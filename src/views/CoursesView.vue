@@ -101,6 +101,93 @@
               </ul>
             </div>
           </div>
+          <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div class="order-2 md:order-1">
+              <h2 class="text-3xl font-bold text-slate-900 mb-2">
+                Course: 4 Skills English (Oxford)
+              </h2>
+              <p class="text-red-600 font-semibold mb-4">
+                เหมาะสำหรับ: นักเรียนระดับมัธยมที่ต้องการพัฒนาภาษาอังกฤษครบ 4
+                ทักษะอย่างเป็นระบบ
+              </p>
+              <ul class="space-y-2 text-slate-600">
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    Oxford Curriculum: ใช้หลักสูตรจาก Oxford ที่ออกแบบสำหรับวัยมัธยม
+                    เนื้อหาทันสมัยและสอดคล้องกับมาตรฐานสากล
+                  </span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    4 Skills Development: พัฒนาครบทุกทักษะ ฟัง–พูด–อ่าน–เขียน
+                    เพื่อการใช้งานจริงและเตรียมพร้อมสู่ระดับสูงขึ้น
+                  </span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    Academic Reading & Writing: วางพื้นฐานทักษะอ่าน–เขียนเชิงวิชาการ
+                    รองรับงานและการสอบของระดับมัธยม
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="order-1 md:order-2">
+              <img
+                alt="4 Skills English"
+                class="rounded-2xl shadow-lg"
+                src="https://placehold.co/600x400/FFFBE6/FFC700?text=4+Skills"
+              />
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <img
+                alt="Private Course"
+                class="rounded-2xl shadow-lg"
+                src="https://placehold.co/600x400/F0FFF4/4CAF50?text=Private"
+              />
+            </div>
+            <div>
+              <h2 class="text-3xl font-bold text-slate-900 mb-2">Course: Private Course</h2>
+              <p class="text-slate-600 mb-4">
+                คอร์สเรียนแบบปรับตามความต้องการของผู้เรียน เลือกหัวข้อได้เองทั้งแบบตัวต่อตัวหรือกลุ่มเล็ก
+                เหมาะสำหรับผู้ที่ต้องการพัฒนาเฉพาะด้านอย่างรวดเร็ว
+              </p>
+              <ul class="space-y-2 text-slate-600">
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    Flexible Learning: เลือกหัวข้อเรียนได้ตามความต้องการ เช่น Grammar, การสื่อสาร,
+                    การเขียน, หรือทักษะเฉพาะทาง
+                  </span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    Exam Preparation: รองรับการเตรียมสอบทุกประเภท เช่น TOEIC, IELTS, TOEFL, CEFR,
+                    สอบเข้ามหาวิทยาลัย
+                  </span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    Academic & Career Support: เรียนเพื่อเตรียมตัวศึกษาต่อต่างประเทศ, สัมภาษณ์งาน,
+                    เขียน Essay หรือพัฒนาทักษะที่ใช้จริงในชีวิตและการทำงาน
+                  </span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-red-500 mr-3">✔</span>
+                  <span>
+                    1-on-1 หรือ Small Group: เรียนเดี่ยวแบบเข้มข้น
+                    หรือเรียนเป็นกลุ่มกับเพื่อนที่สนใจเรื่องเดียวกันได้
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
