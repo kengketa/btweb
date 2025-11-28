@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import CoursesView from '../views/CoursesView.vue'
 import ContactView from '../views/ContactView.vue'
+import FacebookView from '../views/FacebookView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView
+    },
+    {
+      path: '/facebook',
+      name: 'facebook',
+      component: FacebookView
     }
   ]
 })
