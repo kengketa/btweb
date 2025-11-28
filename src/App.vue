@@ -97,7 +97,7 @@ export default {
       navLinks: [
         { name: 'หน้าแรก', to: '/' },
         { name: 'เกี่ยวกับเรา', to: '/about' },
-        { name: 'หลักสูตรของเรา', to: '/courses' },
+        { name: 'หลักสูตรของเรา', to: '/courses' }
       ]
     }
   },
