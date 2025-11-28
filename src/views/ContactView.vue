@@ -32,28 +32,28 @@
               <ul class="space-y-2 text-slate-600">
                 <li>
                   <strong>โทรศัพท์:</strong>
-                  <a href="tel:054070700" class="text-red-600 hover:underline">054-070-700</a>
+                  <a class="text-red-600 hover:underline" href="tel:0821849070">082-184-9070</a>
                 </li>
                 <li>
                   <strong>Facebook:</strong>
                   <a
-                    href="https://facebook.com/brightonlanguage"
                     class="text-red-600 hover:underline"
-                    target="_blank"
+                    href="https://facebook.com/brightonlanguage"
                     rel="noopener noreferrer"
+                    target="_blank"
                     >Brighton Language Academy</a
                   >
                 </li>
-                <li>
-                  <strong>Line:</strong>
-                  <a
-                    href="https://line.me/ti/p/~@brightonphayao"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-red-600 hover:underline"
-                    >@brightonphayao</a
-                  >
-                </li>
+                <!--                <li>-->
+                <!--                  <strong>Line:</strong>-->
+                <!--                  <a-->
+                <!--                    href="https://line.me/ti/p/~@brightonphayao"-->
+                <!--                    target="_blank"-->
+                <!--                    rel="noopener noreferrer"-->
+                <!--                    class="text-red-600 hover:underline"-->
+                <!--                    >@brightonphayao</a-->
+                <!--                  >-->
+                <!--                </li>-->
               </ul>
             </div>
             <div>
@@ -82,19 +82,19 @@
         </h2>
         <p class="text-lg text-slate-600 mb-8">จองคิววัดระดับภาษาฟรีได้แล้ววันนี้</p>
         <div class="flex justify-center gap-4">
+          <!--          <a-->
+          <!--            class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-green-200 transition transform hover:-translate-y-1"-->
+          <!--            href="https://line.me/ti/p/~@brightonphayao"-->
+          <!--            rel="noopener noreferrer"-->
+          <!--            target="_blank"-->
+          <!--          >-->
+          <!--            ติดต่อสอบถามทาง Line-->
+          <!--          </a>-->
           <a
-            href="https://line.me/ti/p/~@brightonphayao"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-green-200 transition transform hover:-translate-y-1"
-          >
-            ติดต่อสอบถามทาง Line
-          </a>
-          <a
-            href="https://m.me/brightonlanguage"
-            target="_blank"
-            rel="noopener noreferrer"
             class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-200 transition transform hover:-translate-y-1"
+            href="https://m.me/brightonlanguage"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             ติดต่อสอบถามทาง Facebook
           </a>
