@@ -84,12 +84,28 @@
 
 <script>
 import { RouterView, RouterLink } from 'vue-router'
+import { useHead } from '@vueuse/head'
 
 export default {
   name: 'App',
   components: {
     RouterView,
     RouterLink
+  },
+  setup () {
+    useHead({
+      title: 'Brighton Language Academy - เรียนภาษาอังกฤษ พะเยา',
+      meta: [
+        {
+          name: 'description',
+          content: 'โรงเรียนสอนภาษาอังกฤษ ไบรท์ตัน พะเยา สอนสดโดยครูเจ้าของภาษา',
+        },
+        {
+          name: 'keywords',
+          content: 'เรียนภาษาอังกฤษ พะเยา, สอนภาษาอังกฤษ, โรงเรียนสอนภาษา, Brighton, Phayao'
+        }
+      ]
+    })
   },
   data() {
     return {

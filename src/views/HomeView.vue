@@ -14,18 +14,19 @@
           <h1
             class="text-4xl md:text-6xl font-extrabold text-red-700 tracking-tight mb-4 uppercase"
           >
-            BRIGHTON
+            BRIGHTON - เรียนภาษาอังกฤษ พะเยา
           </h1>
           <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
             Brighton Language Academy สถาบันสอนภาษามาตรฐานสากล ใจกลางเมืองพะเยา เน้นการเรียนรู้อย่าง
           </p>
           <p class="font-bold mb-10">มีความสุขและใช้งานได้จริง</p>
           <div class="flex justify-center">
-            <button
+            <router-link
               class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-red-200 transition transform hover:-translate-y-1"
+              to="/contact"
             >
-              นัดหมายวัดระดับภาษาฟรี
-            </button>
+              นัดหมายวัดระดับภาษา
+            </router-link>
           </div>
         </div>
       </div>
@@ -103,8 +104,22 @@
 </template>
 
 <script>
+import { useHead } from '@vueuse/head'
+
 export default {
   name: 'HomeView',
+  setup() {
+    useHead({
+      title: 'เรียนภาษาอังกฤษ พะเยา - Brighton Language Academy',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'สถาบันสอนภาษาอังกฤษมาตรฐานสากลในจังหวัดพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics'
+        }
+      ]
+    })
+  },
   data() {
     return {
       whyChooseUs: [
