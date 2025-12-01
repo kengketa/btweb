@@ -1,12 +1,24 @@
+require('dotenv').config()
 const fs = require('fs/promises')
 const path = require('path')
 const axios = require('axios')
+const args = process.argv.slice(2)
 
-// --- Configuration ---
-const PAGE_ID = '987333421284380'
-const ACCESS_TOKEN =
-  'EAArd4lOJ2vMBQKfC977qGGfsQwKADePNZAZBdyE2dXOvYeqJZCrjhlZBZC0eelXMItdTyZCylMTdvKZAZCuq4xP7ikF4XWPsA0k340g9L5zaZB0bMYOiCZCOBGEpmGq4af077V3TMDfcIref7eDZBpHSVOVkn6JcWBTmo45bi0ZAD6xo24QC1XonVSqVeYIyZCF7mcs2PRIWNcZAiKJFmyginEikL1OR611EzHOpB1FWH7EZBB6bS3jl6LZAa54w'
-const API_URL = `https://graph.facebook.com/v21.0/${PAGE_ID}/posts?fields=message,created_time,permalink_url,attachments{media,subattachments}&limit=10&access_token=${ACCESS_TOKEN}`
+const getArgValue = (argName) => {
+  const combined = args.find((arg) => arg.startsWith(`${argName}=`))
+  if (combined) return combined.split('=')[1]
+  const index = args.indexOf(argName)
+  if (index !== -1 && args[index + 1] && !args[index + 1].startsWith('--')) {
+    return args[index + 1]
+  }
+  return null
+}
+
+const hasFlag = (flagName) => args.includes(flagName)
+const PAGE_ID = process.env.VITE_FB_PAGE_ID || ''
+const ACCESS_TOKEN = getArgValue('--access_token') || process.env.VITE_FB_ACCESS_TOKEN
+
+const API_URL = `https://graph.facebook.com/v24.0/${PAGE_ID}/posts?fields=message,created_time,permalink_url,attachments{media,subattachments}&limit=10&access_token=${ACCESS_TOKEN}`
 const CACHE_FILE_PATH = path.join(__dirname, '..', 'public', 'api', 'facebook-feed.json')
 const CACHE_DURATION_HOURS = 24
 
@@ -15,7 +27,6 @@ async function getCachedFeed() {
     const data = await fs.readFile(CACHE_FILE_PATH, 'utf-8')
     return JSON.parse(data)
   } catch (error) {
-    // If the file doesn't exist or is invalid, return null.
     if (error.code === 'ENOENT') {
       return null
     }
@@ -24,11 +35,16 @@ async function getCachedFeed() {
 }
 
 async function fetchAndCacheFeed() {
+  if (!ACCESS_TOKEN) {
+    console.error('Error: No Access Token provided. Use --access_token=YOUR_TOKEN')
+    process.exit(1)
+  }
+
   console.log('Fetching new data from Facebook API...')
   try {
     let allPosts = []
     let nextUrl = API_URL
-    const maxPages = 5 // Fetch up to 5 pages (approx. 50 posts)
+    const maxPages = 5
 
     for (let i = 0; i < maxPages && nextUrl; i++) {
       console.log(`Fetching page ${i + 1}...`)
@@ -36,14 +52,12 @@ async function fetchAndCacheFeed() {
       if (response.data.data) {
         allPosts = allPosts.concat(response.data.data)
       }
-      // The 'next' URL from the Graph API already includes the access token
       nextUrl = response.data.paging?.next
     }
 
     const feedData = {
       last_updated: new Date().toISOString(),
       posts: allPosts
-      // No nextPageUrl, as we're handling pagination by pre-loading posts.
     }
 
     await fs.mkdir(path.dirname(CACHE_FILE_PATH), { recursive: true })
@@ -54,18 +68,20 @@ async function fetchAndCacheFeed() {
       'Error fetching or caching Facebook feed:',
       error.response ? error.response.data : error.message
     )
-    // Exit with an error code to fail CI/CD pipelines if something goes wrong.
     process.exit(1)
   }
 }
 
 async function run() {
-  // 1. Check if the command was run with the --force flag
-  const forceUpdate = process.argv.includes('--force')
+  // Check for the force flag using our helper
+  const forceUpdate = hasFlag('--force')
+
+  console.log(
+    `Configuration: Force Update: ${forceUpdate}, Token provided: ${ACCESS_TOKEN ? 'Yes' : 'No'}`
+  )
 
   const cachedFeed = await getCachedFeed()
 
-  // 2. We only check the cache age if the file exists AND we aren't forcing an update
   if (cachedFeed && !forceUpdate) {
     const now = new Date()
     const lastUpdated = new Date(cachedFeed.last_updated)
