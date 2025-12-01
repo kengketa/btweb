@@ -1,7 +1,7 @@
 <template>
   <div class="feed-container">
     <div v-if="error" class="error">{{ error }}</div>
-    <div v-for="post in posts" :key="post.id" class="post-card shadow-lg">
+    <div v-for="post in displayedPosts" :key="post.id" class="post-card shadow-lg">
       <div class="post-header">
         <img :src="getPageLogo()" alt="Logo" class="page-logo" />
         <div class="header-info">
@@ -37,7 +37,7 @@
         <a :href="post.permalink_url" class="fb-link" target="_blank">View on Facebook</a>
       </div>
     </div>
-    <div v-if="!loading && nextPageUrl" class="pagination-controls">
+    <div v-if="!loading && displayedPosts.length < allPosts.length" class="pagination-controls">
       <button class="btn-load-more" @click="loadMore">Load More</button>
     </div>
     <div v-if="loading" class="loading">Loading...</div>
@@ -50,12 +50,14 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      posts: [],
+      allPosts: [],
+      displayedPosts: [],
       loading: false,
       error: null,
-      nextPageUrl: null,
       expandedPosts: [],
-      pageId: '987333421284380' // Keep pageId for getPageLogo()
+      pageId: '987333421284380', // Keep pageId for getPageLogo()
+      postsPerPage: 10,
+      currentPage: 0
     }
   },
   async created() {
@@ -63,8 +65,8 @@ export default {
     try {
       // Fetch the cached feed from the local JSON file
       const response = await axios.get('/api/facebook-feed.json')
-      this.posts = response.data.posts
-      this.nextPageUrl = response.data.nextPageUrl
+      this.allPosts = response.data.posts
+      this.displayPosts()
     } catch (err) {
       this.error = 'Error fetching posts. Please run "npm run update-feed".'
       console.error(err)
@@ -73,23 +75,17 @@ export default {
     }
   },
   methods: {
-    // --- API Logic ---
-    async loadMore() {
-      if (this.nextPageUrl) await this.fetchMorePosts(this.nextPageUrl)
-    },
-    // This method now only fetches subsequent pages for "Load More"
-    async fetchMorePosts(url) {
-      this.loading = true
-      try {
-        const response = await axios.get(url)
-        this.posts = [...this.posts, ...response.data.data]
-        this.nextPageUrl = response.data.paging?.next || null
-      } catch (err) {
-        this.error = 'Error fetching more posts.'
-        console.error(err)
-      } finally {
-        this.loading = false
+    // --- Pagination Logic ---
+    displayPosts() {
+      const start = this.currentPage * this.postsPerPage
+      const end = start + this.postsPerPage
+      if (start < this.allPosts.length) {
+        this.displayedPosts.push(...this.allPosts.slice(start, end))
       }
+    },
+    loadMore() {
+      this.currentPage++
+      this.displayPosts()
     },
 
     // --- Helper: Get Page Logo ---
@@ -146,7 +142,6 @@ export default {
       if (count === 3) return 'grid-3'
       return 'grid-4'
     },
-
     openLink(url) {
       window.open(url, '_blank')
     }

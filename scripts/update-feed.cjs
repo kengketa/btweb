@@ -26,16 +26,29 @@ async function getCachedFeed() {
 async function fetchAndCacheFeed() {
   console.log('Fetching new data from Facebook API...')
   try {
-    const response = await axios.get(API_URL)
+    let allPosts = []
+    let nextUrl = API_URL
+    const maxPages = 5 // Fetch up to 5 pages (approx. 50 posts)
+
+    for (let i = 0; i < maxPages && nextUrl; i++) {
+      console.log(`Fetching page ${i + 1}...`)
+      const response = await axios.get(nextUrl)
+      if (response.data.data) {
+        allPosts = allPosts.concat(response.data.data)
+      }
+      // The 'next' URL from the Graph API already includes the access token
+      nextUrl = response.data.paging?.next
+    }
+
     const feedData = {
       last_updated: new Date().toISOString(),
-      posts: response.data.data,
-      nextPageUrl: response.data.paging?.next || null
+      posts: allPosts
+      // No nextPageUrl, as we're handling pagination by pre-loading posts.
     }
 
     await fs.mkdir(path.dirname(CACHE_FILE_PATH), { recursive: true })
     await fs.writeFile(CACHE_FILE_PATH, JSON.stringify(feedData, null, 2))
-    console.log(`Successfully cached feed to ${CACHE_FILE_PATH}`)
+    console.log(`Successfully cached ${allPosts.length} posts to ${CACHE_FILE_PATH}`)
   } catch (error) {
     console.error(
       'Error fetching or caching Facebook feed:',
