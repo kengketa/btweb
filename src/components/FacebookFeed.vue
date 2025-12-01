@@ -55,37 +55,37 @@ export default {
       error: null,
       nextPageUrl: null,
       expandedPosts: [],
-      pageId: '987333421284380',
-      accessToken:
-        'EAArd4lOJ2vMBQJShlsLvQ4YCcaFrvQWz5g5M94oU59MlMXMQpvxaq9ZALdraeQFhcGKNSRs4SnsaSGzPWaep5eWyicO6ZAMD7qUCFigewFyukyAshSnLXU9lDmSb9c77cwlsiMcZBmllhRzp4qeX4pVLDytwho0NHFSKQ9gk7VmqzmQK1CoUTItZCsJg4OnXiXqhg0WEuC7DPNE3vbNUKTHXTFBvWkLmgWV0OOPSdljtkPdcb49y4sWNnwZDZD'
+      pageId: '987333421284380' // Keep pageId for getPageLogo()
     }
   },
   async created() {
     this.loading = true
-    if (!this.pageId || this.accessToken.includes('YOUR_')) {
-      this.error = 'Please configure credentials.'
+    try {
+      // Fetch the cached feed from the local JSON file
+      const response = await axios.get('/api/facebook-feed.json')
+      this.posts = response.data.posts
+      this.nextPageUrl = response.data.nextPageUrl
+    } catch (err) {
+      this.error = 'Error fetching posts. Please run "npm run update-feed".'
+      console.error(err)
+    } finally {
       this.loading = false
-      return
     }
-
-    // UPDATED API URL: requesting 'attachments' to get multiple photos
-    const url = `https://graph.facebook.com/v21.0/${this.pageId}/posts?fields=message,created_time,permalink_url,attachments{media,subattachments}&limit=10&access_token=${this.accessToken}`
-
-    await this.fetchPosts(url)
   },
   methods: {
     // --- API Logic ---
     async loadMore() {
-      if (this.nextPageUrl) await this.fetchPosts(this.nextPageUrl)
+      if (this.nextPageUrl) await this.fetchMorePosts(this.nextPageUrl)
     },
-    async fetchPosts(url) {
+    // This method now only fetches subsequent pages for "Load More"
+    async fetchMorePosts(url) {
       this.loading = true
       try {
         const response = await axios.get(url)
         this.posts = [...this.posts, ...response.data.data]
         this.nextPageUrl = response.data.paging?.next || null
       } catch (err) {
-        this.error = 'Error fetching posts.'
+        this.error = 'Error fetching more posts.'
         console.error(err)
       } finally {
         this.loading = false
