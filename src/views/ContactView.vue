@@ -40,9 +40,9 @@
                     class="text-red-600 hover:underline"
                     href="https://facebook.com/brightonlanguage"
                     rel="noopener noreferrer"
-                    target="_blank"
-                    >Brighton Language Academy</a
                   >
+                    Brighton Language Academy
+                  </a>
                 </li>
                 <!--                <li>-->
                 <!--                  <strong>Line:</strong>-->
@@ -102,7 +102,6 @@
             class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-200 transition transform hover:-translate-y-1"
             href="https://m.me/brightonlanguage"
             rel="noopener noreferrer"
-            target="_blank"
           >
             ติดต่อสอบถามทาง Facebook
           </a>

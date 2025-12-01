@@ -55,7 +55,7 @@ export default {
       loading: false,
       error: null,
       expandedPosts: [],
-      pageId: '987333421284380', // Keep pageId for getPageLogo()
+      pageLogoUrl: '',
       postsPerPage: 10,
       currentPage: 0
     }
@@ -66,6 +66,7 @@ export default {
       // Fetch the cached feed from the local JSON file
       const response = await axios.get('/api/facebook-feed.json')
       this.allPosts = response.data.posts
+      this.pageLogoUrl = response.data.pageLogoUrl
       this.displayPosts()
     } catch (err) {
       this.error = 'Error fetching posts. Please run "npm run update-feed".'
@@ -90,8 +91,7 @@ export default {
 
     // --- Helper: Get Page Logo ---
     getPageLogo() {
-      // We can fetch the page logo directly using the ID
-      return `https://graph.facebook.com/${this.pageId}/picture?type=large`
+      return this.pageLogoUrl
     },
 
     // --- Helper: Date Formatting ---
