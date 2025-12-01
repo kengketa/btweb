@@ -29,8 +29,8 @@ const router = createRouter({
       component: ContactView
     },
     {
-      path: '/facebook',
-      name: 'facebook',
+      path: '/news',
+      name: 'news',
       component: FacebookView
     }
   ]

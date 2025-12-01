@@ -3,7 +3,7 @@
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-red-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-          <router-link to="/" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+          <router-link class="flex-shrink-0 flex items-center gap-3 cursor-pointer" to="/">
             <div class="flex flex-col leading-tight">
               <span class="font-bold text-2xl text-red-600 tracking-tight"> BRIGHTON </span>
               <span class="text-xs font-bold text-slate-800 uppercase tracking-widest">
@@ -17,14 +17,14 @@
               v-for="link in navLinks"
               :key="link.name"
               :to="link.to"
-              class="text-slate-600 hover:text-red-600 font-bold transition"
               active-class="text-red-600"
+              class="text-slate-600 hover:text-red-600 font-bold transition"
             >
               {{ link.name }}
             </router-link>
             <router-link
-              to="/contact"
               class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-red-200 transition transform hover:-translate-y-0.5"
+              to="/contact"
             >
               Contact Us
             </router-link>
@@ -62,8 +62,8 @@
             v-for="link in navLinks"
             :key="link.name"
             :to="link.to"
-            @click="isMobileMenuOpen = false"
             class="block px-4 py-3 rounded-lg text-base font-bold text-slate-700 hover:bg-red-50 hover:text-red-600"
+            @click="isMobileMenuOpen = false"
           >
             {{ link.name }}
           </router-link>
@@ -92,13 +92,13 @@ export default {
     RouterView,
     RouterLink
   },
-  setup () {
+  setup() {
     useHead({
       title: 'Brighton Language Academy - เรียนภาษาอังกฤษ พะเยา',
       meta: [
         {
           name: 'description',
-          content: 'โรงเรียนสอนภาษาอังกฤษ ไบรท์ตัน พะเยา สอนสดโดยครูเจ้าของภาษา',
+          content: 'โรงเรียนสอนภาษาอังกฤษ ไบรท์ตัน พะเยา สอนสดโดยครูเจ้าของภาษา'
         },
         {
           name: 'keywords',
@@ -114,7 +114,7 @@ export default {
         { name: 'หน้าแรก', to: '/' },
         { name: 'เกี่ยวกับเรา', to: '/about' },
         { name: 'หลักสูตรของเรา', to: '/courses' },
-        { name: 'Facebook', to: '/facebook' }
+        { name: 'News', to: '/news' }
       ]
     }
   },
