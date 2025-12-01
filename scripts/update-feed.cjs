@@ -4,6 +4,7 @@ const path = require('path')
 const axios = require('axios')
 const args = process.argv.slice(2)
 
+// --- Helper Functions ---
 const getArgValue = (argName) => {
   const combined = args.find((arg) => arg.startsWith(`${argName}=`))
   if (combined) return combined.split('=')[1]
@@ -15,12 +16,14 @@ const getArgValue = (argName) => {
 }
 
 const hasFlag = (flagName) => args.includes(flagName)
-const PAGE_ID = process.env.VITE_FB_PAGE_ID || ''
-const ACCESS_TOKEN = getArgValue('--access_token') || process.env.VITE_FB_ACCESS_TOKEN
 
-const API_URL = `https://graph.facebook.com/v24.0/${PAGE_ID}/posts?fields=message,created_time,permalink_url,attachments{media,subattachments}&limit=10&access_token=${ACCESS_TOKEN}`
+// --- Configuration ---
+const PAGE_ID = process.env.VITE_FB_PAGE_ID || ''
+const USER_ACCESS_TOKEN = getArgValue('--access_token') || process.env.VITE_FB_USER_ACCESS_TOKEN
 const CACHE_FILE_PATH = path.join(__dirname, '..', 'public', 'api', 'facebook-feed.json')
 const CACHE_DURATION_HOURS = 24
+
+// --- Core Logic ---
 
 async function getCachedFeed() {
   try {
@@ -34,20 +37,60 @@ async function getCachedFeed() {
   }
 }
 
+/**
+ * Uses the User Token to fetch the specific Page Access Token
+ */
+async function getPageAccessToken(userToken, pageId) {
+  console.log(`Attempting to retrieve Page Access Token for Page ID: ${pageId}...`)
+  try {
+    // We request a limit of 100 to ensure we find the page if the user manages many pages
+    const url = `https://graph.facebook.com/v24.0/me/accounts?access_token=${userToken}&limit=100`
+    const response = await axios.get(url)
+    if (response.data && response.data.data) {
+      const pageData = response.data.data.find((page) => page.id === pageId)
+      if (pageData && pageData.access_token) {
+        return pageData.access_token
+      }
+    }
+
+    console.warn(
+      '⚠ Page ID not found in user accounts. Will try using the provided token directly.'
+    )
+    return userToken // Fallback to the original token if page not found
+  } catch (error) {
+    console.warn(
+      '⚠ Error fetching page accounts (Input might already be a Page Token). Continuing...'
+    )
+    return userToken // Fallback
+  }
+}
+
 async function fetchAndCacheFeed() {
-  if (!ACCESS_TOKEN) {
+  if (!USER_ACCESS_TOKEN) {
     console.error('Error: No Access Token provided. Use --access_token=YOUR_TOKEN')
     process.exit(1)
   }
 
-  console.log('Fetching new data from Facebook API...')
+  if (!PAGE_ID) {
+    console.error('Error: No PAGE_ID found in environment variables.')
+    process.exit(1)
+  }
+
+  // 1. Get the actual Page Token
+  const pageAccessToken = await getPageAccessToken(USER_ACCESS_TOKEN, PAGE_ID)
+
+  console.log('Fetching feed data from Facebook API...')
+
+  // 2. Fetch the Posts using the final token
+  const API_URL = `https://graph.facebook.com/v24.0/${PAGE_ID}/posts?fields=message,created_time,permalink_url,attachments{media,subattachments}&limit=10&access_token=${pageAccessToken}`
+
   try {
     let allPosts = []
     let nextUrl = API_URL
     const maxPages = 5
 
     for (let i = 0; i < maxPages && nextUrl; i++) {
-      console.log(`Fetching page ${i + 1}...`)
+      console.log(`Fetching feed page ${i + 1}...`)
       const response = await axios.get(nextUrl)
       if (response.data.data) {
         allPosts = allPosts.concat(response.data.data)
@@ -73,11 +116,10 @@ async function fetchAndCacheFeed() {
 }
 
 async function run() {
-  // Check for the force flag using our helper
   const forceUpdate = hasFlag('--force')
 
   console.log(
-    `Configuration: Force Update: ${forceUpdate}, Token provided: ${ACCESS_TOKEN ? 'Yes' : 'No'}`
+    `Configuration: Force Update: ${forceUpdate}, Token provided: ${USER_ACCESS_TOKEN ? 'Yes' : 'No'}`
   )
 
   const cachedFeed = await getCachedFeed()
