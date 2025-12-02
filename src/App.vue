@@ -4,8 +4,12 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
           <router-link class="flex-shrink-0 flex items-center gap-3 cursor-pointer" to="/">
+            <div class="w-10 h-10">
+              <img class="w-10 h-10" src="@/assets/images/logo.png" />
+            </div>
+
             <div class="flex flex-col leading-tight">
-              <span class="font-bold text-2xl text-red-600 tracking-tight"> BRIGHTON </span>
+              <span class="font-bold text-2xl text-red-700 tracking-tight"> BRIGHTON </span>
               <span class="text-xs font-bold text-slate-800 uppercase tracking-widest">
                 Language Academy
               </span>
