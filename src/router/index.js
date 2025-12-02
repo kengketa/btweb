@@ -4,6 +4,7 @@ import AboutView from '../views/AboutView.vue'
 import CoursesView from '../views/CoursesView.vue'
 import ContactView from '../views/ContactView.vue'
 import FacebookView from '../views/FacebookView.vue'
+import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/news',
       name: 'news',
       component: FacebookView
+    },
+    {
+      path: '/privacy-policy',
+      name: 'privacy-policy',
+      component: PrivacyPolicyView
     }
   ]
 })
