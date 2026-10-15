@@ -17,6 +17,8 @@
     "update-feed": "node scripts/update-feed.cjs"
   },
   "dependencies": {
+    "@fontsource/kanit": "5.3.0",
+    "@fontsource/roboto-condensed": "5.3.0",
     "@unhead/vue": "^2.0.19",
     "@vueuse/head": "^2.0.0",
     "axios": "^1.13.2",
@@ -31,7 +33,6 @@
     "@vue/eslint-config-prettier": "^9.0.0",
     "autoprefixer": "^10.4.19",
     "cssnano": "^7.0.4",
-    "daisyui": "^5.5.5",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
     "postcss": "^8.4.40",

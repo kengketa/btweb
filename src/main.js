@@ -5,6 +5,7 @@ import { createHead } from '@vueuse/head'
 import App from './App.vue'
 import router from './router'
 
+import './assets/fonts.js'
 import './assets/main.scss'
 
 const app = createApp(App)
