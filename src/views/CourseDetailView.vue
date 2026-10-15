@@ -168,6 +168,7 @@ import PhotoBox from '@/components/PhotoBox.vue'
 import { useFeed } from '@/composables/useFeed'
 import { contact } from '@/data/site'
 import { courses, faqs } from '@/data/courses'
+import { courseSchema, jsonLd } from '@/data/schema'
 
 export default {
   name: 'CourseDetailView',
@@ -183,7 +184,9 @@ export default {
     const route = useRoute()
     const course = computed(() => courses.find((c) => c.slug === route.params.slug))
     useHead({
-      title: computed(() => `${course.value?.name ?? 'หลักสูตร'} - Brighton Language Academy`)
+      title: computed(() => `${course.value?.name ?? 'หลักสูตร'} - Brighton Language Academy`),
+      meta: [{ name: 'description', content: computed(() => course.value?.desc ?? '') }],
+      script: computed(() => (course.value ? [jsonLd(courseSchema(course.value))] : []))
     })
     const { photoFor } = useFeed()
     return { course, photoFor }

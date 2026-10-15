@@ -289,7 +289,16 @@ export default {
   name: 'ContactView',
   components: { IconFacebook, IconMobile },
   setup() {
-    useHead({ title: 'นัดวัดระดับภาษาฟรี - Brighton Language Academy' })
+    useHead({
+      title: 'นัดวัดระดับภาษาฟรี - Brighton Language Academy',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'นัดวัดระดับภาษาอังกฤษฟรีสำหรับลูกของคุณที่ Brighton Language Academy พะเยา กรอกข้อมูลสั้นๆ แล้วเจ้าหน้าที่จะติดต่อกลับเพื่อยืนยันวันและเวลา'
+        }
+      ]
+    })
   },
   data() {
     return {

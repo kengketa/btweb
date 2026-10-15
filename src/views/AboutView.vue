@@ -98,7 +98,16 @@ export default {
   name: 'AboutView',
   components: { PhotoBox },
   setup() {
-    useHead({ title: 'เกี่ยวกับเรา - Brighton Language Academy' })
+    useHead({
+      title: 'เกี่ยวกับเรา - Brighton Language Academy',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'Brighton Language Academy พื้นที่เรียนรู้ที่ปลอดภัย อบอุ่น และมีคุณภาพ ใจกลางเมืองพะเยา ให้เด็กๆ เรียนภาษาอังกฤษอย่างมีความสุข พร้อมเติบโตอย่างมั่นใจ'
+        }
+      ]
+    })
     const { photos } = useFeed()
     const cover = computed(() => photos.value[6])
     const strip = computed(() => [photos.value[12], photos.value[16], photos.value[20]])

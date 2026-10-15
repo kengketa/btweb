@@ -110,7 +110,16 @@ export default {
   name: 'CoursesView',
   components: { PhotoBox },
   setup() {
-    useHead({ title: 'หลักสูตรของเรา - Brighton Language Academy' })
+    useHead({
+      title: 'หลักสูตรของเรา - Brighton Language Academy',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'หลักสูตรภาษาอังกฤษสำหรับเด็กอนุบาลถึงมัธยมในพะเยา ออกแบบตามช่วงวัย เน้นความเข้าใจ ไม่ใช่การท่องจำ ทุกคลาสเริ่มจากการวัดระดับฟรี'
+        }
+      ]
+    })
     const { photoFor } = useFeed()
     return { photoFor }
   },

@@ -8,8 +8,11 @@
 </template>
 
 <script>
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
+import { SITE_URL } from '@/data/pages'
+import { jsonLd, school } from '@/data/schema'
 import SiteNav from '@/components/SiteNav.vue'
 import SiteFooter from '@/components/SiteFooter.vue'
 import MobileActionBar from '@/components/MobileActionBar.vue'
@@ -23,6 +26,8 @@ export default {
     MobileActionBar
   },
   setup() {
+    const route = useRoute()
+    const url = computed(() => SITE_URL + route.path)
     useHead({
       title: 'Brighton Language Academy - เรียนภาษาอังกฤษ พะเยา',
       meta: [
@@ -33,8 +38,11 @@ export default {
         {
           name: 'keywords',
           content: 'เรียนภาษาอังกฤษ พะเยา, สอนภาษาอังกฤษ, โรงเรียนสอนภาษา, Brighton, Phayao'
-        }
-      ]
+        },
+        { property: 'og:url', content: url }
+      ],
+      link: [{ rel: 'canonical', href: url }],
+      script: [jsonLd(school)]
     })
   }
 }
