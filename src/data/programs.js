@@ -4,6 +4,9 @@
 // Each page targets the searches parents in Phayao use (see GitHub issue #11) in natural
 // sentences. Keep it true: Brighton supports MEP/EP students but is not an MEP/EP school
 // or an international school, and the ~50 teachers are foreign teachers, not all native speakers.
+//
+// `english` is the summary box near the bottom of each page: English by default, for
+// English searches; add `lang: 'th'` to write it in Thai instead.
 import { contact, team } from './site.js'
 
 export const programs = [
@@ -158,8 +161,9 @@ export const programs = [
       }
     ],
     english: {
-      heading: 'English holiday camp in Phayao',
-      text: 'Kindy Fun Camp runs every school break at Brighton Language Academy in Phayao. Each week has its own theme (cooking, science, outdoor adventure), with children using English all day alongside our foreign teachers. Book one week or the whole camp.'
+      lang: 'th',
+      heading: 'ค่ายภาษาอังกฤษช่วงปิดเทอมในพะเยา',
+      text: 'Kindy Fun Camp จัดขึ้นทุกช่วงปิดเทอมที่ Brighton Language Academy พะเยา แต่ละสัปดาห์มีธีมของตัวเอง ทั้งทำอาหาร วิทยาศาสตร์ และผจญภัยนอกห้องเรียน เด็กๆ ได้ใช้ภาษาอังกฤษตลอดทั้งวันกับครูชาวต่างชาติของเรา เลือกสมัครเป็นรายสัปดาห์ หรือสมัครครบทั้งค่ายก็ได้'
     },
     faqs: [
       [

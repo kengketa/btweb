@@ -122,10 +122,16 @@
     <section class="wrap pb-16 md:pb-[88px]">
       <div
         class="flex flex-col gap-3 rounded-[22px] border border-line bg-white p-6 md:rounded-[28px] md:p-10"
-        lang="en"
+        :lang="summaryLang"
       >
-        <span class="eyebrow">In English</span>
-        <h2 class="font-condensed text-2xl font-bold leading-tight md:text-[32px]">
+        <span class="eyebrow">{{ summaryLang === 'en' ? 'In English' : 'สรุป' }}</span>
+        <!-- Roboto Condensed has no Thai glyphs, so a Thai summary keeps the heading font -->
+        <h2
+          :class="
+            summaryLang === 'en' ? 'font-condensed leading-tight' : 'font-display leading-[1.4]'
+          "
+          class="text-2xl font-bold md:text-[32px]"
+        >
           {{ program.english.heading }}
         </h2>
         <p class="max-w-[820px] text-base leading-[1.75] text-body md:text-[17px]">
@@ -233,7 +239,8 @@ export default {
     const { photoFor } = useFeed()
     const photoIndex = computed(() => programs.indexOf(program.value) * 4 + 1)
     const others = computed(() => programs.filter((p) => p !== program.value))
-    return { program, photoFor, photoIndex, others, contact, dateRange }
+    const summaryLang = computed(() => program.value.english.lang || 'en')
+    return { program, photoFor, photoIndex, others, summaryLang, contact, dateRange }
   }
 }
 </script>
