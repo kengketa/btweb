@@ -1,5 +1,6 @@
 import { createMemoryHistory, createRouter, createWebHistory, START_LOCATION } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { programs } from '../data/programs'
 
 // The home page ships in the main bundle; every other page loads on first visit.
 const AboutView = () => import('../views/AboutView.vue')
@@ -8,6 +9,7 @@ const ContactView = () => import('../views/ContactView.vue')
 const CourseDetailView = () => import('../views/CourseDetailView.vue')
 const NewsView = () => import('../views/NewsView.vue')
 const PrivacyPolicyView = () => import('../views/PrivacyPolicyView.vue')
+const ProgramView = () => import('../views/ProgramView.vue')
 
 const routes = [
   {
@@ -30,6 +32,13 @@ const routes = [
     name: 'course',
     component: CourseDetailView
   },
+  // /teachers, /camp, /ef, /mep: one view, content from src/data/programs.js
+  ...programs.map((p) => ({
+    path: p.path,
+    name: p.slug,
+    component: ProgramView,
+    props: { slug: p.slug }
+  })),
   {
     path: '/contact',
     name: 'contact',

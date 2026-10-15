@@ -6,7 +6,9 @@ import { renderHeadToString } from '@vueuse/head'
 import { createApp } from './app'
 
 export { courses } from './data/courses'
-export { contact } from './data/site'
+export { contact, team } from './data/site'
+export { programs } from './data/programs'
+export { pagePaths, SITE_URL } from './data/pages'
 
 export async function render(url) {
   const { app, router, head } = createApp({ hydrate: true })

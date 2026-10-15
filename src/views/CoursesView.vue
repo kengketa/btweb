@@ -93,7 +93,11 @@
         </router-link>
       </div>
       <p class="mt-6 text-sm text-muted">
-        บริการอื่นๆ: คอร์สเตรียมสอบ (Exam Prep) · อบรมภาษาอังกฤษสำหรับองค์กร (Corporate Training) —
+        บริการอื่นๆ:
+        <template v-for="p in programs" :key="p.slug">
+          <router-link class="link-arrow" :to="p.path">{{ p.label }}</router-link> ·
+        </template>
+        คอร์สเตรียมสอบ (Exam Prep) · อบรมภาษาอังกฤษสำหรับองค์กร (Corporate Training) —
         <router-link class="link-arrow" to="/contact">สอบถามรายละเอียด</router-link>
       </p>
     </section>
@@ -105,18 +109,19 @@ import { useHead } from '@vueuse/head'
 import PhotoBox from '@/components/PhotoBox.vue'
 import { useFeed } from '@/composables/useFeed'
 import { ageFont, courseGroups, courses } from '@/data/courses'
+import { programs } from '@/data/programs'
 
 export default {
   name: 'CoursesView',
   components: { PhotoBox },
   setup() {
     useHead({
-      title: 'หลักสูตรของเรา - Brighton Language Academy',
+      title: 'คอร์สเรียนพิเศษภาษาอังกฤษ พะเยา - Brighton Language Academy',
       meta: [
         {
           name: 'description',
           content:
-            'หลักสูตรภาษาอังกฤษสำหรับเด็กอนุบาลถึงมัธยมในพะเยา ออกแบบตามช่วงวัย เน้นความเข้าใจ ไม่ใช่การท่องจำ ทุกคลาสเริ่มจากการวัดระดับฟรี'
+            'คอร์สเรียนพิเศษภาษาอังกฤษสำหรับเด็กอนุบาลถึงมัธยมในพะเยา และคอร์สติวภาษาอังกฤษตัวต่อตัว ออกแบบตามช่วงวัย เน้นความเข้าใจ ไม่ใช่การท่องจำ ทุกคลาสเริ่มจากการวัดระดับฟรี'
         }
       ]
     })
@@ -124,7 +129,7 @@ export default {
     return { photoFor }
   },
   data() {
-    return { filter: 'all', groups: courseGroups, courses, ageFont }
+    return { filter: 'all', groups: courseGroups, courses, programs, ageFont }
   },
   computed: {
     filtered() {

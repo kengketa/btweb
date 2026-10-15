@@ -1,4 +1,5 @@
 import { courses } from './courses.js'
+import { programs } from './programs.js'
 
 export const SITE_URL = 'https://www.brightonedu.com'
 
@@ -8,6 +9,7 @@ export const pagePaths = [
   '/about',
   '/courses',
   ...courses.map((c) => `/courses/${c.slug}`),
+  ...programs.map((p) => p.path),
   '/news',
   '/contact',
   '/privacy-policy'

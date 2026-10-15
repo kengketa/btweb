@@ -11,8 +11,6 @@ import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { build } from 'vite'
 
-import { pagePaths, SITE_URL } from '../src/data/pages.js'
-
 const root = fileURLToPath(new URL('..', import.meta.url))
 const configFile = path.join(root, 'vite.config.prod.mjs')
 const args = process.argv.slice(2)
@@ -27,7 +25,7 @@ await build({
   build: { ssr: 'src/entry-server.js', outDir: ssrDir, emptyOutDir: true, copyPublicDir: false }
 })
 
-const { render, courses, contact } = await import(
+const { render, courses, contact, team, programs, pagePaths, SITE_URL } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 )
 
@@ -65,6 +63,8 @@ fs.writeFileSync(
 
 > English language school for children in Phayao, Thailand. Classes are taught live by native English-speaking teachers using Oxford University Press and Jolly Phonics curricula, from kindergarten to secondary school, plus private lessons. Every child starts with a free placement test (CEFR) so they join a group at their level.
 >
+> Brighton also runs an English holiday camp (Kindy Fun Camp) every school break, tutors students in Mini English Program (MEP) and English Program (EP) classrooms, and has about ${team.foreignTeachers} foreign teachers teaching in ${team.schools} schools across Phayao. It is a language school, not an MEP/EP or international school.
+>
 > โรงเรียนสอนภาษาอังกฤษสำหรับเด็ก ใจกลางเมืองพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics ตั้งแต่อนุบาลถึงมัธยม และคอร์สส่วนตัว วัดระดับภาษาฟรีก่อนเริ่มเรียน
 
 - Address / ที่อยู่: ${contact.address.join(' ')}, Thailand
@@ -78,6 +78,10 @@ fs.writeFileSync(
 ${courses
   .map((c) => `- [${c.name}](${link(`/courses/${c.slug}`)}): ${c.tag}, ${c.age} ${c.ageUnit}. ${c.desc}`)
   .join('\n')}
+
+## Programs
+
+${programs.map((p) => `- [${p.label}](${link(p.path)}): ${p.card}. ${p.english.text}`).join('\n')}
 
 ## Pages
 
