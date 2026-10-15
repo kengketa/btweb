@@ -23,4 +23,12 @@ export const contact = {
     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.5626798299395!2d99.90315867559715!3d19.170610948994746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30d82ccdbfef0777%3A0xa255be9ca9f77c5e!2z4LmC4Lij4LiH4LmA4Lij4Li14Lii4LiZ4Liq4Lit4LiZ4Lig4Liy4Lip4LiyIOC5hOC4muC4o-C4l-C5jOC4leC4seC4mSAoIEJyaWdodG9uIExhbmd1YWdlIEFjYWRlbXkgKQ!5e0!3m2!1sen!2sth!4v1764565999332!5m2!1sen!2sth'
 }
 
+// Booking form, configured in .env (read at build time, so rebuild after changing it).
+// Without an endpoint, bookings are handed to Messenger instead. The endpoint receives
+// a JSON POST; the Turnstile key is the public site key. Both end up in the public bundle.
+export const booking = {
+  endpoint: import.meta.env.VITE_BOOKING_ENDPOINT || '',
+  turnstileSiteKey: import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
+}
+
 export const yearsLabel = '10+'
