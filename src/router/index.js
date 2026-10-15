@@ -48,7 +48,10 @@ const router = createRouter({
     { path: '/:pathMatch(.*)*', redirect: '/' }
   ],
   scrollBehavior(to, from, savedPosition) {
-    return savedPosition || { top: 0 }
+    if (savedPosition) return savedPosition
+    // leave room for the sticky nav when jumping to a section
+    if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }
+    return { top: 0 }
   }
 })
 

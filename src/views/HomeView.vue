@@ -44,12 +44,24 @@
               <span class="text-sm leading-[1.4] text-muted">ปีที่ดูแลเด็กๆ<br />ในพะเยา</span>
             </div>
             <div class="h-11 w-px bg-line"></div>
-            <div class="flex max-w-[300px] flex-col gap-1">
-              <span class="font-display text-base font-medium leading-normal">
-                “{{ testimonials.hero.quote }}”
+            <router-link :to="{ hash: '#reviews' }" class="group flex items-center gap-3.5">
+              <span class="flex -space-x-2.5">
+                <span
+                  v-for="r in reviews.slice(0, 4)"
+                  :key="r.name"
+                  class="flex h-10 w-10 items-center justify-center rounded-full bg-blush text-sm font-semibold text-brand ring-2 ring-cream"
+                  >{{ r.initial }}</span
+                >
               </span>
-              <span class="text-[13px] text-muted">{{ testimonials.hero.who }}</span>
-            </div>
+              <span class="flex flex-col gap-0.5">
+                <span class="font-display text-base font-medium leading-normal"
+                  >ผู้ปกครองแนะนำ Brighton</span
+                >
+                <span class="text-[13px] text-muted group-hover:text-brand"
+                  >ดูรีวิวบน Facebook →</span
+                >
+              </span>
+            </router-link>
           </div>
         </div>
 
@@ -61,7 +73,6 @@
             <PhotoBox
               v-for="(src, i) in heroPhotos"
               :key="i"
-              :fallback-position="heroCrops[i]"
               :src="src"
               alt="บรรยากาศการเรียนที่ Brighton"
               class="rounded-sm"
@@ -183,8 +194,8 @@
       >
         <PhotoBox
           alt="นักเรียนและครูที่ Brighton"
+          :src="photos[5]"
           class="col-span-2 rounded-[18px] md:row-span-2 md:rounded-3xl"
-          src="/images/cover.jpg"
         />
         <PhotoBox
           :src="photos[4]"
@@ -205,8 +216,8 @@
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="relative overflow-hidden bg-brand py-16 text-white md:py-24">
+    <!-- Reviews -->
+    <section id="reviews" class="relative overflow-hidden bg-brand py-16 text-white md:py-24">
       <div
         aria-hidden="true"
         class="absolute -right-16 -top-16 grid grid-cols-[90px_90px] gap-3.5 opacity-[.14]"
@@ -214,40 +225,80 @@
         <div v-for="n in 4" :key="n" class="h-[90px] border-[10px] border-white"></div>
       </div>
       <div class="wrap relative">
-        <span class="text-xs font-semibold uppercase tracking-[.14em] opacity-85 md:text-[13px]">
-          เสียงจากผู้ปกครอง
-        </span>
-        <div class="mt-5 grid items-start gap-10 md:mt-7 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
-          <div class="flex flex-col gap-7">
-            <p
-              class="font-display text-xl font-semibold leading-[1.6] md:text-[36px] md:leading-[1.55]"
-              style="text-wrap: pretty"
-            >
-              “{{ testimonials.main.quote }}”
-            </p>
-            <div class="flex items-center gap-3.5">
-              <BrandMark class="h-12 w-12" color="#FBF6EF" />
-              <div class="flex flex-col">
-                <b class="text-base">{{ testimonials.main.who }}</b>
-                <span class="text-sm opacity-85">{{ testimonials.main.role }}</span>
-              </div>
-            </div>
-          </div>
+        <div class="grid items-end gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
           <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-3.5 rounded-[20px] bg-white p-6 text-ink md:p-[26px]">
-              <span class="font-display text-lg font-medium leading-[1.6]"
-                >“{{ testimonials.side.quote }}”</span
-              >
-              <span class="text-[13px] text-muted">{{ testimonials.side.who }}</span>
-            </div>
-            <div class="flex items-center gap-5 rounded-[20px] bg-sun p-6 text-ink md:p-[26px]">
-              <span class="font-condensed text-[56px] font-bold leading-none">{{ years }}</span>
-              <span class="text-[15px] font-medium leading-normal">
-                ปีที่ครอบครัวในพะเยา<br />ไว้วางใจ Brighton
-              </span>
-            </div>
+            <span
+              class="text-xs font-semibold uppercase tracking-[.14em] opacity-85 md:text-[13px]"
+            >
+              เสียงจากผู้ปกครอง
+            </span>
+            <h2
+              class="font-display text-[28px] font-bold leading-[1.4] md:text-[44px] md:leading-[1.35]"
+            >
+              ผู้ปกครองแนะนำ Brighton
+            </h2>
+            <p class="max-w-[520px] text-[15px] leading-[1.75] opacity-90 md:text-[17px]">
+              รีวิวจากผู้ปกครองบนเพจ Facebook ของโรงเรียน
+            </p>
+          </div>
+          <div class="flex items-center gap-5 rounded-[20px] bg-sun p-6 text-ink md:p-[26px]">
+            <span class="font-condensed text-[56px] font-bold leading-none">{{ years }}</span>
+            <span class="text-[15px] font-medium leading-normal">
+              ปีที่ครอบครัวในพะเยา<br />ไว้วางใจ Brighton
+            </span>
           </div>
         </div>
+
+        <!-- comments vary a lot in length, so cards flow down columns instead of rows -->
+        <div class="mt-10 gap-3 sm:columns-2 md:mt-12 md:gap-4 lg:columns-3">
+          <figure
+            v-for="r in reviews"
+            :key="r.name"
+            class="mb-3 break-inside-avoid rounded-[20px] bg-white p-5 text-ink md:mb-4 md:p-6"
+          >
+            <blockquote
+              :title="r.text"
+              class="line-clamp-3 whitespace-pre-line text-sm font-light italic leading-[1.75] text-[#7D736D] md:text-[15px]"
+            >
+              “{{ r.text }}”
+            </blockquote>
+            <figcaption class="mt-5 flex items-center gap-3">
+              <span
+                class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-blush text-[15px] font-semibold text-brand"
+                >{{ r.initial }}</span
+              >
+              <span class="flex min-w-0 flex-col">
+                <b class="truncate text-[15px]">{{ r.name }}</b>
+                <span aria-label="5 ดาว" class="mt-0.5 flex items-center gap-1.5" role="img">
+                  <IconFacebook class="h-3.5 w-3.5 flex-none text-[#1877F2]" />
+                  <span class="flex gap-0.5 text-sun">
+                    <svg
+                      v-for="n in 5"
+                      :key="n"
+                      aria-hidden="true"
+                      class="h-3.5 w-3.5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 1.5l2.6 5.3 5.9.9-4.25 4.1 1 5.85L10 14.9l-5.25 2.75 1-5.85L1.5 7.7l5.9-.9L10 1.5z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <a
+          :href="contact.reviews"
+          class="mt-8 inline-flex items-center gap-2 font-semibold underline-offset-4 hover:underline md:mt-10"
+          rel="noopener"
+          target="_blank"
+        >
+          อ่านรีวิวทั้งหมดบน Facebook →
+        </a>
       </div>
     </section>
 
@@ -268,22 +319,36 @@
           <router-link class="btn-primary h-[58px] text-[17px] shadow-none" to="/contact">
             นัดวัดระดับภาษาฟรี →
           </router-link>
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid gap-3 sm:grid-cols-[auto_1fr]">
             <a
               :href="contact.tel"
-              class="flex flex-col gap-0.5 rounded-2xl bg-cream px-[18px] py-3.5"
+              class="flex flex-col gap-2 rounded-2xl bg-cream px-4 py-3.5 sm:px-[18px]"
             >
-              <span class="text-xs text-muted">โทรหาเรา</span>
-              <b class="text-[15px]">{{ contact.phone }}</b>
+              <span class="flex items-center gap-2 whitespace-nowrap text-xs text-muted">
+                <span
+                  class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-white text-brand"
+                >
+                  <IconMobile class="h-[18px] w-[18px]" />
+                </span>
+                โทรหาเรา
+              </span>
+              <b class="whitespace-nowrap text-[15px]">{{ contact.phone }}</b>
             </a>
             <a
               :href="contact.facebook"
-              class="flex flex-col gap-0.5 rounded-2xl bg-cream px-[18px] py-3.5"
+              class="flex flex-col gap-2 rounded-2xl bg-cream px-4 py-3.5 sm:px-[18px]"
               rel="noopener"
               target="_blank"
             >
-              <span class="text-xs text-muted">เพจ Facebook</span>
-              <b class="text-[15px]">Brighton Language</b>
+              <span class="flex items-center gap-2 whitespace-nowrap text-xs text-muted">
+                <span
+                  class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-white text-[#1877F2]"
+                >
+                  <IconFacebook class="h-5 w-5" />
+                </span>
+                เพจ Facebook
+              </span>
+              <b class="whitespace-nowrap text-[15px]">{{ contact.facebookName }}</b>
             </a>
           </div>
         </div>
@@ -296,14 +361,16 @@
 import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
 import PhotoBox from '@/components/PhotoBox.vue'
-import BrandMark from '@/components/BrandMark.vue'
+import IconFacebook from '@/components/icons/IconFacebook.vue'
+import IconMobile from '@/components/icons/IconMobile.vue'
 import { useFeed } from '@/composables/useFeed'
-import { contact, testimonials, yearsLabel } from '@/data/site'
+import { contact, yearsLabel } from '@/data/site'
+import reviewList from '@/data/reviews.json'
 import { ageFont, courses, toneClass } from '@/data/courses'
 
 export default {
   name: 'HomeView',
-  components: { PhotoBox, BrandMark },
+  components: { PhotoBox, IconFacebook, IconMobile },
   setup() {
     useHead({
       title: 'เรียนภาษาอังกฤษ พะเยา - Brighton Language Academy',
@@ -316,25 +383,23 @@ export default {
       ]
     })
     const { photos } = useFeed()
-    // first window is always the local cover photo; the rest come from the Facebook feed
-    const heroPhotos = computed(() => [
-      '/images/cover.jpg',
-      photos.value[0],
-      photos.value[1],
-      photos.value[2]
-    ])
+    const heroPhotos = computed(() => [0, 1, 2, 3].map((i) => photos.value[i]))
     return { photos, heroPhotos }
   },
   data() {
     return {
       contact,
-      testimonials,
+      // only reviews with a written comment are shown
+      reviews: reviewList
+        .filter((r) => r.text?.trim())
+        .map((r) => ({
+          ...r,
+          initial: Array.from(r.name)[0]
+        })),
       years: yearsLabel,
       courses,
       toneClass,
       ageFont,
-      // distinct crops of the cover photo for any window whose feed photo is unavailable
-      heroCrops: ['55% 40%', '12% 45%', '88% 50%', '50% 85%'],
       pillars: [
         {
           title: 'หลักสูตรมาตรฐานสากล',

@@ -15,22 +15,36 @@
           กรอกข้อมูลสั้นๆ แล้วส่งให้เราทาง Messenger เจ้าหน้าที่จะติดต่อกลับเพื่อยืนยันวันและเวลา
           หรือติดต่อเราได้โดยตรงตามช่องทางด้านล่าง
         </p>
-        <div class="mt-2 grid grid-cols-2 gap-3">
+        <div class="mt-2 grid gap-3 sm:grid-cols-[auto_1fr] lg:grid-cols-1 xl:grid-cols-[auto_1fr]">
           <a
             :href="contact.tel"
-            class="flex flex-col gap-1 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
+            class="flex flex-col gap-2.5 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
           >
-            <span class="text-[13px] text-muted">โทรศัพท์</span>
-            <b class="text-base md:text-lg">{{ contact.phone }}</b>
+            <span class="flex items-center gap-2.5 text-[13px] text-muted">
+              <span
+                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-blush text-brand"
+              >
+                <IconMobile class="h-5 w-5" />
+              </span>
+              โทรศัพท์
+            </span>
+            <b class="whitespace-nowrap text-base md:text-lg">{{ contact.phone }}</b>
           </a>
           <a
             :href="contact.facebook"
-            class="flex flex-col gap-1 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
+            class="flex flex-col gap-2.5 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
             rel="noopener"
             target="_blank"
           >
-            <span class="text-[13px] text-muted">Facebook</span>
-            <b class="text-base md:text-lg">Brighton Language</b>
+            <span class="flex items-center gap-2.5 text-[13px] text-muted">
+              <span
+                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#E7F0FE] text-[#1877F2]"
+              >
+                <IconFacebook class="h-[22px] w-[22px]" />
+              </span>
+              Facebook
+            </span>
+            <b class="whitespace-nowrap text-base md:text-lg">{{ contact.facebookName }}</b>
           </a>
         </div>
         <div
@@ -198,10 +212,13 @@
 
 <script>
 import { useHead } from '@vueuse/head'
+import IconFacebook from '@/components/icons/IconFacebook.vue'
+import IconMobile from '@/components/icons/IconMobile.vue'
 import { chatPrefills, chatUrl, contact } from '@/data/site'
 
 export default {
   name: 'ContactView',
+  components: { IconFacebook, IconMobile },
   setup() {
     useHead({ title: 'นัดวัดระดับภาษาฟรี - Brighton Language Academy' })
   },
