@@ -160,13 +160,22 @@
             <span v-if="errors.note" class="text-xs text-brand">{{ errors.note }}</span>
           </label>
           <div v-if="booking.endpoint && booking.turnstileSiteKey" ref="turnstile"></div>
-          <p
+          <div
             v-if="submitError"
-            class="rounded-[14px] bg-blush px-4 py-3 text-sm text-brand"
+            class="flex flex-col items-start gap-2.5 rounded-[14px] bg-blush px-4 py-3 text-sm text-brand"
             role="alert"
           >
             {{ submitError }}
-          </p>
+            <!-- a failed send must not lose the booking: let the parent send it by Messenger -->
+            <button
+              v-if="sendFailed"
+              class="rounded-full bg-brand px-4 py-2 font-semibold text-white"
+              type="button"
+              @click="handOffToMessenger"
+            >
+              ส่งทาง Messenger แทน →
+            </button>
+          </div>
           <button
             :disabled="sending"
             class="btn-primary h-14 text-base disabled:cursor-wait disabled:opacity-60 md:h-[58px] md:text-[17px]"
@@ -290,6 +299,7 @@ export default {
       startedAt: 0,
       errors: {},
       submitError: '',
+      sendFailed: false,
       sending: false,
       submitted: false,
       sentVia: '',
@@ -339,6 +349,7 @@ export default {
     async submit() {
       if (this.sending) return
       this.submitError = ''
+      this.sendFailed = false
       if (!this.validate()) return
 
       // Without an endpoint the parent sends the message themselves, so there is nothing to guard.
@@ -366,7 +377,8 @@ export default {
         markSent()
         this.finish('endpoint')
       } catch {
-        this.submitError = `ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง หรือโทร ${contact.phone}`
+        this.submitError = `ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง ส่งทาง Messenger หรือโทร ${contact.phone}`
+        this.sendFailed = true
       } finally {
         this.sending = false
         this.resetTurnstile()
