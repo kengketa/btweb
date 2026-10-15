@@ -23,6 +23,9 @@
         <div class="flex flex-col gap-2.5 text-sm">
           <b class="text-[13px] tracking-[.04em] text-brand">Brighton</b>
           <router-link class="hover:text-brand" to="/about">เกี่ยวกับเรา</router-link>
+          <router-link v-for="p in programs" :key="p.slug" :to="p.path" class="hover:text-brand">
+            {{ p.label }}
+          </router-link>
           <router-link class="hover:text-brand" to="/news">ข่าวสารและกิจกรรม</router-link>
           <router-link class="hover:text-brand" to="/contact">นัดวัดระดับภาษา</router-link>
           <router-link class="hover:text-brand" to="/privacy-policy"
@@ -53,12 +56,13 @@
 import BrandLogo from './BrandLogo.vue'
 import { contact } from '@/data/site'
 import { courses } from '@/data/courses'
+import { programs } from '@/data/programs'
 
 export default {
   name: 'SiteFooter',
   components: { BrandLogo },
   data() {
-    return { contact, courses, year: new Date().getFullYear() }
+    return { contact, courses, programs, year: new Date().getFullYear() }
   }
 }
 </script>

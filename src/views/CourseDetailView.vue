@@ -83,31 +83,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col">
-            <h2 class="mb-4 font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
-              คำถามที่พบบ่อย
-            </h2>
-            <div v-for="([q, a], i) in faqs" :key="q" class="border-t border-line2">
-              <button
-                :aria-expanded="openFaq === i"
-                class="flex w-full items-center justify-between gap-4 py-5 text-left text-base font-semibold md:py-[22px] md:text-lg"
-                @click="openFaq = openFaq === i ? -1 : i"
-              >
-                {{ q }}
-                <span
-                  class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-cream text-lg text-brand"
-                >
-                  {{ openFaq === i ? '–' : '+' }}
-                </span>
-              </button>
-              <p
-                v-if="openFaq === i"
-                class="mb-[22px] max-w-[620px] text-base leading-[1.75] text-muted"
-              >
-                {{ a }}
-              </p>
-            </div>
-          </div>
+          <FaqList :key="course.slug" :faqs="faqs" />
         </div>
 
         <aside
@@ -164,6 +140,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
+import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
 import { useFeed } from '@/composables/useFeed'
 import { contact } from '@/data/site'
@@ -172,13 +149,12 @@ import { courseSchema, jsonLd } from '@/data/schema'
 
 export default {
   name: 'CourseDetailView',
-  components: { PhotoBox },
+  components: { FaqList, PhotoBox },
   beforeRouteEnter(to, from, next) {
     next(courses.some((c) => c.slug === to.params.slug) ? undefined : '/courses')
   },
   beforeRouteUpdate(to) {
     if (!courses.some((c) => c.slug === to.params.slug)) return '/courses'
-    this.openFaq = 0
   },
   setup() {
     const route = useRoute()
@@ -195,7 +171,6 @@ export default {
     return {
       contact,
       faqs,
-      openFaq: 0,
       steps: [
         ['Warm-up', 'เพลงและเกมเปิดคาบ'],
         ['Learn', 'เนื้อหาใหม่ผ่านภาพและเรื่องราว'],

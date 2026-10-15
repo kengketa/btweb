@@ -174,6 +174,30 @@
       </div>
     </section>
 
+    <!-- Programs: camp, teachers, MEP/EP, EF -->
+    <section class="wrap pb-16 md:pb-[104px]">
+      <div class="mb-6 flex flex-col gap-3 md:mb-10">
+        <span class="eyebrow">More at Brighton</span>
+        <h2 class="font-display text-2xl font-bold leading-[1.35] md:text-[44px]">
+          มากกว่าคลาสภาษาอังกฤษ
+        </h2>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
+        <router-link
+          v-for="p in programs"
+          :key="p.slug"
+          :to="p.path"
+          class="group flex flex-col gap-3 rounded-[20px] border border-line bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,.25)] md:rounded-3xl md:p-7"
+        >
+          <b class="font-display text-xl font-semibold group-hover:text-brand md:text-[22px]">{{
+            p.label
+          }}</b>
+          <span class="flex-1 text-[15px] leading-[1.7] text-muted">{{ p.card }}</span>
+          <span class="text-sm font-semibold text-brand">ดูรายละเอียด →</span>
+        </router-link>
+      </div>
+    </section>
+
     <!-- Gallery -->
     <section class="wrap pb-16 md:pb-[104px]">
       <div class="mb-6 flex items-end justify-between gap-6 md:mb-8">
@@ -367,18 +391,19 @@ import { useFeed } from '@/composables/useFeed'
 import { contact, yearsLabel } from '@/data/site'
 import reviewList from '@/data/reviews.json'
 import { ageFont, courses, toneClass } from '@/data/courses'
+import { programs } from '@/data/programs'
 
 export default {
   name: 'HomeView',
   components: { PhotoBox, IconFacebook, IconMobile },
   setup() {
     useHead({
-      title: 'เรียนภาษาอังกฤษ พะเยา - Brighton Language Academy',
+      title: 'เรียนภาษาอังกฤษ พะเยา สำหรับเด็ก กับครูเจ้าของภาษา - Brighton Language Academy',
       meta: [
         {
           name: 'description',
           content:
-            'โรงเรียนสอนภาษาอังกฤษมาตรฐานสากลในจังหวัดพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics'
+            'โรงเรียนสอนภาษาอังกฤษสำหรับเด็กในพะเยา เรียนพิเศษกับครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics ค่ายภาษาอังกฤษช่วงปิดเทอม และติวเสริม MEP / EP วัดระดับฟรี'
         }
       ]
     })
@@ -398,6 +423,7 @@ export default {
         })),
       years: yearsLabel,
       courses,
+      programs,
       toneClass,
       ageFont,
       pillars: [

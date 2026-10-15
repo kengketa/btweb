@@ -80,3 +80,41 @@ export function jsonLd(data) {
     innerHTML: JSON.stringify(data).replace(/</g, '\\u003c')
   }
 }
+
+// Program pages (/teachers, /camp, /ef, /mep): their FAQ, plus one Event per camp week
+export function programSchema(p) {
+  const graph = [
+    {
+      '@type': 'FAQPage',
+      '@id': `${SITE_URL}${p.path}#faq`,
+      mainEntity: p.faqs.map(([q, a]) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a }
+      }))
+    }
+  ]
+  for (const week of p.camp?.weeks ?? []) {
+    graph.push({
+      '@type': 'Event',
+      name: `Kindy Fun Camp ${week.name}`,
+      description: week.text,
+      startDate: `${week.start}T${p.camp.opens}:00+07:00`,
+      endDate: `${week.end}T${p.camp.closes}:00+07:00`,
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: { '@type': 'Place', name: school.name, address: school.address },
+      organizer: { '@id': SCHOOL_ID },
+      image: school.image,
+      url: `${SITE_URL}${p.path}`,
+      offers: {
+        '@type': 'Offer',
+        price: p.camp.price,
+        priceCurrency: 'THB',
+        availability: 'https://schema.org/InStock',
+        url: `${SITE_URL}/contact`
+      }
+    })
+  }
+  return { '@context': 'https://schema.org', '@graph': graph }
+}

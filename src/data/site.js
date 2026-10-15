@@ -38,3 +38,10 @@ export const booking = {
 }
 
 export const yearsLabel = '10+'
+
+// Brighton's teaching team across Phayao (the /teachers page, home page and llms.txt)
+export const team = {
+  foreignTeachers: 50, // approximate; shown as "~50"
+  schools: 12,
+  years: yearsLabel
+}
