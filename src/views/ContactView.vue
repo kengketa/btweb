@@ -116,6 +116,7 @@
               <button
                 v-for="a in ages"
                 :key="a"
+                :aria-pressed="form.age === a"
                 :class="
                   form.age === a
                     ? 'border-brand bg-brand font-semibold text-white'
@@ -130,19 +131,22 @@
             </div>
           </div>
           <div class="flex flex-col gap-2.5">
-            <span class="text-sm font-medium">วันที่สะดวก</span>
-            <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <span class="text-sm font-medium">
+              วันที่สะดวก <span class="font-light text-muted">(เลือกได้หลายวัน)</span>
+            </span>
+            <div class="flex flex-wrap gap-2">
               <button
                 v-for="d in days"
                 :key="d"
+                :aria-pressed="form.days.includes(d)"
                 :class="
-                  form.day === d
+                  form.days.includes(d)
                     ? 'border-ink bg-ink font-semibold text-white'
                     : 'border-line2 bg-white hover:border-ink'
                 "
-                class="h-11 rounded-[14px] border-[1.5px] px-5 text-[15px] transition-colors sm:rounded-full"
+                class="h-11 rounded-full border-[1.5px] px-4 text-[15px] transition-colors md:px-5"
                 type="button"
-                @click="form.day = d"
+                @click="toggleDay(d)"
               >
                 {{ d }}
               </button>
@@ -292,9 +296,9 @@ export default {
       contact,
       booking,
       LIMITS,
-      ages: ['3–6 ปี', '7–9 ปี', '10–12 ปี', '13 ปีขึ้นไป'],
-      days: ['วันเสาร์', 'วันอาทิตย์', 'วันธรรมดา (หลังเลิกเรียน)'],
-      form: { name: '', phone: '', age: '', day: '', note: '' },
+      ages: ['3–4 ปี', '5–8 ปี', '9–12 ปี', '13+ ปี'],
+      days: ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์'],
+      form: { name: '', phone: '', age: '', days: [], note: '' },
       trap: '',
       startedAt: 0,
       errors: {},
@@ -318,7 +322,7 @@ export default {
         `ชื่อผู้ปกครอง: ${f.name}`,
         `เบอร์โทร: ${f.phone}`,
         f.age && `อายุของลูก: ${f.age}`,
-        f.day && `วันที่สะดวก: ${f.day}`,
+        f.days.length && `วันที่สะดวก: ${f.days.join(', ')}`,
         f.note && `ข้อความเพิ่มเติม: ${f.note}`
       ]
         .filter(Boolean)
@@ -395,7 +399,7 @@ export default {
             name: this.form.name,
             phone: normalizePhone(this.form.phone),
             age: this.form.age,
-            day: this.form.day,
+            days: this.form.days,
             note: this.form.note,
             // for the server to repeat the bot checks
             website: this.trap,
@@ -415,6 +419,13 @@ export default {
       if (!chatPrefills) this.copy()
       window.open(this.messengerLink, '_blank', 'noopener')
       this.finish('messenger')
+    },
+    // keeps the chosen days in week order, whatever order they were tapped in
+    toggleDay(day) {
+      const chosen = this.form.days.includes(day)
+        ? this.form.days.filter((d) => d !== day)
+        : [...this.form.days, day]
+      this.form.days = this.days.filter((d) => chosen.includes(d))
     },
     finish(via) {
       this.sentVia = via
