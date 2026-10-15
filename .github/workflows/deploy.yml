@@ -1,0 +1,44 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never overlap deployments — queue, don't cancel.
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # The droplet builds on 1 vCPU; a deploy that also runs npm ci takes minutes.
+    timeout-minutes: 20
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      # The key is installed on the droplet with a forced command that runs
+      # scripts/deploy.sh, so the command below is what runs whether or not
+      # the key is restricted. Keepalives stop the channel from looking idle
+      # during the silent minutes of npm ci.
+      - name: Deploy
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+              -p "${SSH_PORT:-22}" \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=10 \
+              "$SSH_USER@$SSH_HOST" \
+              "bash /var/www/html/btweb/scripts/deploy.sh"
