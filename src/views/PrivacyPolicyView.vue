@@ -70,8 +70,21 @@
 </template>
 
 <script>
+import { useHead } from '@vueuse/head'
+
 export default {
-  name: 'PrivacyPolicyView'
+  name: 'PrivacyPolicyView',
+  setup() {
+    useHead({
+      title: 'Privacy Policy - Brighton Language Academy',
+      meta: [
+        {
+          name: 'description',
+          content: 'Privacy Policy for Brighton Language Academy, Phayao, Thailand'
+        }
+      ]
+    })
+  }
 }
 </script>
 

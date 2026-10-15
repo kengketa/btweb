@@ -113,7 +113,16 @@ export default {
   name: 'NewsView',
   components: { PhotoBox },
   setup() {
-    useHead({ title: 'ข่าวสารและกิจกรรม - Brighton Language Academy' })
+    useHead({
+      title: 'ข่าวสารและกิจกรรม - Brighton Language Academy',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'ข่าวสาร ประกาศ และกิจกรรมของ Brighton Language Academy โรงเรียนสอนภาษาอังกฤษสำหรับเด็กในพะเยา'
+        }
+      ]
+    })
     const { posts, loaded } = useFeed()
     return { posts, loaded }
   },

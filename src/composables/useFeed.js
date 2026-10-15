@@ -47,6 +47,9 @@ function normalize(post) {
 }
 
 export function loadFeed() {
+  // pre-rendered pages ship without the feed, matching the browser's first render
+  // before its fetch returns
+  if (import.meta.env.SSR) return Promise.resolve()
   if (!request) {
     request = fetch('/api/facebook-feed.json')
       .then((r) => (r.ok ? r.json() : { posts: [] }))

@@ -1,58 +1,80 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createMemoryHistory, createRouter, createWebHistory, START_LOCATION } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import CoursesView from '../views/CoursesView.vue'
-import ContactView from '../views/ContactView.vue'
-import CourseDetailView from '../views/CourseDetailView.vue'
-import NewsView from '../views/NewsView.vue'
-import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: AboutView
-    },
-    {
-      path: '/courses',
-      name: 'courses',
-      component: CoursesView
-    },
-    {
-      path: '/courses/:slug',
-      name: 'course',
-      component: CourseDetailView
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: ContactView
-    },
-    {
-      path: '/news',
-      name: 'news',
-      component: NewsView
-    },
-    {
-      path: '/privacy-policy',
-      name: 'privacy-policy',
-      component: PrivacyPolicyView
-    },
-    { path: '/:pathMatch(.*)*', redirect: '/' }
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) return savedPosition
-    // leave room for the sticky nav when jumping to a section
-    if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }
-    return { top: 0 }
-  }
-})
+// The home page ships in the main bundle; every other page loads on first visit.
+const AboutView = () => import('../views/AboutView.vue')
+const CoursesView = () => import('../views/CoursesView.vue')
+const ContactView = () => import('../views/ContactView.vue')
+const CourseDetailView = () => import('../views/CourseDetailView.vue')
+const NewsView = () => import('../views/NewsView.vue')
+const PrivacyPolicyView = () => import('../views/PrivacyPolicyView.vue')
 
-export default router
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: AboutView
+  },
+  {
+    path: '/courses',
+    name: 'courses',
+    component: CoursesView
+  },
+  {
+    path: '/courses/:slug',
+    name: 'course',
+    component: CourseDetailView
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView
+  },
+  {
+    path: '/news',
+    name: 'news',
+    component: NewsView
+  },
+  {
+    path: '/privacy-policy',
+    name: 'privacy-policy',
+    component: PrivacyPolicyView
+  },
+  { path: '/:pathMatch(.*)*', redirect: '/' }
+]
+
+function scrollBehavior(to, from, savedPosition) {
+  if (savedPosition) return savedPosition
+  // leave room for the sticky nav when jumping to a section
+  if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }
+  // first page load: already at the top, and scrolling there would force a
+  // layout while the page is still rendering
+  if (from === START_LOCATION) return false
+  return { top: 0 }
+}
+
+// One router per app: the browser gets one, and the build makes one per pre-rendered page.
+export function createAppRouter() {
+  const router = createRouter({
+    history: import.meta.env.SSR
+      ? createMemoryHistory(import.meta.env.BASE_URL)
+      : createWebHistory(import.meta.env.BASE_URL),
+    routes,
+    scrollBehavior
+  })
+
+  // A deploy replaces the page chunks, so a tab opened before it can't fetch the
+  // next page's code. Load that page fresh instead of leaving the click dead.
+  router.onError((error, to) => {
+    if (/dynamically imported module|Importing a module script failed/i.test(error?.message)) {
+      window.location.assign(to.fullPath)
+    }
+  })
+
+  return router
+}
