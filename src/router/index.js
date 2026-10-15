@@ -3,7 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import CoursesView from '../views/CoursesView.vue'
 import ContactView from '../views/ContactView.vue'
-import FacebookView from '../views/FacebookView.vue'
+import CourseDetailView from '../views/CourseDetailView.vue'
+import NewsView from '../views/NewsView.vue'
 import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 
 const router = createRouter({
@@ -25,6 +26,11 @@ const router = createRouter({
       component: CoursesView
     },
     {
+      path: '/courses/:slug',
+      name: 'course',
+      component: CourseDetailView
+    },
+    {
       path: '/contact',
       name: 'contact',
       component: ContactView
@@ -32,14 +38,18 @@ const router = createRouter({
     {
       path: '/news',
       name: 'news',
-      component: FacebookView
+      component: NewsView
     },
     {
       path: '/privacy-policy',
       name: 'privacy-policy',
       component: PrivacyPolicyView
-    }
-  ]
+    },
+    { path: '/:pathMatch(.*)*', redirect: '/' }
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition || { top: 0 }
+  }
 })
 
 export default router

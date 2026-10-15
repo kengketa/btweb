@@ -1,216 +1,126 @@
 <template>
   <main>
-    <!-- Header -->
-    <div class="bg-slate-50 py-16 sm:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-          หลักสูตรคุณภาพเพื่อการเติบโตที่สมวัย
+    <section class="wrap flex flex-col gap-3 pb-6 pt-12 md:gap-5 md:pb-12 md:pt-[88px]">
+      <span class="eyebrow">Our Courses</span>
+      <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-end lg:gap-10">
+        <h1
+          class="font-display text-[36px] font-bold leading-[1.35] md:text-[56px] xl:text-[64px] xl:leading-[1.3]"
+        >
+          หลักสูตรของเรา
         </h1>
-        <p class="mt-4 text-xl text-slate-600">Young Learners Program</p>
-      </div>
-    </div>
-
-    <!-- Intro -->
-    <section class="py-16 bg-white">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-lg text-slate-600 leading-relaxed">
-          เราออกแบบเส้นทางการเรียนรู้ให้เหมาะกับเด็กแต่ละช่วงวัย โดยเน้นความเข้าใจ ไม่ใช่การท่องจำ
-          เพื่อผลลัพธ์ที่ยั่งยืน
+        <p class="max-w-[440px] text-base leading-[1.75] text-muted md:text-[17px]">
+          ออกแบบตามช่วงวัยและพัฒนาการ เน้นความเข้าใจ ไม่ใช่การท่องจำ ทุกคลาสเริ่มจากการวัดระดับฟรี
+          เพื่อให้ลูกได้เรียนในกลุ่มที่เหมาะสม
         </p>
       </div>
     </section>
 
-    <!-- Courses Section -->
-    <section class="py-10 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="space-y-16">
-          <div class="grid md:grid-cols-2 gap-10 items-center">
-            <div class="order-2 md:order-1">
-              <h2 class="text-3xl font-bold text-slate-900 mb-2">
-                Course: English Level (Oxford Curriculum)
-              </h2>
-              <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>หลักสูตรแท้จาก Oxford University Press มาตรฐานระดับโลก</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>พัฒนาครบทุกทักษะ ฟัง–พูด–อ่าน–เขียน อย่างเป็นระบบ</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>เนื้อหาเชื่อมโยงกับกรอบ CEFR เพื่อการพัฒนาที่เห็นผลจริง</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>เรียนกับครูผู้เชี่ยวชาญ ช่วยปรับพื้นฐานและต่อยอดอย่างถูกวิธี</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>เด็กเข้าใจง่าย ใช้ได้จริงในชีวิตประจำวัน</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>ปูพื้นฐานแน่น เพื่อเตรียมตัวสู่ระดับที่สูงขึ้นและสอบได้อย่างมั่นใจ</span>
-                </li>
-              </ul>
-            </div>
-            <div class="order-1 md:order-2">
-              <img
-                alt="English Level Standard Course"
-                class="rounded-2xl shadow-lg"
-                src="https://placehold.co/600x400/FFE4E6/FF0000?text=English+Level"
-              />
-            </div>
-          </div>
-          <div class="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <img
-                alt="Brighton Phonics"
-                class="rounded-2xl shadow-lg"
-                src="https://placehold.co/600x400/E6F4FF/0000FF?text=Brighton+Phonics"
-              />
-            </div>
-            <div>
-              <h2 class="text-3xl font-bold text-slate-900 mb-2">Course: Brighton Phonics</h2>
-              <p class="text-red-600 font-semibold mb-4">
-                เหมาะสำหรับ: น้องๆ อายุ 5-12 ปี ที่ต้องการเน้นทักษะการอ่านและการออกเสียง
-              </p>
-              <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>ใช้หลักสูตรต้นฉบับจาก Jolly Phonics – ได้ผลจริงทั่วโลก</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>ปูพื้นฐาน “เสียงภาษาอังกฤษ” อย่างถูกต้องตั้งแต่แรก</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>เด็กอ่านคำศัพท์ได้เร็วขึ้น สะกดถูกต้อง คล่องเป็นธรรมชาติ</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>ใช้เทคนิคที่ช่วยให้ทำข้อสอบ Reading Test ได้ดีขึ้น</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>วางรากฐานสำคัญสำหรับการเรียนภาษาอังกฤษระดับสูงในอนาคต</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="grid md:grid-cols-2 gap-10 items-center">
-            <div class="order-2 md:order-1">
-              <h2 class="text-3xl font-bold text-slate-900 mb-2">
-                Course: 4 Skills English (Oxford)
-              </h2>
-              <p class="text-red-600 font-semibold mb-4">
-                เหมาะสำหรับ: นักเรียนระดับมัธยมที่ต้องการพัฒนาภาษาอังกฤษครบ 4
-                ทักษะอย่างเป็นระบบ
-              </p>
-              <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    Oxford Curriculum: ใช้หลักสูตรจาก Oxford ที่ออกแบบสำหรับวัยมัธยม
-                    เนื้อหาทันสมัยและสอดคล้องกับมาตรฐานสากล
-                  </span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    4 Skills Development: พัฒนาครบทุกทักษะ ฟัง–พูด–อ่าน–เขียน
-                    เพื่อการใช้งานจริงและเตรียมพร้อมสู่ระดับสูงขึ้น
-                  </span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    Academic Reading & Writing: วางพื้นฐานทักษะอ่าน–เขียนเชิงวิชาการ
-                    รองรับงานและการสอบของระดับมัธยม
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div class="order-1 md:order-2">
-              <img
-                alt="4 Skills English"
-                class="rounded-2xl shadow-lg"
-                src="https://placehold.co/600x400/FFFBE6/FFC700?text=4+Skills"
-              />
-            </div>
-          </div>
-          <div class="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <img
-                alt="Private Course"
-                class="rounded-2xl shadow-lg"
-                src="https://placehold.co/600x400/F0FFF4/4CAF50?text=Private"
-              />
-            </div>
-            <div>
-              <h2 class="text-3xl font-bold text-slate-900 mb-2">Course: Private Course</h2>
-              <p class="text-slate-600 mb-4">
-                คอร์สเรียนแบบปรับตามความต้องการของผู้เรียน เลือกหัวข้อได้เองทั้งแบบตัวต่อตัวหรือกลุ่มเล็ก
-                เหมาะสำหรับผู้ที่ต้องการพัฒนาเฉพาะด้านอย่างรวดเร็ว
-              </p>
-              <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    Flexible Learning: เลือกหัวข้อเรียนได้ตามความต้องการ เช่น Grammar, การสื่อสาร,
-                    การเขียน, หรือทักษะเฉพาะทาง
-                  </span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    Exam Preparation: รองรับการเตรียมสอบทุกประเภท เช่น TOEIC, IELTS, TOEFL, CEFR,
-                    สอบเข้ามหาวิทยาลัย
-                  </span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    Academic & Career Support: เรียนเพื่อเตรียมตัวศึกษาต่อต่างประเทศ, สัมภาษณ์งาน,
-                    เขียน Essay หรือพัฒนาทักษะที่ใช้จริงในชีวิตและการทำงาน
-                  </span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-500 mr-3">✔</span>
-                  <span>
-                    1-on-1 หรือ Small Group: เรียนเดี่ยวแบบเข้มข้น
-                    หรือเรียนเป็นกลุ่มกับเพื่อนที่สนใจเรื่องเดียวกันได้
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
+    <div
+      class="mx-auto flex max-w-[1280px] gap-2 overflow-x-auto px-5 pb-5 md:flex-wrap md:gap-2.5 md:px-10 lg:px-14"
+    >
+      <button
+        v-for="[key, label] in groups"
+        :key="key"
+        :class="{ 'chip-on': filter === key }"
+        class="chip"
+        @click="filter = key"
+      >
+        {{ label }}
+      </button>
+    </div>
+
+    <section class="wrap flex flex-col gap-3.5 pb-12 md:gap-0 md:pb-[72px]">
+      <article
+        v-for="c in filtered"
+        :key="c.slug"
+        class="overflow-hidden rounded-[22px] border border-line bg-white md:grid md:grid-cols-[200px_160px_1fr] md:items-center md:gap-8 md:rounded-none md:border-0 md:border-t md:border-line2 md:bg-transparent md:py-8 lg:grid-cols-[240px_200px_1fr_auto] lg:gap-10"
+      >
+        <PhotoBox
+          :alt="c.name"
+          :src="photoFor(c.keyword, courses.indexOf(c) * 3 + 2)"
+          class="h-[150px] md:h-[160px] md:rounded-[20px]"
+        />
+        <div class="hidden flex-col gap-1.5 md:flex">
+          <span class="text-[13px] font-semibold text-muted">{{ c.tag }}</span>
+          <span :class="ageFont(c.age)" class="text-[44px] font-bold leading-[1.1] text-brand">
+            {{ c.age }}
+          </span>
+          <span class="text-sm text-muted">{{ c.ageUnit }}</span>
         </div>
-      </div>
+        <div class="flex flex-col gap-1.5 p-[18px] md:gap-2.5 md:p-0">
+          <div class="flex items-baseline justify-between gap-3">
+            <b class="text-xl md:text-[26px]">{{ c.name }}</b>
+            <span :class="ageFont(c.age)" class="text-[22px] font-bold text-brand md:hidden">{{
+              c.age
+            }}</span>
+          </div>
+          <span class="text-sm font-medium text-brand md:text-[15px]">{{ c.sub }}</span>
+          <span
+            class="max-w-[460px] text-sm leading-[1.65] text-muted md:text-[15px] md:leading-[1.7]"
+          >
+            {{ c.desc }}
+          </span>
+          <router-link :to="`/courses/${c.slug}`" class="mt-2 text-sm font-semibold lg:hidden">
+            ดูรายละเอียด →
+          </router-link>
+        </div>
+        <router-link
+          :to="`/courses/${c.slug}`"
+          class="btn-outline hidden h-12 px-6 text-[15px] lg:inline-flex"
+        >
+          ดูรายละเอียด →
+        </router-link>
+      </article>
     </section>
 
-    <!-- Other Services -->
-    <section class="py-20 bg-slate-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold text-slate-900 mb-4">บริการอื่นๆ ของเรา</h2>
-          <div class="flex flex-col md:flex-row justify-center gap-8 mt-8 text-lg">
-            <p class="bg-white p-6 rounded-xl shadow">คอร์สเตรียมสอบ (Exam Prep)</p>
-            <p class="bg-white p-6 rounded-xl shadow">
-              บริการจัดอบรมภาษาอังกฤษสำหรับองค์กร (Corporate Training)
-            </p>
-          </div>
+    <section class="wrap pb-16 md:pb-[104px]">
+      <div
+        class="flex flex-col justify-between gap-4 rounded-[22px] bg-sun p-6 md:flex-row md:items-center md:gap-8 md:rounded-[28px] md:px-12 md:py-11"
+      >
+        <div class="flex flex-col gap-2">
+          <b class="font-display text-xl font-bold md:text-[30px]"
+            >ไม่แน่ใจว่าลูกควรเริ่มที่ระดับไหน?</b
+          >
+          <span class="text-[15px] md:text-base"
+            >ให้ครูช่วยประเมิน — วัดระดับภาษาฟรี ไม่มีค่าใช้จ่าย</span
+          >
         </div>
+        <router-link
+          class="inline-flex h-12 items-center justify-center whitespace-nowrap rounded-full bg-ink px-[30px] text-[15px] font-semibold text-white md:h-14 md:text-base"
+          to="/contact"
+        >
+          นัดวัดระดับฟรี →
+        </router-link>
       </div>
+      <p class="mt-6 text-sm text-muted">
+        บริการอื่นๆ: คอร์สเตรียมสอบ (Exam Prep) · อบรมภาษาอังกฤษสำหรับองค์กร (Corporate Training) —
+        <router-link class="link-arrow" to="/contact">สอบถามรายละเอียด</router-link>
+      </p>
     </section>
   </main>
 </template>
 
 <script>
+import { useHead } from '@vueuse/head'
+import PhotoBox from '@/components/PhotoBox.vue'
+import { useFeed } from '@/composables/useFeed'
+import { ageFont, courseGroups, courses } from '@/data/courses'
+
 export default {
-  name: 'CoursesView'
+  name: 'CoursesView',
+  components: { PhotoBox },
+  setup() {
+    useHead({ title: 'หลักสูตรของเรา - Brighton Language Academy' })
+    const { photoFor } = useFeed()
+    return { photoFor }
+  },
+  data() {
+    return { filter: 'all', groups: courseGroups, courses, ageFont }
+  },
+  computed: {
+    filtered() {
+      return courses.filter((c) => this.filter === 'all' || c.group === this.filter)
+    }
+  }
 }
 </script>

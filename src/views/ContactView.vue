@@ -1,110 +1,195 @@
 <template>
   <main>
-    <!-- Header -->
-    <div class="bg-slate-50 py-16 sm:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-          มาเป็นครอบครัวเดียวกันที่ <span class="text-red-600">Brighton</span>
+    <section
+      class="wrap grid items-start gap-10 pb-16 pt-10 md:pb-[104px] md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16"
+    >
+      <div class="flex flex-col gap-5 md:gap-6">
+        <span class="eyebrow">Contact &amp; Booking</span>
+        <h1
+          class="font-display text-[32px] font-bold leading-[1.4] md:text-5xl xl:text-[56px] xl:leading-[1.35]"
+        >
+          นัดวัดระดับภาษา<br class="hidden md:block" />
+          <span class="text-brand">ฟรี</span>สำหรับลูกของคุณ
         </h1>
-        <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
-          หากคุณพ่อคุณแม่มีข้อสงสัย หรือต้องการปรึกษาเรื่องการวางแผนเรียนภาษาให้ลูกๆ
-          ทางโรงเรียนยินดีให้คำแนะนำด้วยความเต็มใจครับ
+        <p class="max-w-[480px] text-[15px] leading-[1.75] text-muted md:text-[17px]">
+          กรอกข้อมูลสั้นๆ แล้วส่งให้เราทาง Messenger เจ้าหน้าที่จะติดต่อกลับเพื่อยืนยันวันและเวลา
+          หรือติดต่อเราได้โดยตรงตามช่องทางด้านล่าง
         </p>
-      </div>
-    </div>
-
-    <!-- Contact Info Section -->
-    <section class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <!-- Left Column: Details -->
-          <div class="space-y-8">
-            <div>
-              <h2 class="text-2xl font-bold text-slate-900 mb-2">📍 ที่ตั้งโรงเรียน</h2>
-              <p class="text-slate-600">
-                Brighton Language Academy<br />
-                56/6 ถ.ประตูชัย ต.เวียง อ.เมือง<br />
-                จ.พะเยา 56000
-              </p>
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold text-slate-900 mb-2">☎️ ช่องทางการติดต่อ</h2>
-              <ul class="space-y-2 text-slate-600">
-                <li>
-                  <strong>โทรศัพท์:</strong>
-                  <a class="text-red-600 hover:underline" href="tel:0821849070">082-184-9070</a>
-                </li>
-                <li>
-                  <strong>Facebook:</strong>
-                  <a
-                    class="text-red-600 hover:underline"
-                    href="https://facebook.com/brightonlanguage"
-                    rel="noopener noreferrer"
-                  >
-                    Brighton Language Academy
-                  </a>
-                </li>
-                <!--                <li>-->
-                <!--                  <strong>Line:</strong>-->
-                <!--                  <a-->
-                <!--                    href="https://line.me/ti/p/~@brightonphayao"-->
-                <!--                    target="_blank"-->
-                <!--                    rel="noopener noreferrer"-->
-                <!--                    class="text-red-600 hover:underline"-->
-                <!--                    >@brightonphayao</a-->
-                <!--                  >-->
-                <!--                </li>-->
-              </ul>
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold text-slate-900 mb-2">🕒 เวลาทำการ</h2>
-              <p class="text-slate-600">อังคาร - อาทิตย์<br />09.00 - 18.00 น.</p>
-            </div>
-          </div>
-
-          <!-- Right Column: Map -->
-          <div>
-            <div
-              class="aspect-w-16 aspect-h-9 bg-slate-200 rounded-2xl flex items-center justify-center"
-            >
-              <iframe
-                allowfullscreen=""
-                height="450"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.5626798299395!2d99.90315867559715!3d19.170610948994746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30d82ccdbfef0777%3A0xa255be9ca9f77c5e!2z4LmC4Lij4LiH4LmA4Lij4Li14Lii4LiZ4Liq4Lit4LiZ4Lig4Liy4Lip4LiyIOC5hOC4muC4o-C4l-C5jOC4leC4seC4mSAoIEJyaWdodG9uIExhbmd1YWdlIEFjYWRlbXkgKQ!5e0!3m2!1sen!2sth!4v1764565999332!5m2!1sen!2sth"
-                style="border: 0"
-                width="600"
-              ></iframe>
-            </div>
-          </div>
+        <div class="mt-2 grid grid-cols-2 gap-3">
+          <a
+            :href="contact.tel"
+            class="flex flex-col gap-1 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
+          >
+            <span class="text-[13px] text-muted">โทรศัพท์</span>
+            <b class="text-base md:text-lg">{{ contact.phone }}</b>
+          </a>
+          <a
+            :href="contact.facebook"
+            class="flex flex-col gap-1 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
+            rel="noopener"
+            target="_blank"
+          >
+            <span class="text-[13px] text-muted">Facebook</span>
+            <b class="text-base md:text-lg">Brighton Language</b>
+          </a>
+        </div>
+        <div
+          class="flex flex-col gap-1 rounded-[20px] border border-line bg-white px-4 py-4 md:px-[22px] md:py-5"
+        >
+          <span class="text-[13px] text-muted">ที่ตั้งและเวลาทำการ</span>
+          <b class="text-base font-semibold leading-relaxed">{{ contact.address.join(' ') }}</b>
+          <span class="text-sm text-muted">{{ contact.hours }}</span>
+        </div>
+        <div class="ph h-[260px] overflow-hidden rounded-3xl">
+          <iframe
+            :src="contact.mapEmbed"
+            allowfullscreen
+            class="h-full w-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="แผนที่ Brighton Language Academy"
+          ></iframe>
         </div>
       </div>
-    </section>
 
-    <!-- Final CTA -->
-    <section class="py-20 bg-slate-50">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">
-          เริ่มต้นก้าวแรกที่มั่นคงทางภาษาไปพร้อมกับเรา
-        </h2>
-        <p class="text-lg text-slate-600 mb-8">จองคิววัดระดับภาษาฟรีได้แล้ววันนี้</p>
-        <div class="flex justify-center gap-4">
-          <!--          <a-->
-          <!--            class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-green-200 transition transform hover:-translate-y-1"-->
-          <!--            href="https://line.me/ti/p/~@brightonphayao"-->
-          <!--            rel="noopener noreferrer"-->
-          <!--            target="_blank"-->
-          <!--          >-->
-          <!--            ติดต่อสอบถามทาง Line-->
-          <!--          </a>-->
-          <a
-            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-200 transition transform hover:-translate-y-1"
-            href="https://m.me/brightonlanguage"
-            rel="noopener noreferrer"
+      <div
+        class="rounded-3xl border border-line bg-white p-5 shadow-[0_30px_60px_-40px_rgba(0,0,0,.3)] md:rounded-[32px] md:p-11 lg:sticky lg:top-28"
+      >
+        <form
+          v-if="!submitted"
+          class="flex flex-col gap-5 md:gap-[22px]"
+          novalidate
+          @submit.prevent="submit"
+        >
+          <b class="font-display text-[22px] font-bold md:text-[26px]">ข้อมูลสำหรับนัดหมาย</b>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="flex flex-col gap-2 text-sm font-medium">
+              ชื่อผู้ปกครอง
+              <input
+                v-model.trim="form.name"
+                :class="errors.name ? 'border-brand' : 'border-line2'"
+                autocomplete="name"
+                class="h-[52px] rounded-[14px] border-[1.5px] bg-cream px-4 text-base font-normal outline-brand"
+                placeholder="เช่น คุณแม่น้องมิว"
+              />
+              <span v-if="errors.name" class="text-xs text-brand">{{ errors.name }}</span>
+            </label>
+            <label class="flex flex-col gap-2 text-sm font-medium">
+              เบอร์โทรศัพท์
+              <input
+                v-model.trim="form.phone"
+                :class="errors.phone ? 'border-brand' : 'border-line2'"
+                autocomplete="tel"
+                class="h-[52px] rounded-[14px] border-[1.5px] bg-cream px-4 text-base font-normal outline-brand"
+                inputmode="tel"
+                placeholder="08X-XXX-XXXX"
+              />
+              <span v-if="errors.phone" class="text-xs text-brand">{{ errors.phone }}</span>
+            </label>
+          </div>
+          <div class="flex flex-col gap-2.5">
+            <span class="text-sm font-medium">อายุของลูก</span>
+            <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+              <button
+                v-for="a in ages"
+                :key="a"
+                :class="
+                  form.age === a
+                    ? 'border-brand bg-brand font-semibold text-white'
+                    : 'border-line2 bg-white hover:border-brand'
+                "
+                class="h-11 rounded-full border-[1.5px] px-5 text-[15px] transition-colors"
+                type="button"
+                @click="form.age = a"
+              >
+                {{ a }}
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2.5">
+            <span class="text-sm font-medium">วันที่สะดวก</span>
+            <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+              <button
+                v-for="d in days"
+                :key="d"
+                :class="
+                  form.day === d
+                    ? 'border-ink bg-ink font-semibold text-white'
+                    : 'border-line2 bg-white hover:border-ink'
+                "
+                class="h-11 rounded-[14px] border-[1.5px] px-5 text-[15px] transition-colors sm:rounded-full"
+                type="button"
+                @click="form.day = d"
+              >
+                {{ d }}
+              </button>
+            </div>
+          </div>
+          <label class="flex flex-col gap-2 text-sm font-medium">
+            ข้อความเพิ่มเติม (ถ้ามี)
+            <textarea
+              v-model.trim="form.note"
+              class="h-24 resize-none rounded-[14px] border-[1.5px] border-line2 bg-cream px-4 py-3.5 text-base font-normal outline-brand"
+              placeholder="เช่น ลูกเคยเรียนพื้นฐานมาแล้ว 1 ปี"
+            ></textarea>
+          </label>
+          <button class="btn-primary h-14 text-base md:h-[58px] md:text-[17px]" type="submit">
+            ส่งคำขอนัดหมายทาง Messenger →
+          </button>
+          <span class="text-center text-[13px] text-muted">
+            ไม่มีค่าใช้จ่าย · หรือโทร
+            <a :href="contact.tel" class="font-semibold text-ink">{{ contact.phone }}</a>
+          </span>
+        </form>
+
+        <div
+          v-else
+          class="flex flex-col items-center gap-[18px] px-2 py-10 text-center md:px-5 md:py-[60px]"
+        >
+          <div
+            class="grid grid-cols-[30px_30px] gap-1.5 rounded-md bg-brand p-2"
+            aria-hidden="true"
           >
-            ติดต่อสอบถามทาง Facebook
-          </a>
+            <div class="h-[30px] rounded-sm bg-cream"></div>
+            <div class="h-[30px] rounded-sm bg-sun"></div>
+            <div class="h-[30px] rounded-sm bg-sun"></div>
+            <div class="h-[30px] rounded-sm bg-cream"></div>
+          </div>
+          <b class="font-display text-[26px] font-bold md:text-[30px]">อีกขั้นเดียวค่ะ!</b>
+          <span v-if="chatPrefills" class="max-w-[380px] text-base leading-[1.7] text-muted">
+            เราเปิด Messenger พร้อมข้อความนัดหมายให้แล้ว กด “ส่ง” ใน Messenger เพื่อยืนยัน
+            เจ้าหน้าที่จะติดต่อกลับเพื่อยืนยันวันวัดระดับของลูก
+          </span>
+          <template v-else>
+            <span class="max-w-[400px] text-base leading-[1.7] text-muted">
+              เราเปิดแชท Facebook ของโรงเรียนให้แล้ว
+              {{ copied ? 'และคัดลอกข้อความนัดหมายไว้ให้แล้ว —' : '—' }}
+              วางข้อความด้านล่างในแชท แล้วกด “ส่ง” เพื่อยืนยัน
+            </span>
+            <div class="w-full rounded-[14px] border border-line bg-cream p-4 text-left">
+              <p class="whitespace-pre-line text-sm leading-[1.7]">{{ bookingText }}</p>
+              <button class="link-arrow mt-2 text-sm" type="button" @click="copy">
+                {{ copied ? 'คัดลอกแล้ว ✓' : 'คัดลอกข้อความ' }}
+              </button>
+            </div>
+          </template>
+          <div class="flex flex-wrap justify-center gap-2.5">
+            <a
+              :href="messengerLink"
+              class="btn-primary h-[46px] px-[22px] text-[15px] shadow-none"
+              rel="noopener"
+              target="_blank"
+            >
+              เปิดแชทอีกครั้ง
+            </a>
+            <button class="btn-outline h-[46px] px-[22px] text-[15px]" @click="submitted = false">
+              กลับไปแก้ไข
+            </button>
+          </div>
+          <span class="text-[13px] text-muted">
+            ไม่สะดวกใช้ Messenger? โทร
+            <a :href="contact.tel" class="font-semibold text-ink">{{ contact.phone }}</a>
+          </span>
         </div>
       </div>
     </section>
@@ -112,7 +197,64 @@
 </template>
 
 <script>
+import { useHead } from '@vueuse/head'
+import { chatPrefills, chatUrl, contact } from '@/data/site'
+
 export default {
-  name: 'ContactView'
+  name: 'ContactView',
+  setup() {
+    useHead({ title: 'นัดวัดระดับภาษาฟรี - Brighton Language Academy' })
+  },
+  data() {
+    return {
+      contact,
+      ages: ['3–6 ปี', '7–9 ปี', '10–12 ปี', '13 ปีขึ้นไป'],
+      days: ['วันเสาร์', 'วันอาทิตย์', 'วันธรรมดา (หลังเลิกเรียน)'],
+      form: { name: '', phone: '', age: '', day: '', note: '' },
+      errors: {},
+      submitted: false,
+      copied: false,
+      chatPrefills
+    }
+  },
+  computed: {
+    // The site has no backend, so the request is handed to the school's Messenger inbox.
+    bookingText() {
+      const f = this.form
+      return [
+        'สวัสดีค่ะ ขอนัดวัดระดับภาษาฟรีค่ะ',
+        `ชื่อผู้ปกครอง: ${f.name}`,
+        `เบอร์โทร: ${f.phone}`,
+        f.age && `อายุของลูก: ${f.age}`,
+        f.day && `วันที่สะดวก: ${f.day}`,
+        f.note && `ข้อความเพิ่มเติม: ${f.note}`
+      ]
+        .filter(Boolean)
+        .join('\n')
+    },
+    messengerLink() {
+      return chatUrl(this.bookingText)
+    }
+  },
+  methods: {
+    submit() {
+      const errors = {}
+      if (!this.form.name) errors.name = 'กรุณากรอกชื่อ'
+      if (this.form.phone.replace(/\D/g, '').length < 9)
+        errors.phone = 'กรุณากรอกเบอร์โทรให้ถูกต้อง'
+      this.errors = errors
+      if (Object.keys(errors).length) return
+      // start the copy before the chat tab steals focus, or the clipboard write is refused
+      if (!chatPrefills) this.copy()
+      window.open(this.messengerLink, '_blank', 'noopener')
+      this.submitted = true
+    },
+    copy() {
+      navigator.clipboard
+        ?.writeText(this.bookingText)
+        .then(() => (this.copied = true))
+        .catch(() => (this.copied = false))
+    }
+  }
 }
 </script>

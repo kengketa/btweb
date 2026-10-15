@@ -1,101 +1,290 @@
 <template>
   <main>
-    <!-- Hero Section -->
-    <header class="relative bg-red-50 pt-16 pb-24 lg:pt-32 lg:pb-40 overflow-hidden">
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
       <div
-        class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"
+        class="absolute -bottom-56 -left-44 hidden h-[420px] w-[420px] rounded-full bg-blush lg:block"
       ></div>
       <div
-        class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
-      ></div>
-
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center max-w-4xl mx-auto">
-          <h1
-            class="text-4xl md:text-6xl font-extrabold text-red-700 tracking-tight mb-4 uppercase"
+        class="wrap relative grid items-center gap-10 pb-16 pt-8 md:pt-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-24 lg:pt-20"
+      >
+        <div class="flex flex-col gap-5 md:gap-7">
+          <span
+            class="flex items-center gap-2.5 self-start text-[13px] text-muted md:rounded-full md:border md:border-line md:bg-white md:px-4 md:py-2 md:text-sm"
           >
-            BRIGHTON - เรียนภาษาอังกฤษ พะเยา
-          </h1>
-          <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-            Brighton Language Academy สถาบันสอนภาษามาตรฐานสากล ใจกลางเมืองพะเยา เน้นการเรียนรู้อย่าง
-          </p>
-          <p class="font-bold mb-10">มีความสุขและใช้งานได้จริง</p>
-          <div class="flex justify-center">
-            <router-link
-              class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-red-200 transition transform hover:-translate-y-1"
-              to="/contact"
+            <span class="h-2 w-2 rounded-full bg-sun"></span>
+            โรงเรียนสอนภาษาอังกฤษสำหรับเด็ก · ใจกลางเมืองพะเยา
+          </span>
+          <h1
+            class="font-display text-[36px] font-bold leading-[1.4] tracking-[-0.01em] md:text-5xl md:leading-[1.35] lg:text-[44px] xl:text-[54px] xl:leading-[1.32]"
+          >
+            <span class="sm:block sm:whitespace-nowrap">ให้ลูกเรียนภาษาอังกฤษ</span>
+            <span class="sm:block sm:whitespace-nowrap"
+              >อย่าง<span class="whitespace-nowrap text-brand">มีความสุข</span></span
             >
-              นัดหมายวัดระดับภาษา
+            <span class="sm:block sm:whitespace-nowrap">และใช้ได้จริง</span>
+          </h1>
+          <p class="max-w-[520px] text-base leading-[1.7] text-muted md:text-lg md:leading-[1.75]">
+            Brighton Language Academy โรงเรียนสอนภาษามาตรฐานสากลในพะเยา หลักสูตร Oxford และ Jolly
+            Phonics กับครูที่รู้จักและใส่ใจลูกของคุณทุกคน
+          </p>
+          <div class="flex flex-wrap items-center gap-3.5">
+            <router-link class="btn-primary h-14 px-[30px] text-[17px]" to="/contact">
+              นัดวัดระดับภาษาฟรี <span>→</span>
             </router-link>
+            <router-link class="btn-outline h-14 px-7 text-[17px]" to="/courses">
+              ดูหลักสูตร
+            </router-link>
+          </div>
+          <div class="mt-3 hidden items-center gap-7 border-t border-line pt-7 md:flex">
+            <div class="flex items-baseline gap-2.5">
+              <span class="font-condensed text-[44px] font-bold leading-none text-brand">{{
+                years
+              }}</span>
+              <span class="text-sm leading-[1.4] text-muted">ปีที่ดูแลเด็กๆ<br />ในพะเยา</span>
+            </div>
+            <div class="h-11 w-px bg-line"></div>
+            <div class="flex max-w-[300px] flex-col gap-1">
+              <span class="font-display text-base font-medium leading-normal">
+                “{{ testimonials.hero.quote }}”
+              </span>
+              <span class="text-[13px] text-muted">{{ testimonials.hero.who }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute -right-6 -top-7 hidden h-24 w-24 rounded-lg bg-sun lg:block"></div>
+          <div
+            class="relative grid grid-cols-2 grid-rows-[150px_150px] gap-2.5 rounded-md bg-brand p-2.5 sm:grid-rows-[220px_220px] lg:grid-rows-[250px_250px] lg:gap-3.5 lg:rounded-lg lg:p-3.5"
+          >
+            <PhotoBox
+              v-for="(src, i) in heroPhotos"
+              :key="i"
+              :fallback-position="heroCrops[i]"
+              :src="src"
+              alt="บรรยากาศการเรียนที่ Brighton"
+              class="rounded-sm"
+            />
+          </div>
+          <div
+            class="absolute -bottom-9 -left-11 hidden h-[136px] w-[136px] -rotate-[10deg] items-center justify-center rounded-full bg-sun text-center shadow-[0_12px_24px_-12px_rgba(0,0,0,.3)] lg:flex"
+          >
+            <span class="font-condensed text-[17px] font-semibold italic leading-tight">
+              Happy<br />learning<br />starts here
+            </span>
+          </div>
+          <div
+            class="absolute -bottom-7 right-2 flex h-24 w-24 -rotate-[8deg] flex-col items-center justify-center rounded-full bg-sun lg:hidden"
+          >
+            <span class="font-condensed text-[30px] font-bold leading-none">{{ years }}</span>
+            <span class="text-[11px] font-semibold">ปีในพะเยา</span>
           </div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Welcome Section -->
-    <section class="py-20 bg-white">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Welcome to Our Family</h2>
-        <p class="text-xl text-red-600 font-semibold mb-6">
-          "เพราะเราเชื่อว่า... ความสุขคือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด"
-        </p>
-        <p class="text-slate-600 leading-relaxed">
-          ที่ Brighton เราไม่ได้เป็นเพียงแค่โรงเรียนสอนภาษา
-          แต่เราเป็นพื้นที่แห่งการเรียนรู้ที่ให้ความสำคัญกับ "ความรู้สึก" ของผู้เรียน
-          เราคัดสรรหลักสูตรระดับโลก (Oxford & Jolly Phonics) และทีมครูคุณภาพ
-          เพื่อให้มั่นใจว่าบุตรหลานของท่านจะเติบโตอย่างมั่นคงทั้งทักษะภาษาและทัศนคติ
-        </p>
+    <!-- Welcome -->
+    <section class="bg-white py-16 md:py-[104px]">
+      <div class="wrap">
+        <div class="grid items-end gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+          <div class="flex flex-col gap-3 md:gap-5">
+            <span class="eyebrow">Welcome to Our Family</span>
+            <h2
+              class="font-display text-[22px] font-semibold leading-[1.6] md:text-[40px] md:leading-[1.5]"
+              style="text-wrap: balance"
+            >
+              “เพราะเราเชื่อว่า… ความสุขคือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด”
+            </h2>
+          </div>
+          <p class="text-base leading-[1.85] text-muted md:text-[17px]">
+            ที่ Brighton เราไม่ได้เป็นเพียงแค่โรงเรียนสอนภาษา
+            แต่เราเป็นพื้นที่แห่งการเรียนรู้ที่ให้ความสำคัญกับ “ความรู้สึก” ของผู้เรียน
+            เราคัดสรรหลักสูตรระดับสากล (Oxford &amp; Jolly Phonics) และทีมครูคุณภาพ
+            เพื่อให้ลูกเติบโตอย่างมั่นคงทั้งทักษะภาษาและทัศนคติ
+          </p>
+        </div>
+        <div class="mt-12 grid gap-8 sm:grid-cols-2 md:mt-[72px] lg:grid-cols-4 lg:gap-10">
+          <div
+            v-for="(item, i) in pillars"
+            :key="item.title"
+            class="flex flex-col gap-3 border-t-2 border-ink pt-6"
+          >
+            <span class="font-condensed text-[13px] font-medium text-brand">0{{ i + 1 }}</span>
+            <b class="text-[22px] font-semibold">{{ item.title }}</b>
+            <span class="text-[15px] leading-[1.7] text-muted">{{ item.desc }}</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Why Choose Us Section -->
-    <section class="py-20 bg-slate-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            ทำไมผู้ปกครองในพะเยาถึงไว้วางใจ Brighton?
+    <!-- Courses -->
+    <section class="py-16 md:py-[104px]">
+      <div class="wrap mb-6 flex items-end justify-between gap-6 md:mb-10">
+        <div class="flex flex-col gap-3">
+          <span class="eyebrow">Our Courses</span>
+          <h2 class="font-display text-2xl font-bold leading-[1.35] md:text-[44px]">
+            หลักสูตรตามช่วงวัย
           </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <router-link class="link-arrow text-sm md:text-base" to="/courses">
+          <span class="hidden md:inline">ดูหลักสูตรทั้งหมด</span
+          ><span class="md:hidden">ทั้งหมด</span> →
+        </router-link>
+      </div>
+      <div
+        class="mx-auto flex max-w-[1280px] snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-10 lg:grid-cols-4 lg:px-14"
+      >
+        <router-link
+          v-for="c in courses"
+          :key="c.slug"
+          :to="`/courses/${c.slug}`"
+          class="flex w-[240px] flex-none snap-start flex-col overflow-hidden rounded-[20px] border border-line bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,.25)] md:w-auto md:rounded-3xl"
+        >
           <div
-            v-for="reason in whyChooseUs"
-            :key="reason.title"
-            class="p-8 rounded-3xl bg-white shadow-lg hover:shadow-xl hover:border-red-200 border border-transparent transition duration-300 group"
+            :class="toneClass[c.tone]"
+            class="flex h-[120px] flex-col justify-between p-5 md:h-[170px] md:p-6"
           >
-            <div
-              class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white transition"
+            <span class="text-[13px] font-semibold opacity-90">{{ c.tag }}</span>
+            <span :class="ageFont(c.age)" class="text-[40px] font-bold leading-none md:text-[56px]">
+              {{ c.age
+              }}<span v-if="c.ageUnit === 'ปี'" class="ml-1.5 text-base md:text-xl">ปี</span>
+            </span>
+          </div>
+          <div class="flex flex-1 flex-col gap-2 p-4 md:gap-2.5 md:p-6">
+            <b class="text-[17px] md:text-[21px]">{{ c.name }}</b>
+            <span class="text-[13px] font-medium text-brand md:text-sm">{{ c.sub }}</span>
+            <span class="hidden flex-1 text-sm leading-[1.7] text-muted md:block">{{
+              c.short
+            }}</span>
+            <span class="mt-1 hidden text-sm font-semibold md:block">ดูรายละเอียด →</span>
+          </div>
+        </router-link>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="wrap pb-16 md:pb-[104px]">
+      <div class="mb-6 flex items-end justify-between gap-6 md:mb-8">
+        <h2 class="font-display text-2xl font-bold leading-[1.35] md:text-[44px]">
+          บรรยากาศที่ Brighton
+        </h2>
+        <a
+          :href="contact.facebook"
+          class="link-arrow text-sm md:text-base"
+          rel="noopener"
+          target="_blank"
+        >
+          <span class="hidden md:inline">ติดตามเราบน </span>Facebook →
+        </a>
+      </div>
+      <div
+        class="grid grid-cols-2 grid-rows-[140px_140px_140px] gap-2.5 md:grid-cols-4 md:grid-rows-[220px_220px] md:gap-4"
+      >
+        <PhotoBox
+          alt="นักเรียนและครูที่ Brighton"
+          class="col-span-2 rounded-[18px] md:row-span-2 md:rounded-3xl"
+          src="/images/cover.jpg"
+        />
+        <PhotoBox
+          :src="photos[4]"
+          alt="กิจกรรมที่ Brighton"
+          class="rounded-[18px] md:rounded-3xl"
+        />
+        <div class="flex flex-col justify-between rounded-[18px] bg-sun p-5 md:rounded-3xl md:p-6">
+          <span class="font-condensed text-xl font-semibold italic leading-[1.3] md:text-[26px]"
+            >“I can do it!”</span
+          >
+          <span class="text-[13px] font-medium md:text-sm">ความมั่นใจที่เห็นได้ทุกคาบเรียน</span>
+        </div>
+        <PhotoBox
+          :src="photos[8]"
+          alt="กิจกรรมที่ Brighton"
+          class="col-span-2 hidden rounded-3xl md:block"
+        />
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="relative overflow-hidden bg-brand py-16 text-white md:py-24">
+      <div
+        aria-hidden="true"
+        class="absolute -right-16 -top-16 grid grid-cols-[90px_90px] gap-3.5 opacity-[.14]"
+      >
+        <div v-for="n in 4" :key="n" class="h-[90px] border-[10px] border-white"></div>
+      </div>
+      <div class="wrap relative">
+        <span class="text-xs font-semibold uppercase tracking-[.14em] opacity-85 md:text-[13px]">
+          เสียงจากผู้ปกครอง
+        </span>
+        <div class="mt-5 grid items-start gap-10 md:mt-7 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
+          <div class="flex flex-col gap-7">
+            <p
+              class="font-display text-xl font-semibold leading-[1.6] md:text-[36px] md:leading-[1.55]"
+              style="text-wrap: pretty"
             >
-              {{ reason.icon }}
+              “{{ testimonials.main.quote }}”
+            </p>
+            <div class="flex items-center gap-3.5">
+              <BrandMark class="h-12 w-12" color="#FBF6EF" />
+              <div class="flex flex-col">
+                <b class="text-base">{{ testimonials.main.who }}</b>
+                <span class="text-sm opacity-85">{{ testimonials.main.role }}</span>
+              </div>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-3">{{ reason.title }}</h3>
-            <p class="text-slate-500 leading-relaxed">{{ reason.desc }}</p>
+          </div>
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-3.5 rounded-[20px] bg-white p-6 text-ink md:p-[26px]">
+              <span class="font-display text-lg font-medium leading-[1.6]"
+                >“{{ testimonials.side.quote }}”</span
+              >
+              <span class="text-[13px] text-muted">{{ testimonials.side.who }}</span>
+            </div>
+            <div class="flex items-center gap-5 rounded-[20px] bg-sun p-6 text-ink md:p-[26px]">
+              <span class="font-condensed text-[56px] font-bold leading-none">{{ years }}</span>
+              <span class="text-[15px] font-medium leading-normal">
+                ปีที่ครอบครัวในพะเยา<br />ไว้วางใจ Brighton
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Signature Courses Section -->
-    <section class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Our Signature Courses</h2>
+    <!-- Booking CTA -->
+    <section class="wrap py-16 md:py-24">
+      <div
+        class="grid items-center gap-8 rounded-3xl border border-line bg-white p-7 md:rounded-[32px] md:p-14 lg:grid-cols-[1.3fr_1fr] lg:gap-12"
+      >
+        <div class="flex flex-col gap-4">
+          <h2 class="font-display text-[26px] font-bold leading-[1.35] md:text-[44px]">
+            มาลองเรียนกับเราก่อน
+          </h2>
+          <p class="max-w-[520px] text-[15px] leading-[1.75] text-muted md:text-[17px]">
+            นัดวัดระดับภาษาฟรี ครูจะพูดคุยกับลูกและแนะนำคลาสที่เหมาะกับวัยและพื้นฐานของลูกมากที่สุด
+          </p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div
-            v-for="course in signatureCourses"
-            :key="course.title"
-            class="p-8 rounded-[2rem] bg-slate-50 border border-slate-200 hover:shadow-xl transition"
-          >
-            <h3 class="text-2xl font-bold text-slate-900">{{ course.title }}</h3>
-            <p class="text-red-600 font-medium mb-4">{{ course.age }}</p>
-            <p class="text-slate-500 mb-8 leading-relaxed">{{ course.desc }}</p>
-            <router-link
-              v-if="course.details"
-              class="px-6 py-3 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700 transition"
-              to="/courses"
+        <div class="flex flex-col gap-3.5">
+          <router-link class="btn-primary h-[58px] text-[17px] shadow-none" to="/contact">
+            นัดวัดระดับภาษาฟรี →
+          </router-link>
+          <div class="grid grid-cols-2 gap-3">
+            <a
+              :href="contact.tel"
+              class="flex flex-col gap-0.5 rounded-2xl bg-cream px-[18px] py-3.5"
             >
-              ดูรายละเอียดเพิ่มเติม
-            </router-link>
+              <span class="text-xs text-muted">โทรหาเรา</span>
+              <b class="text-[15px]">{{ contact.phone }}</b>
+            </a>
+            <a
+              :href="contact.facebook"
+              class="flex flex-col gap-0.5 rounded-2xl bg-cream px-[18px] py-3.5"
+              rel="noopener"
+              target="_blank"
+            >
+              <span class="text-xs text-muted">เพจ Facebook</span>
+              <b class="text-[15px]">Brighton Language</b>
+            </a>
           </div>
         </div>
       </div>
@@ -104,10 +293,17 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
+import PhotoBox from '@/components/PhotoBox.vue'
+import BrandMark from '@/components/BrandMark.vue'
+import { useFeed } from '@/composables/useFeed'
+import { contact, testimonials, yearsLabel } from '@/data/site'
+import { ageFont, courses, toneClass } from '@/data/courses'
 
 export default {
   name: 'HomeView',
+  components: { PhotoBox, BrandMark },
   setup() {
     useHead({
       title: 'เรียนภาษาอังกฤษ พะเยา - Brighton Language Academy',
@@ -115,47 +311,46 @@ export default {
         {
           name: 'description',
           content:
-            'สถาบันสอนภาษาอังกฤษมาตรฐานสากลในจังหวัดพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics'
+            'โรงเรียนสอนภาษาอังกฤษมาตรฐานสากลในจังหวัดพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics'
         }
       ]
     })
+    const { photos } = useFeed()
+    // first window is always the local cover photo; the rest come from the Facebook feed
+    const heroPhotos = computed(() => [
+      '/images/cover.jpg',
+      photos.value[0],
+      photos.value[1],
+      photos.value[2]
+    ])
+    return { photos, heroPhotos }
   },
   data() {
     return {
-      whyChooseUs: [
+      contact,
+      testimonials,
+      years: yearsLabel,
+      courses,
+      toneClass,
+      ageFont,
+      // distinct crops of the cover photo for any window whose feed photo is unavailable
+      heroCrops: ['55% 40%', '12% 45%', '88% 50%', '50% 85%'],
+      pillars: [
         {
-          title: 'World-Class Curriculum',
-          desc: 'หลักสูตรมาตรฐานสากลจาก Oxford และ Jolly Phonics พร้อมแนวทางพัฒนาภาษาตามกรอบ CEFR เพื่อให้เรียนแล้วใช้ได้จริง',
-          icon: '🌍'
+          title: 'หลักสูตรมาตรฐานสากล',
+          desc: 'Oxford และ Jolly Phonics พร้อมแนวทางพัฒนาภาษาตามกรอบ CEFR เรียนแล้วใช้ได้จริง'
         },
         {
-          title: 'Qualified Native Teachers',
-          desc: 'ครูเจ้าของภาษาและครูผู้เชี่ยวชาญ ช่วยพัฒนาทักษะฟัง–พูด–อ่าน–เขียน ให้ก้าวหน้าอย่างเป็นระบบตามระดับ CEFR',
-          icon: '👩‍🏫'
+          title: 'ครูเจ้าของภาษา',
+          desc: 'ครูเจ้าของภาษาและครูผู้เชี่ยวชาญ พัฒนาทักษะฟัง–พูด–อ่าน–เขียนอย่างเป็นระบบ'
         },
         {
-          title: 'Warm & Caring Environment',
-          desc: 'บรรยากาศการเรียนรู้ที่อบอุ่น ใส่ใจ และเป็นมิตร ทำให้เด็กมีความสุขกับการเรียน และพร้อมเติบโตอย่างมั่นใจ',
-          icon: '🏡'
+          title: 'บรรยากาศอบอุ่น',
+          desc: 'ใส่ใจและเป็นมิตร ลูกมีความสุขกับการเรียน และเติบโตอย่างมั่นใจ'
         },
         {
-          title: 'Personalized Placement Test',
-          desc: 'ประเมินระดับภาษาแบบละเอียดตามมาตรฐาน CEFR เพื่อตั้งต้นในระดับที่เหมาะสมที่สุด และเห็นพัฒนาการได้อย่างชัดเจน',
-          icon: '✅'
-        }
-      ],
-      signatureCourses: [
-        {
-          title: 'English Level (3-12 ปี)',
-          age: 'พัฒนาทักษะรอบด้าน ฟัง-พูด-อ่าน-เขียน ด้วยหลักสูตร Oxford',
-          desc: 'คอร์สเรียนที่เน้นการพัฒนาทักษะภาษาอังกฤษอย่างสมดุล ผ่านกิจกรรมที่สนุกสนานและสื่อการสอนที่ทันสมัยจาก Oxford University Press',
-          details: false
-        },
-        {
-          title: 'Brighton Phonics (5-12 ปี)',
-          age: 'ปูพื้นฐานการอ่านออกเสียงให้เป๊ะ ด้วยหลักสูตร Jolly Phonics',
-          desc: 'หลักสูตรที่ช่วยให้น้องๆ อ่านออกเสียงได้อย่างถูกต้องและมั่นใจ ด้วยการเรียนรู้ผ่านระบบ Jolly Phonics ที่ได้รับการยอมรับในระดับสากล',
-          details: true
+          title: 'วัดระดับก่อนเรียน',
+          desc: 'ประเมินระดับภาษาตามมาตรฐาน CEFR เริ่มในระดับที่เหมาะสม และเห็นพัฒนาการชัดเจน'
         }
       ]
     }
