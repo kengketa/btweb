@@ -92,8 +92,10 @@ mv dist-next dist
 rm -rf dist-prev
 
 # === 6. Healthcheck through nginx, as a visitor would hit it. ===
+# Plain grep, not grep -q: -q stops reading at the first match, and with pipefail
+# the pre-rendered page (larger than a pipe buffer) then fails curl with "Failed writing body".
 for host in www.brightonedu.com v2.brightonedu.com; do
-  if ! curl -fsS --max-time 10 --resolve "$host:443:127.0.0.1" "https://$host/" | grep -q '<div id="app"'; then
+  if ! curl -fsS --max-time 10 --resolve "$host:443:127.0.0.1" "https://$host/" | grep '<div id="app"' >/dev/null; then
     echo "[deploy] FAILED: https://$host/ did not serve the app." >&2
     exit 1
   fi
