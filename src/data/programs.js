@@ -304,13 +304,14 @@ export const programs = [
       }
     ],
     english: {
-      heading: 'Mini English Program (MEP) and English Program (EP) support in Phayao',
-      text: 'Brighton Language Academy is a language school, not an MEP/EP school. We tutor children who study in Mini English Program or English Program classrooms at Phayao schools, and children preparing for MEP/EP entry: lesson review, subject vocabulary in English, speaking and listening with foreign teachers, and entrance test practice, one-to-one or in small groups.'
+      lang: 'th',
+      heading: 'พาร์ทเนอร์ห้องเรียน EP · IEP · MEP ในพะเยา',
+      text: 'โรงเรียนสอนภาษาไบรท์ตัน (Brighton Language Academy) เป็นพาร์ทเนอร์ด้านการจัดการศึกษาให้กับห้องเรียน EP (English Program), IEP (Intensive English Program) และ MEP (Mini English Program) ของโรงเรียนต่างๆ ด้วยความเชี่ยวชาญทั้งด้านหลักสูตรและเนื้อหาการสอนในห้องเรียนสองภาษา พร้อมทีมครูชาวต่างชาติที่สอนอยู่จริงในโรงเรียนทั่วจังหวัดพะเยา เรานำประสบการณ์เดียวกันนี้มาติวเสริมให้นักเรียนห้อง EP / IEP / MEP และเด็กที่เตรียมสอบเข้า ทั้งการทบทวนบทเรียน คำศัพท์รายวิชาเป็นภาษาอังกฤษ การฟังและพูดกับครูชาวต่างชาติ และการฝึกทำข้อสอบ แบบตัวต่อตัวหรือกลุ่มเล็ก'
     },
     faqs: [
       [
         'Brighton เป็นโรงเรียน MEP หรือโรงเรียนอินเตอร์ไหม?',
-        'ไม่ใช่ค่ะ Brighton เป็นโรงเรียนสอนภาษา เราติวเสริมให้นักเรียนที่เรียนห้อง MEP / EP ของโรงเรียนต่างๆ และเด็กที่เตรียมสอบเข้า โดยเรียนกับครูชาวต่างชาติ'
+        'ไม่ใช่ค่ะ Brighton เป็นโรงเรียนสอนภาษา และเป็นพาร์ทเนอร์ด้านการจัดการศึกษาให้กับห้องเรียน EP, IEP และ MEP ของโรงเรียนต่างๆ พร้อมติวเสริมให้นักเรียนห้องเรียนสองภาษาและเด็กที่เตรียมสอบเข้า กับครูชาวต่างชาติ'
       ],
       [
         'ติวเสริม MEP / EP เรียนแบบไหน?',

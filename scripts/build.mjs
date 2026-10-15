@@ -63,7 +63,7 @@ fs.writeFileSync(
 
 > English language school for children in Phayao, Thailand. Classes are taught live by native English-speaking teachers using Oxford University Press and Jolly Phonics curricula, from kindergarten to secondary school, plus private lessons. Every child starts with a free placement test (CEFR) so they join a group at their level.
 >
-> Brighton also runs an English holiday camp (Kindy Fun Camp) every school break, tutors students in Mini English Program (MEP) and English Program (EP) classrooms, and has about ${team.foreignTeachers} foreign teachers teaching in ${team.schools} schools across Phayao. It is a language school, not an MEP/EP or international school.
+> Brighton also runs an English holiday camp (Kindy Fun Camp) every school break, partners with schools on their English Program (EP), Intensive English Program (IEP) and Mini English Program (MEP) bilingual classrooms and tutors their students, and has about ${team.foreignTeachers} foreign teachers teaching in ${team.schools} schools across Phayao. It is a language school, not an MEP/EP or international school.
 >
 > โรงเรียนสอนภาษาอังกฤษสำหรับเด็ก ใจกลางเมืองพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics ตั้งแต่อนุบาลถึงมัธยม และคอร์สส่วนตัว วัดระดับภาษาฟรีก่อนเริ่มเรียน
 
