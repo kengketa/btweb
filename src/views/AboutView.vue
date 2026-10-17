@@ -50,23 +50,16 @@
           {{ story.heading }}
         </h2>
       </div>
-      <div class="flex flex-col">
-        <div
-          v-for="([title, text], i) in story.steps"
-          :key="title"
-          class="flex gap-5 border-t border-line2 py-6 first:border-t-0 first:pt-0"
+      <article class="flex flex-col gap-5 md:gap-6">
+        <p
+          v-for="(text, i) in story.paragraphs"
+          :key="i"
+          class="text-base leading-[1.95] text-body md:text-lg"
+          style="text-wrap: pretty"
         >
-          <span class="font-condensed text-[13px] font-medium leading-[2.2] text-brand"
-            >0{{ i + 1 }}</span
-          >
-          <div class="flex flex-col gap-2">
-            <b class="font-display text-xl font-semibold leading-normal md:text-[22px]">{{
-              title
-            }}</b>
-            <p class="text-base leading-[1.85] text-body md:text-[17px]">{{ text }}</p>
-          </div>
-        </div>
-        <figure class="mt-4 rounded-3xl bg-brand p-7 text-white md:p-9">
+          {{ text }}
+        </p>
+        <figure class="mt-2 rounded-3xl bg-brand p-7 text-white md:p-9">
           <blockquote
             class="font-display text-lg font-medium leading-[1.7] md:text-[22px]"
             style="text-wrap: pretty"
@@ -77,7 +70,7 @@
             ผู้ก่อตั้ง Brighton Language Academy
           </figcaption>
         </figure>
-      </div>
+      </article>
     </section>
 
     <section class="bg-white py-14 md:py-20">
