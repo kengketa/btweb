@@ -20,9 +20,9 @@
 
     <div class="wrap relative">
       <PhotoBox
+        :src="cover"
         alt="นักเรียนและครูที่ Brighton Language Academy"
         class="h-[260px] rounded-3xl md:h-[440px] md:rounded-[28px]"
-        :src="cover"
         position="center 35%"
       />
       <div
@@ -161,8 +161,11 @@
     <section class="wrap grid gap-8 pb-16 md:pb-[104px] lg:grid-cols-[1fr_1.4fr] lg:gap-20">
       <div class="flex flex-col gap-4">
         <span class="eyebrow">Our Team</span>
-        <h2 class="font-display text-[28px] font-bold leading-[1.4] md:text-[40px]">
-          ครูมีความสุข ลูกก็มีความสุข
+        <h2 class="font-display text-[24px] font-bold leading-[1.4] md:text-[40px]">
+          ครูมีความสุข
+        </h2>
+        <h2 class="font-display text-[24px] font-bold leading-[1.0] md:text-[40px] px-8">
+          ลูกก็มีความสุข...
         </h2>
         <p class="text-base leading-[1.8] text-muted md:text-[17px]">
           เราเชื่อว่าห้องเรียนที่ดี เริ่มจากการดูแลคนที่สอนให้ดีที่สุด

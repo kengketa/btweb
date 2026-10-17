@@ -76,11 +76,11 @@ fs.writeFileSync(
 ## About / เกี่ยวกับเรา
 
 - Teaching children in Phayao for ${team.years} years, with ${studentsLabel} students so far, starting from age 3.
-- Founded by a Phayao local who learned English by rote at school without being able to use it, then spent 5 years in Australia (language school, a diploma and a master's degree) before coming home to teach the way that finally worked: use the language, not just memorise it.
+- Founded by a Phayao local who learned English by rote at school without being able to use it, then spent 5 years in Australia (language school, then a master's degree) before coming home to teach the way that finally worked: use the language, not just memorise it.
 - Classroom approach: a "Can Do Attitude" room where mistakes are welcome, Active Learning through games, arts and crafts, and lessons structured as warm-up, content in short parts, and wrap-up.
 - Teachers of Brighton's own classes speak English as their first language, have an education background, and are trained by Brighton.
 - Children are placed by a placement test, assessed through the year on reading, writing, listening, class participation and vocabulary, and sit a level-up test each year.
-- One former student who started at age 3 now attends MUIDS (Mahidol University International Demonstration School) and scored around 7–8 in IELTS.
+- Many students started at age 3 and went on to well-known international schools and universities; one scored 8.0 in IELTS.
 - Brighton runs Mini English Program (MEP) classrooms for ${team.schools} schools in Phayao: recruiting, placing and training teachers, and handling progress tracking, report cards and portfolios.
 
 ## Courses / หลักสูตร
