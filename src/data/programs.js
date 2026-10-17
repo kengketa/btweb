@@ -246,8 +246,9 @@ export const programs = [
       }
     ],
     english: {
-      heading: 'English lessons that build executive function skills',
-      text: 'At Brighton in Phayao, games with rules, phonics routines, group projects, cooking, science experiments and outdoor activities are planned so children practise working memory, self-control, flexible thinking and planning while they use English.'
+      lang: 'th',
+      heading: 'เรียนภาษาอังกฤษ พร้อมฝึกทักษะ EF ในพะเยา',
+      text: 'ที่ Brighton Language Academy พะเยา เราออกแบบกิจกรรมให้เด็กๆ ได้ใช้ภาษาอังกฤษไปพร้อมกับฝึกทักษะ EF ทั้งเกมที่มีกติกา การฝึก Phonics งานกลุ่ม การทำอาหาร การทดลองวิทยาศาสตร์ และกิจกรรมนอกห้องเรียน ลูกจึงได้ฝึกความจำใช้งาน การควบคุมตัวเอง ความคิดยืดหยุ่น และการวางแผน ในทุกกิจกรรมที่ทำ'
     },
     faqs: [
       [
