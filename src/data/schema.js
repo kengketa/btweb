@@ -16,7 +16,7 @@ export const school = {
     'โรงเรียนสอนภาษาอังกฤษสำหรับเด็กในจังหวัดพะเยา สอนโดยครูเจ้าของภาษา หลักสูตร Oxford และ Jolly Phonics วัดระดับภาษาฟรีก่อนเริ่มเรียน',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/apple-touch-icon.png`,
-  image: `${SITE_URL}/images/cover.jpg`,
+  image: `${SITE_URL}/images/cover-brighton.jpg`,
   telephone: `+66${contact.tel.replace(/\D/g, '').slice(1)}`,
   address: {
     '@type': 'PostalAddress',
