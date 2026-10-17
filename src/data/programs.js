@@ -8,6 +8,7 @@
 // `english` is the summary box near the bottom of each page: English by default, for
 // English searches; add `lang: 'th'` to write it in Thai instead.
 import { contact, team } from './site.js'
+import { teacherStandards } from './about.js'
 
 export const programs = [
   {
@@ -45,6 +46,11 @@ export const programs = [
           ['เรียนรู้วัฒนธรรม', 'เปิดโลกผ่านเพลง เกม เทศกาล และเรื่องเล่าจากครูชาวต่างชาติ'],
           ['ครูไทยช่วยดูแล', 'ทีมงานคนไทยช่วยประสานกับผู้ปกครอง และแจ้งพัฒนาการของลูกเป็นระยะ']
         ]
+      },
+      {
+        heading: 'เราคัดเลือกและอบรมครูอย่างไร',
+        style: 'cards',
+        items: teacherStandards
       },
       {
         heading: 'ครูของเราสอนที่ไหนบ้าง',
@@ -224,7 +230,7 @@ export const programs = [
           ['งานกลุ่มและการนำเสนอ', 'วางแผนกับเพื่อน แบ่งหน้าที่ และนำเสนอผลงานเป็นภาษาอังกฤษ'],
           [
             'คาบเรียนหลายช่วง',
-            'Warm-up, Learn, Practice, Share ฝึกเปลี่ยนโหมดความคิดอย่างเป็นธรรมชาติ'
+            'Warm-up, Learn, Activity, Wrap-up ฝึกเปลี่ยนโหมดความคิดอย่างเป็นธรรมชาติ'
           ]
         ]
       },
@@ -240,8 +246,9 @@ export const programs = [
       }
     ],
     english: {
-      heading: 'English lessons that build executive function skills',
-      text: 'At Brighton in Phayao, games with rules, phonics routines, group projects, cooking, science experiments and outdoor activities are planned so children practise working memory, self-control, flexible thinking and planning while they use English.'
+      lang: 'th',
+      heading: 'เรียนภาษาอังกฤษ พร้อมฝึกทักษะ EF ในพะเยา',
+      text: 'ที่ Brighton Language Academy พะเยา เราออกแบบกิจกรรมให้เด็กๆ ได้ใช้ภาษาอังกฤษไปพร้อมกับฝึกทักษะ EF ทั้งเกมที่มีกติกา การฝึก Phonics งานกลุ่ม การทำอาหาร การทดลองวิทยาศาสตร์ และกิจกรรมนอกห้องเรียน ลูกจึงได้ฝึกความจำใช้งาน การควบคุมตัวเอง ความคิดยืดหยุ่น และการวางแผน ในทุกกิจกรรมที่ทำ'
     },
     faqs: [
       [
@@ -296,6 +303,10 @@ export const programs = [
           [
             'ครูชาวต่างชาติ',
             `ทีมครูชาวต่างชาติราว ${team.foreignTeachers} คน ที่สอนอยู่ใน ${team.schools} โรงเรียนทั่วจังหวัดพะเยา`
+          ],
+          [
+            'ดูแลห้องเรียน MEP ครบวงจร',
+            `ปัจจุบันดูแลห้องเรียน Mini English Program ให้ ${team.schools} โรงเรียน เช่น โรงเรียนอนุบาลพะเยา และโรงเรียนเทศบาล 5 ตั้งแต่สรรหาครู จัดครูลงห้องเรียน อบรมครู ติดตามผลการเรียน ไปจนถึงสมุดรายงานผล (Report Card) และแฟ้มสะสมผลงาน (Portfolio)`
           ],
           [
             'กิจกรรมการเรียนรู้',

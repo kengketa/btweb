@@ -25,7 +25,7 @@ await build({
   build: { ssr: 'src/entry-server.js', outDir: ssrDir, emptyOutDir: true, copyPublicDir: false }
 })
 
-const { render, courses, contact, team, programs, pagePaths, SITE_URL } = await import(
+const { render, courses, contact, team, programs, studentsLabel, pagePaths, SITE_URL } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 )
 
@@ -73,6 +73,16 @@ fs.writeFileSync(
 - Facebook: ${contact.facebook}
 - Book a free placement test / นัดวัดระดับภาษาฟรี: ${link('/contact')}
 
+## About / เกี่ยวกับเรา
+
+- Teaching children in Phayao for ${team.years} years, with ${studentsLabel} students so far, starting from age 3.
+- Founded by a Phayao local who learned English by rote at school without being able to use it, then spent 5 years in Australia (language school, then a master's degree) before coming home to teach the way that finally worked: use the language, not just memorise it.
+- Classroom approach: a "Can Do Attitude" room where mistakes are welcome, Active Learning through games, arts and crafts, and lessons structured as warm-up, content in short parts, and wrap-up.
+- Teachers of Brighton's own classes speak English as their first language, have an education background, and are trained by Brighton.
+- Children are placed by a placement test, assessed through the year on reading, writing, listening, class participation and vocabulary, and sit a level-up test each year.
+- Many students started at age 3 and went on to well-known international schools and universities; one scored 8.0 in IELTS.
+- Brighton runs Mini English Program (MEP) classrooms for ${team.schools} schools in Phayao: recruiting, placing and training teachers, and handling progress tracking, report cards and portfolios.
+
 ## Courses / หลักสูตร
 
 ${courses
@@ -86,7 +96,7 @@ ${programs.map((p) => `- [${p.label}](${link(p.path)}): ${p.card}. ${p.english.t
 ## Pages
 
 - [Home / หน้าแรก](${link('/')}): overview, courses, parent reviews
-- [About / เกี่ยวกับเรา](${link('/about')}): the school, its teachers and approach
+- [About / เกี่ยวกับเรา](${link('/about')}): the founder's story, how teachers are chosen and trained, teaching approach, a student success story, team culture and plans
 - [Courses / หลักสูตร](${link('/courses')}): all courses by age group
 - [News / ข่าวสารและกิจกรรม](${link('/news')}): announcements and class activities from the school's Facebook page
 - [Contact & free placement test / ติดต่อและนัดวัดระดับ](${link('/contact')}): booking form, phone, map

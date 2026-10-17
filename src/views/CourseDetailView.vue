@@ -56,6 +56,28 @@
             </div>
           </div>
 
+          <div v-if="course.levels" class="flex flex-col gap-6">
+            <h2 class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
+              {{ course.levels.heading }}
+            </h2>
+            <ol class="flex flex-col">
+              <li
+                v-for="([title, text], i) in course.levels.items"
+                :key="title"
+                class="flex gap-4 border-t border-line2 py-5 first:border-t-0 first:pt-0"
+              >
+                <span
+                  class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand font-condensed text-sm font-semibold text-white"
+                  >{{ i + 1 }}</span
+                >
+                <span class="flex flex-col gap-1">
+                  <b class="text-lg">{{ title }}</b>
+                  <span class="text-[15px] leading-[1.75] text-muted">{{ text }}</span>
+                </span>
+              </li>
+            </ol>
+          </div>
+
           <div class="flex flex-col gap-6">
             <h2 class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
               หนึ่งคาบเรียนที่ Brighton
@@ -172,10 +194,10 @@ export default {
       contact,
       faqs,
       steps: [
-        ['Warm-up', 'เพลงและเกมเปิดคาบ'],
-        ['Learn', 'เนื้อหาใหม่ผ่านภาพและเรื่องราว'],
-        ['Practice', 'ฝึกพูดเป็นคู่และกลุ่ม'],
-        ['Share', 'นำเสนอผลงานให้เพื่อนฟัง']
+        ['Warm-up', 'เพลง เกม และพูดคุยเปิดคาบ'],
+        ['Learn', 'เนื้อหาใหม่ทีละช่วง ผ่านภาพและเรื่องราว'],
+        ['Activity', 'ลงมือทำ เล่นเกม งานศิลปะและงานประดิษฐ์'],
+        ['Wrap-up', 'ทบทวนสิ่งที่เรียน และใช้ภาษาจริงก่อนจบคาบ']
       ]
     }
   },

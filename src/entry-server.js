@@ -8,6 +8,7 @@ import { createApp } from './app'
 export { courses } from './data/courses'
 export { contact, team } from './data/site'
 export { programs } from './data/programs'
+export { studentsLabel } from './data/about'
 export { pagePaths, SITE_URL } from './data/pages'
 
 export async function render(url) {
