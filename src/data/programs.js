@@ -15,7 +15,7 @@ export const programs = [
     slug: 'teachers',
     path: '/teachers',
     label: 'ครูชาวต่างชาติ',
-    card: 'ครูชาวต่างชาติราว 50 คน สอนอยู่ใน 12 โรงเรียนทั่วพะเยา',
+    card: `ครูชาวต่างชาติราว ${team.foreignTeachers} คน สอนอยู่ใน ${team.schools} โรงเรียนทั่วพะเยา`,
     photoKeyword: 'Teacher',
     meta: {
       title: 'ครูเจ้าของภาษาในพะเยา (Native Speaker) - Brighton Language Academy',
