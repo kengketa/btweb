@@ -111,7 +111,8 @@
           <p class="text-base leading-[1.85] text-muted md:text-[17px]">
             ที่ Brighton เราไม่ได้เป็นเพียงแค่โรงเรียนสอนภาษา
             แต่เราเป็นพื้นที่แห่งการเรียนรู้ที่ให้ความสำคัญกับ “ความรู้สึก” ของผู้เรียน
-            เราคัดสรรหลักสูตรระดับสากล (Oxford &amp; Jolly Phonics) และทีมครูคุณภาพ
+            ห้องเรียนที่ลูกกล้าพูดโดยไม่กลัวผิด ได้ลงมือทำผ่านกิจกรรม พร้อมหลักสูตรระดับสากล (Oxford
+            &amp; Jolly Phonics) และครูที่ผ่านการคัดเลือกและอบรม
             เพื่อให้ลูกเติบโตอย่างมั่นคงทั้งทักษะภาษาและทัศนคติ
           </p>
         </div>
@@ -195,6 +196,45 @@
           <span class="flex-1 text-[15px] leading-[1.7] text-muted">{{ p.card }}</span>
           <span class="text-sm font-semibold text-brand">ดูรายละเอียด →</span>
         </router-link>
+      </div>
+    </section>
+
+    <!-- Our story: founder, students, a success story; the full version is on /about -->
+    <section class="wrap pb-16 md:pb-[104px]">
+      <div
+        class="grid gap-8 rounded-3xl bg-ink p-7 text-cream md:rounded-[32px] md:p-14 lg:grid-cols-[1.2fr_1fr] lg:gap-14"
+      >
+        <div class="flex flex-col gap-4">
+          <span class="font-condensed text-xs font-semibold uppercase tracking-[.14em] text-sun"
+            >Our Story</span
+          >
+          <h2
+            class="font-display text-[26px] font-bold leading-[1.4] md:text-[40px]"
+            style="text-wrap: balance"
+          >
+            {{ story.heading }}
+          </h2>
+          <p class="text-[15px] leading-[1.8] opacity-85 md:text-[17px]">
+            ผู้ก่อตั้ง Brighton เคยเรียนภาษาอังกฤษแบบท่องจำจนสื่อสารไม่ได้ ใช้เวลา 5
+            ปีในออสเตรเลียจนใช้ภาษาได้จริง แล้วกลับมาพะเยาเพื่อส่งต่อวิธีเรียนแบบนั้นให้เด็กๆ
+          </p>
+          <router-link class="mt-1 self-start font-semibold text-sun hover:underline" to="/about"
+            >อ่านเรื่องราวของเรา →</router-link
+          >
+        </div>
+        <div class="grid grid-cols-2 gap-3 self-center">
+          <div
+            v-for="[value, label] in storyStats"
+            :key="label"
+            class="flex flex-col gap-2 rounded-[20px] bg-cream/10 p-5"
+          >
+            <span
+              class="font-condensed text-[36px] font-bold leading-none text-sun md:text-[44px]"
+              >{{ value }}</span
+            >
+            <span class="text-sm leading-[1.5] opacity-85">{{ label }}</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -389,6 +429,7 @@ import IconFacebook from '@/components/icons/IconFacebook.vue'
 import IconMobile from '@/components/icons/IconMobile.vue'
 import { useFeed } from '@/composables/useFeed'
 import { contact, yearsLabel } from '@/data/site'
+import { founderStory, studentsLabel } from '@/data/about'
 import reviewList from '@/data/reviews.json'
 import { ageFont, courses, toneClass } from '@/data/courses'
 import { programs } from '@/data/programs'
@@ -422,6 +463,13 @@ export default {
           initial: Array.from(r.name)[0]
         })),
       years: yearsLabel,
+      story: founderStory,
+      storyStats: [
+        [yearsLabel, 'ปีที่ดูแลเด็กๆ ในพะเยา'],
+        [studentsLabel, 'นักเรียนที่เรียนกับเรา'],
+        ['3', 'ขวบ ก็เริ่มเรียนกับเราได้แล้ว'],
+        ['7–8', 'IELTS ของศิษย์เก่าที่เริ่มเรียนกับเราตอน 3 ขวบ']
+      ],
       courses,
       programs,
       toneClass,
@@ -429,19 +477,19 @@ export default {
       pillars: [
         {
           title: 'หลักสูตรมาตรฐานสากล',
-          desc: 'Oxford และ Jolly Phonics พร้อมแนวทางพัฒนาภาษาตามกรอบ CEFR เรียนแล้วใช้ได้จริง'
+          desc: 'Oxford และ Jolly Phonics เรียนผ่านกิจกรรม Active Learning เกม งานศิลปะและงานประดิษฐ์ ไม่ใช่การท่องจำ'
         },
         {
           title: 'ครูเจ้าของภาษา',
-          desc: 'ครูเจ้าของภาษาและครูผู้เชี่ยวชาญ พัฒนาทักษะฟัง–พูด–อ่าน–เขียนอย่างเป็นระบบ'
+          desc: 'ครูที่ใช้ภาษาอังกฤษเป็นภาษาแรก มีพื้นฐานด้านการศึกษา และผ่านการอบรมของ Brighton'
         },
         {
-          title: 'บรรยากาศอบอุ่น',
-          desc: 'ใส่ใจและเป็นมิตร ลูกมีความสุขกับการเรียน และเติบโตอย่างมั่นใจ'
+          title: 'กล้าพูด ไม่กลัวผิด',
+          desc: 'ห้องเรียนแบบ Can Do Attitude ตอบผิดได้ ครูและเพื่อนช่วยกันให้กำลังใจ ลูกจึงกล้าใช้ภาษาอย่างมั่นใจ'
         },
         {
           title: 'วัดระดับก่อนเรียน',
-          desc: 'ประเมินระดับภาษาตามมาตรฐาน CEFR เริ่มในระดับที่เหมาะสม และเห็นพัฒนาการชัดเจน'
+          desc: 'วัดระดับก่อนเริ่มเรียน ติดตามผลตลอดปี และสอบเลื่อนระดับทุกปี เห็นพัฒนาการของลูกชัดเจน'
         }
       ]
     }
