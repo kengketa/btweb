@@ -98,6 +98,7 @@ ${programs.map((p) => `- [${p.label}](${link(p.path)}): ${p.card}. ${p.english.t
 - [Home / หน้าแรก](${link('/')}): overview, courses, parent reviews
 - [About / เกี่ยวกับเรา](${link('/about')}): the founder's story, how teachers are chosen and trained, teaching approach, a student success story, team culture and plans
 - [Courses / หลักสูตร](${link('/courses')}): all courses by age group
+- [Hall of Fame / ผลสอบของนักเรียน](${link('/hall-of-fame')}): students' real test results — IELTS Academic overall 7.0–7.5 (CEFR C1) and Oxford Placement Test for Young Learners at B1 and above
 - [News / ข่าวสารและกิจกรรม](${link('/news')}): announcements and class activities from the school's Facebook page
 - [Contact & free placement test / ติดต่อและนัดวัดระดับ](${link('/contact')}): booking form, phone, map
 

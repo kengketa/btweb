@@ -26,6 +26,7 @@
           <router-link v-for="p in programs" :key="p.slug" :to="p.path" class="hover:text-brand">
             {{ p.label }}
           </router-link>
+          <router-link class="hover:text-brand" to="/hall-of-fame">Hall of Fame</router-link>
           <router-link class="hover:text-brand" to="/news">ข่าวสารและกิจกรรม</router-link>
           <router-link class="hover:text-brand" to="/contact">นัดวัดระดับภาษา</router-link>
           <router-link class="hover:text-brand" to="/privacy-policy"
