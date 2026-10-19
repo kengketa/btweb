@@ -6,6 +6,6 @@ const numbered = (folder, prefix, count) =>
     (_, i) => `/images/${folder}/${prefix}-${String(i + 1).padStart(2, '0')}.jpg`
   )
 
-export const homePhotos = numbered('1_home', 'home', 11)
+export const homePhotos = numbered('1_home', 'home', 16)
 export const aboutPhotos = numbered('2_about_us', 'about', 5)
 export const aboutCover = '/images/cover-brighton.jpg'
