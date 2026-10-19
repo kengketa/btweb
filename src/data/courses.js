@@ -1,5 +1,6 @@
 // `tone` picks the colour block used on cards: red | sun | blush | ink
 // `levels` is the step-by-step outline on the course page (how the course runs, in order)
+// `photo` is the course's own picture in public/images/3_courses/, named after its slug
 export const courses = [
   {
     slug: 'english-level',
@@ -10,7 +11,7 @@ export const courses = [
     name: 'English Level',
     sub: 'Oxford Curriculum',
     tone: 'red',
-    keyword: 'English Level',
+    photo: '/images/3_courses/english-level.jpg',
     tagline: 'พัฒนาทักษะรอบด้าน ฟัง–พูด–อ่าน–เขียน ด้วยหลักสูตร Oxford',
     desc: 'เริ่มเรียนได้ตั้งแต่ 3 ขวบ วัย 3–4 ปีเรียนผ่านบัตรคำและกิจกรรมโดยยังไม่ใช้หนังสือ ส่วนวัย 5–12 ปีเรียนด้วยหลักสูตร Oxford University Press จัดชั้นตามผลวัดระดับ ติดตามผลตลอดปี และสอบเลื่อนระดับทุกปี',
     short: 'ฟัง พูด อ่าน เขียน อย่างสมดุล ด้วยหลักสูตรแท้จาก Oxford',
@@ -58,7 +59,7 @@ export const courses = [
     name: 'Brighton Phonics',
     sub: 'Jolly Phonics',
     tone: 'sun',
-    keyword: 'Phonics',
+    photo: '/images/3_courses/brighton-phonics.jpg',
     tagline: 'ปูพื้นฐานการอ่านออกเสียงให้เป๊ะ ด้วยหลักสูตร Jolly Phonics',
     desc: 'หลักสูตร Jolly Phonics เริ่มที่อายุ 5 ปี ไล่จากเสียงตัวอักษร การผสมเสียงเป็นคำ ไปจนถึงคำที่ซับซ้อนขึ้น เป้าหมายคือให้ลูกอ่านแล้วเข้าใจเรื่อง และรักการอ่านด้วยตัวเอง',
     short: 'อ่านออกเสียงถูกต้อง สะกดคำได้คล่อง ด้วยระบบ Jolly Phonics',
@@ -98,7 +99,7 @@ export const courses = [
     name: '4 Skills English',
     sub: 'Oxford · ระดับมัธยม',
     tone: 'blush',
-    keyword: 'Conversation',
+    photo: '/images/3_courses/4-skills-english.jpg',
     tagline: 'ภาษาอังกฤษครบ 4 ทักษะ สำหรับนักเรียนมัธยม',
     desc: 'สำหรับนักเรียนระดับมัธยมที่ต้องการพัฒนาภาษาอังกฤษครบ 4 ทักษะอย่างเป็นระบบ พร้อมวางพื้นฐานการอ่าน–เขียนเชิงวิชาการ',
     short: 'ฟัง พูด อ่าน เขียน และ Academic Reading & Writing สำหรับวัยมัธยม',
@@ -136,7 +137,7 @@ export const courses = [
     name: 'Private Course',
     sub: 'เลือกหัวข้อได้เอง · Exam Prep',
     tone: 'ink',
-    keyword: null,
+    photo: '/images/3_courses/private-course.jpg',
     tagline: 'เรียนตรงจุด ตามเป้าหมายของผู้เรียน',
     desc: 'คอร์สติวภาษาอังกฤษที่ปรับตามความต้องการของผู้เรียน เลือกหัวข้อได้เองทั้งแบบตัวต่อตัวหรือกลุ่มเล็ก เหมาะสำหรับผู้ที่ต้องการพัฒนาเฉพาะด้านอย่างรวดเร็ว หรือติวเสริมสำหรับนักเรียน MEP / EP',
     short: 'ตัวต่อตัวหรือกลุ่มเล็ก เตรียมสอบ TOEIC, IELTS, TOEFL, CEFR',
