@@ -11,6 +11,7 @@ export const pagePaths = [
   ...courses.map((c) => `/courses/${c.slug}`),
   ...programs.map((p) => p.path),
   '/hall-of-fame',
+  '/results',
   '/news',
   '/contact',
   '/privacy-policy'

@@ -27,6 +27,7 @@
             {{ p.label }}
           </router-link>
           <router-link class="hover:text-brand" to="/hall-of-fame">Hall of Fame</router-link>
+          <router-link class="hover:text-brand" to="/results">ดูผลการเรียน</router-link>
           <router-link class="hover:text-brand" to="/news">ข่าวสารและกิจกรรม</router-link>
           <router-link class="hover:text-brand" to="/contact">นัดวัดระดับภาษา</router-link>
           <router-link class="hover:text-brand" to="/privacy-policy"

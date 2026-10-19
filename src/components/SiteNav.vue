@@ -81,7 +81,7 @@ export default {
         { label: 'เกี่ยวกับเรา', to: '/about' },
         { label: 'หลักสูตร', to: '/courses' },
         { label: 'Hall of Fame', to: '/hall-of-fame' },
-        { label: 'ข่าวสาร', to: '/news' },
+        { label: 'ดูผลการเรียน', to: '/results' },
         { label: 'ติดต่อเรา', to: '/contact' }
       ]
     }

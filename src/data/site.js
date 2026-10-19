@@ -17,6 +17,9 @@ export const contact = {
   facebook: 'https://www.facebook.com/brightonlanguage',
   facebookName: 'Brighton Language Academy',
   reviews: 'https://www.facebook.com/brightonlanguage/reviews',
+  // LINE official account: parents view their child's report here (the /results page)
+  line: 'https://lin.ee/O3Da95C',
+  lineName: 'BrightonLA Official',
   address: ['56/3 ถ.ประตูชัย ต.เวียง อ.เมือง', 'จ.พะเยา 56000'],
   hours: 'เปิดทุกวัน · 09.00 – 19.00 น.',
   // the same hours for search engines and AI (structured data); keep in step with `hours`
