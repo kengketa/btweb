@@ -80,7 +80,7 @@ export default {
         { label: 'หน้าแรก', to: '/' },
         { label: 'เกี่ยวกับเรา', to: '/about' },
         { label: 'หลักสูตร', to: '/courses' },
-        { label: 'ค่ายปิดเทอม', to: '/camp' },
+        { label: 'Hall of Fame', to: '/hall-of-fame' },
         { label: 'ข่าวสาร', to: '/news' },
         { label: 'ติดต่อเรา', to: '/contact' }
       ]

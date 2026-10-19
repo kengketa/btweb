@@ -10,6 +10,7 @@ const CourseDetailView = () => import('../views/CourseDetailView.vue')
 const NewsView = () => import('../views/NewsView.vue')
 const PrivacyPolicyView = () => import('../views/PrivacyPolicyView.vue')
 const ProgramView = () => import('../views/ProgramView.vue')
+const HallOfFameView = () => import('../views/HallOfFameView.vue')
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     component: ProgramView,
     props: { slug: p.slug }
   })),
+  {
+    path: '/hall-of-fame',
+    name: 'hall-of-fame',
+    component: HallOfFameView
+  },
   {
     path: '/contact',
     name: 'contact',

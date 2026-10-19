@@ -10,6 +10,7 @@ export const pagePaths = [
   '/courses',
   ...courses.map((c) => `/courses/${c.slug}`),
   ...programs.map((p) => p.path),
+  '/hall-of-fame',
   '/news',
   '/contact',
   '/privacy-policy'
