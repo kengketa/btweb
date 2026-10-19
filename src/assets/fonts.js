@@ -13,7 +13,8 @@ import '@fontsource/kanit/thai-600.css'
 import '@fontsource/kanit/latin-600.css'
 import '@fontsource/kanit/thai-700.css'
 import '@fontsource/kanit/latin-700.css'
-// the Hall of Fame title only
+// page titles on /hall-of-fame and /results only
+import '@fontsource/kanit/thai-800.css'
 import '@fontsource/kanit/latin-800.css'
 import '@fontsource/roboto-condensed/latin-500.css'
 import '@fontsource/roboto-condensed/latin-600.css'

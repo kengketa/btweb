@@ -11,6 +11,7 @@ const NewsView = () => import('../views/NewsView.vue')
 const PrivacyPolicyView = () => import('../views/PrivacyPolicyView.vue')
 const ProgramView = () => import('../views/ProgramView.vue')
 const HallOfFameView = () => import('../views/HallOfFameView.vue')
+const ResultsView = () => import('../views/ResultsView.vue')
 
 const routes = [
   {
@@ -44,6 +45,11 @@ const routes = [
     path: '/hall-of-fame',
     name: 'hall-of-fame',
     component: HallOfFameView
+  },
+  {
+    path: '/results',
+    name: 'results',
+    component: ResultsView
   },
   {
     path: '/contact',
