@@ -242,10 +242,10 @@
 </template>
 
 <script>
-import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
 import PhotoBox from '@/components/PhotoBox.vue'
-import { useFeed } from '@/composables/useFeed'
+import { useRandomPhotos } from '@/composables/useRandomPhotos'
+import { aboutCover, aboutPhotos } from '@/data/photos'
 import { team, yearsLabel } from '@/data/site'
 import {
   founderStory,
@@ -269,10 +269,8 @@ export default {
         }
       ]
     })
-    const { photos } = useFeed()
-    const cover = computed(() => photos.value[6])
-    const strip = computed(() => [photos.value[12], photos.value[16], photos.value[20]])
-    return { cover, strip }
+    const strip = useRandomPhotos(aboutPhotos, 3)
+    return { cover: aboutCover, strip }
   },
   data() {
     return {

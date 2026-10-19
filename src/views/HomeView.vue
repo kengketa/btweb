@@ -258,11 +258,11 @@
       >
         <PhotoBox
           alt="นักเรียนและครูที่ Brighton"
-          :src="photos[5]"
+          :src="photos[4]"
           class="col-span-2 rounded-[18px] md:row-span-2 md:rounded-3xl"
         />
         <PhotoBox
-          :src="photos[4]"
+          :src="photos[5]"
           alt="กิจกรรมที่ Brighton"
           class="rounded-[18px] md:rounded-3xl"
         />
@@ -273,7 +273,7 @@
           <span class="text-[13px] font-medium md:text-sm">ความมั่นใจที่เห็นได้ทุกคาบเรียน</span>
         </div>
         <PhotoBox
-          :src="photos[8]"
+          :src="photos[6]"
           alt="กิจกรรมที่ Brighton"
           class="col-span-2 hidden rounded-3xl md:block"
         />
@@ -427,11 +427,12 @@ import { useHead } from '@vueuse/head'
 import PhotoBox from '@/components/PhotoBox.vue'
 import IconFacebook from '@/components/icons/IconFacebook.vue'
 import IconMobile from '@/components/icons/IconMobile.vue'
-import { useFeed } from '@/composables/useFeed'
+import { useRandomPhotos } from '@/composables/useRandomPhotos'
 import { contact, yearsLabel } from '@/data/site'
 import { founderStory, studentsLabel } from '@/data/about'
 import reviewList from '@/data/reviews.json'
 import { ageFont, courses, toneClass } from '@/data/courses'
+import { homePhotos } from '@/data/photos'
 import { programs } from '@/data/programs'
 
 export default {
@@ -448,8 +449,9 @@ export default {
         }
       ]
     })
-    const { photos } = useFeed()
-    const heroPhotos = computed(() => [0, 1, 2, 3].map((i) => photos.value[i]))
+    // 4 for the hero grid, 3 for the gallery
+    const photos = useRandomPhotos(homePhotos, 7)
+    const heroPhotos = computed(() => photos.value.slice(0, 4))
     return { photos, heroPhotos }
   },
   data() {
