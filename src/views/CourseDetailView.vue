@@ -25,7 +25,7 @@
         <div class="relative">
           <PhotoBox
             :alt="course.name"
-            :src="photoFor(course.keyword, index * 3 + 2)"
+            :src="course.photo"
             class="h-[260px] rounded-3xl md:h-[380px] md:rounded-[28px]"
           />
           <div
@@ -164,7 +164,6 @@ import { useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
 import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
-import { useFeed } from '@/composables/useFeed'
 import { contact } from '@/data/site'
 import { courses, faqs } from '@/data/courses'
 import { courseSchema, jsonLd } from '@/data/schema'
@@ -186,8 +185,7 @@ export default {
       meta: [{ name: 'description', content: computed(() => course.value?.desc ?? '') }],
       script: computed(() => (course.value ? [jsonLd(courseSchema(course.value))] : []))
     })
-    const { photoFor } = useFeed()
-    return { course, photoFor }
+    return { course }
   },
   data() {
     return {
@@ -202,9 +200,6 @@ export default {
     }
   },
   computed: {
-    index() {
-      return courses.indexOf(this.course)
-    },
     others() {
       return courses.filter((c) => c !== this.course).slice(0, 3)
     },
