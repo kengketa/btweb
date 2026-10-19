@@ -26,7 +26,7 @@
         <div class="relative">
           <PhotoBox
             :alt="program.label"
-            :src="photoFor(program.photoKeyword, photoIndex)"
+            :src="program.photo || photoFor(program.photoKeyword, photoIndex)"
             class="h-[260px] rounded-3xl md:h-[400px] md:rounded-[28px]"
           />
           <div

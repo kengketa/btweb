@@ -7,6 +7,9 @@
 //
 // `english` is the summary box near the bottom of each page: English by default, for
 // English searches; add `lang: 'th'` to write it in Thai instead.
+//
+// `photo` is the page's own picture from public/images/; pages without one fall back to
+// a Facebook feed photo that mentions `photoKeyword`.
 import { contact, team } from './site.js'
 import { teacherStandards } from './about.js'
 
@@ -100,7 +103,7 @@ export const programs = [
     path: '/camp',
     label: 'ค่ายปิดเทอม',
     card: 'Kindy Fun Camp ค่ายภาษาอังกฤษทุกช่วงปิดเทอม',
-    photoKeyword: 'Camp',
+    photo: '/images/4_camp/camp.jpg',
     meta: {
       title: 'ค่ายภาษาอังกฤษปิดเทอม พะเยา (Kindy Fun Camp) - Brighton Language Academy',
       description:
