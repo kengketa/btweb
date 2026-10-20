@@ -3,9 +3,9 @@
     :class="small ? 'h-6' : 'h-8'"
     alt="Brighton Language Academy"
     class="block w-auto"
-    height="290"
-    src="@/assets/images/brighton-logo.png"
-    width="1454"
+    height="96"
+    src="@/assets/images/brighton-logo.webp"
+    width="480"
   />
 </template>
 

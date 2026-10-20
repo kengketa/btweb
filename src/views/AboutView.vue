@@ -24,6 +24,8 @@
         alt="นักเรียนและครูที่ Brighton Language Academy"
         class="h-[260px] rounded-3xl md:h-[440px] md:rounded-[28px]"
         position="center 35%"
+        priority
+        sizes="(min-width: 1280px) 1170px, 100vw"
       />
       <div
         class="absolute -bottom-10 left-9 flex items-center gap-4 rounded-3xl bg-sun px-6 py-5 shadow-[0_20px_40px_-24px_rgba(0,0,0,.35)] md:-bottom-12 md:left-24 md:gap-5 md:px-8 md:py-7"
@@ -236,6 +238,7 @@
         :src="src"
         alt="บรรยากาศที่ Brighton"
         class="h-[220px] rounded-3xl md:h-[300px]"
+        sizes="(min-width: 640px) 40vw, 100vw"
       />
     </section>
   </main>
