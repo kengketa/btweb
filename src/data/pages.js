@@ -16,3 +16,14 @@ export const pagePaths = [
   '/contact',
   '/privacy-policy'
 ]
+
+// The main menu, in order. On phones, scrolling past the end of one of these pages
+// brings the next one in below it (src/composables/usePageFeed.js).
+export const menu = [
+  { label: 'หน้าแรก', to: '/' },
+  { label: 'เกี่ยวกับเรา', to: '/about' },
+  { label: 'หลักสูตร', to: '/courses' },
+  { label: 'Hall of Fame', to: '/hall-of-fame' },
+  { label: 'ดูผลการเรียน', to: '/results' },
+  { label: 'ติดต่อเรา', to: '/contact' }
+]
