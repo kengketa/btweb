@@ -69,7 +69,22 @@ const routes = [
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
+// The phone page feed changes the address as the visitor scrolls from one page into
+// the next; that change must leave the scroll position alone.
+let keepScrollFor = null
+
+export function replaceKeepingScroll(router, path) {
+  keepScrollFor = path
+  return router.replace(path).then((failure) => {
+    if (failure) keepScrollFor = null
+  })
+}
+
 function scrollBehavior(to, from, savedPosition) {
+  if (to.path === keepScrollFor) {
+    keepScrollFor = null
+    return false
+  }
   if (savedPosition) return savedPosition
   // leave room for the sticky nav when jumping to a section
   if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }

@@ -145,7 +145,7 @@
         </router-link>
       </div>
       <div
-        class="mx-auto flex max-w-[1280px] snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-10 lg:grid-cols-4 lg:px-14"
+        class="mx-auto flex max-w-[1280px] snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 pb-1 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-10 lg:grid-cols-4 lg:px-14"
       >
         <router-link
           v-for="c in courses"

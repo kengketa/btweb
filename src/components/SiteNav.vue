@@ -59,6 +59,7 @@
           :class="isActive(link) ? 'text-brand' : 'text-ink'"
           :to="link.to"
           class="border-b border-line py-4 text-lg font-medium last:border-0"
+          @click="open = false"
         >
           {{ link.label }}
         </router-link>
@@ -69,6 +70,7 @@
 
 <script>
 import BrandLogo from './BrandLogo.vue'
+import { menu } from '@/data/pages'
 
 export default {
   name: 'SiteNav',
@@ -76,14 +78,7 @@ export default {
   data() {
     return {
       open: false,
-      links: [
-        { label: 'หน้าแรก', to: '/' },
-        { label: 'เกี่ยวกับเรา', to: '/about' },
-        { label: 'หลักสูตร', to: '/courses' },
-        { label: 'Hall of Fame', to: '/hall-of-fame' },
-        { label: 'ดูผลการเรียน', to: '/results' },
-        { label: 'ติดต่อเรา', to: '/contact' }
-      ]
+      links: menu
     }
   },
   watch: {
