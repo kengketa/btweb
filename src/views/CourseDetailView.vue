@@ -27,6 +27,8 @@
             :alt="course.name"
             :src="course.photo"
             class="h-[260px] rounded-3xl md:h-[380px] md:rounded-[28px]"
+            priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
           />
           <div
             class="absolute -right-2 -top-3 h-14 w-14 rounded-lg bg-brand md:-right-4 md:-top-4 md:h-[72px] md:w-[72px]"

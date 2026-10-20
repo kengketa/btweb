@@ -76,6 +76,8 @@
               :src="src"
               alt="บรรยากาศการเรียนที่ Brighton"
               class="rounded-sm"
+              priority
+              sizes="(min-width: 1024px) 280px, 50vw"
             />
           </div>
           <div
@@ -258,13 +260,15 @@
       >
         <PhotoBox
           alt="นักเรียนและครูที่ Brighton"
-          :src="photos[4]"
+          :src="photos[0]"
           class="col-span-2 rounded-[18px] md:row-span-2 md:rounded-3xl"
+          sizes="(min-width: 768px) 25vw, 100vw"
         />
         <PhotoBox
-          :src="photos[5]"
+          :src="photos[1]"
           alt="กิจกรรมที่ Brighton"
           class="rounded-[18px] md:rounded-3xl"
+          sizes="(min-width: 768px) 25vw, 50vw"
         />
         <div class="flex flex-col justify-between rounded-[18px] bg-sun p-5 md:rounded-3xl md:p-6">
           <span class="font-condensed text-xl font-semibold italic leading-[1.3] md:text-[26px]"
@@ -273,9 +277,10 @@
           <span class="text-[13px] font-medium md:text-sm">ความมั่นใจที่เห็นได้ทุกคาบเรียน</span>
         </div>
         <PhotoBox
-          :src="photos[6]"
+          :src="photos[2]"
           alt="กิจกรรมที่ Brighton"
           class="col-span-2 hidden rounded-3xl md:block"
+          sizes="50vw"
         />
       </div>
     </section>
@@ -422,7 +427,6 @@
 </template>
 
 <script>
-import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
 import PhotoBox from '@/components/PhotoBox.vue'
 import IconFacebook from '@/components/icons/IconFacebook.vue'
@@ -449,9 +453,11 @@ export default {
         }
       ]
     })
-    // 4 for the hero grid, 3 for the gallery
-    const photos = useRandomPhotos(homePhotos, 7)
-    const heroPhotos = computed(() => photos.value.slice(0, 4))
+    // The hero grid is in the first screen, so its photos stay the pre-rendered ones:
+    // swapping them after load would download a second set. The gallery further down
+    // hasn't started loading by then, so it gets a random 3 of the rest.
+    const heroPhotos = homePhotos.slice(0, 4)
+    const photos = useRandomPhotos(homePhotos.slice(4), 3)
     return { photos, heroPhotos }
   },
   data() {

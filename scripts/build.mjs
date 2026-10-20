@@ -30,7 +30,20 @@ const { render, courses, contact, team, programs, studentsLabel, pagePaths, SITE
 )
 
 // --- pages -----------------------------------------------------------------
-const template = fs.readFileSync(path.join(outDir, 'index.html'), 'utf8')
+// The browser finds the fonts only once it has read the stylesheet, and every page's
+// largest text (its title, and the body copy) waits for them. Preloading the Thai body
+// and heading faces starts both downloads alongside the stylesheet instead.
+const PRELOAD_FONTS = [/^kanit-thai-300-normal-.+\.woff2$/, /^kanit-thai-700-normal-.+\.woff2$/]
+const assets = fs.readdirSync(path.join(outDir, 'assets'))
+const fontPreloads = PRELOAD_FONTS.map((pattern) => {
+  const file = assets.find((f) => pattern.test(f))
+  if (!file) throw new Error(`no font matching ${pattern} in the build`)
+  return `<link rel="preload" href="/assets/${file}" as="font" type="font/woff2" crossorigin>`
+}).join('\n')
+
+const template = fs
+  .readFileSync(path.join(outDir, 'index.html'), 'utf8')
+  .replace('</head>', `${fontPreloads}\n</head>`)
 if (!template.includes('<div id="app"></div>')) throw new Error('index.html has no empty #app')
 
 for (const url of pagePaths) {

@@ -35,7 +35,12 @@
         :key="c.slug"
         class="overflow-hidden rounded-[22px] border border-line bg-white md:grid md:grid-cols-[200px_160px_1fr] md:items-center md:gap-8 md:rounded-none md:border-0 md:border-t md:border-line2 md:bg-transparent md:py-8 lg:grid-cols-[240px_200px_1fr_auto] lg:gap-10"
       >
-        <PhotoBox :alt="c.name" :src="c.photo" class="h-[150px] md:h-[160px] md:rounded-[20px]" />
+        <PhotoBox
+          :alt="c.name"
+          :src="c.photo"
+          class="h-[150px] md:h-[160px] md:rounded-[20px]"
+          sizes="(min-width: 1024px) 240px, (min-width: 768px) 200px, 100vw"
+        />
         <div class="hidden flex-col gap-1.5 md:flex">
           <span class="text-[13px] font-semibold text-muted">{{ c.tag }}</span>
           <span :class="ageFont(c.age)" class="text-[44px] font-bold leading-[1.1] text-brand">
