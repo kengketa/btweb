@@ -13,7 +13,18 @@ export default {
         line: '#EADFD2',
         line2: '#E2D5C5',
         sun: '#F4B63F',
-        blush: '#F9E3E0'
+        blush: '#F9E3E0',
+        // the LINE parent app (Student Progress), for the phone demo on /results
+        app: {
+          navy: '#1B2559',
+          red: '#C8102E',
+          sky: '#BFE6FB',
+          cream: '#FFFCF5',
+          muted: '#6B7394',
+          pale: '#F3F8FD',
+          sun: '#FFC93C',
+          note: '#FFF4C9'
+        }
       },
       fontFamily: {
         sans: ['Kanit', 'system-ui', 'sans-serif'],
