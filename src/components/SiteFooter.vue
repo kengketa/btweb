@@ -1,16 +1,28 @@
 <template>
-  <footer class="bg-paper pb-28 pt-16 md:pb-8">
+  <footer class="pb-28 pt-6 md:pb-8 md:pt-10">
     <div class="wrap">
-      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-        <div class="flex flex-col gap-4">
-          <BrandLogo class="self-start" />
-          <p class="max-w-[300px] text-sm leading-[1.7] text-muted">
-            โรงเรียนสอนภาษาอังกฤษสำหรับเด็ก ใจกลางเมืองพะเยา —
-            เพราะความสุขคือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด
-          </p>
+      <!-- the footer is one more bento grid: brand, courses, links, contact -->
+      <div class="grid gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-12">
+        <div
+          class="flex flex-col justify-between gap-6 rounded-[28px] border border-line bg-white p-7 text-ink shadow-[0_24px_48px_-36px_rgba(34,28,25,.28)] sm:col-span-2 lg:col-span-4 lg:row-span-2"
+        >
+          <div class="flex flex-col gap-4">
+            <BrandLogo class="self-start" />
+            <p class="max-w-[320px] text-[15px] leading-[1.75] text-muted">
+              โรงเรียนสอนภาษาอังกฤษสำหรับเด็ก ใจกลางเมืองพะเยา —
+              เพราะความสุขคือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด
+            </p>
+          </div>
+          <router-link
+            class="btn-primary h-12 self-start px-6 text-[15px] shadow-none"
+            to="/contact"
+            >นัดวัดระดับภาษาฟรี →</router-link
+          >
         </div>
-        <div class="flex flex-col gap-2.5 text-sm">
-          <b class="text-[13px] tracking-[.04em] text-brand">หลักสูตร</b>
+        <div
+          class="flex flex-col gap-2.5 rounded-[28px] border border-line bg-white p-6 text-sm lg:col-span-4"
+        >
+          <b class="mb-1 text-[13px] tracking-[.04em] text-brand">หลักสูตร</b>
           <router-link
             v-for="c in courses"
             :key="c.slug"
@@ -20,33 +32,35 @@
             {{ c.name }} · {{ c.age }} {{ c.ageUnit === 'ปี' ? 'ปี' : '' }}
           </router-link>
         </div>
-        <div class="flex flex-col gap-2.5 text-sm">
-          <b class="text-[13px] tracking-[.04em] text-brand">Brighton</b>
-          <router-link class="hover:text-brand" to="/about">เกี่ยวกับเรา</router-link>
-          <router-link v-for="p in programs" :key="p.slug" :to="p.path" class="hover:text-brand">
-            {{ p.label }}
-          </router-link>
-          <router-link class="hover:text-brand" to="/hall-of-fame">Hall of Fame</router-link>
-          <router-link class="hover:text-brand" to="/results">ดูผลการเรียน</router-link>
-          <router-link class="hover:text-brand" to="/news">ข่าวสารและกิจกรรม</router-link>
-          <router-link class="hover:text-brand" to="/contact">นัดวัดระดับภาษา</router-link>
-          <router-link class="hover:text-brand" to="/privacy-policy"
-            >นโยบายความเป็นส่วนตัว</router-link
+        <div
+          class="flex flex-col gap-2.5 rounded-[28px] bg-sunsoft p-6 text-sm lg:col-span-4 lg:row-span-2"
+        >
+          <b class="mb-1 text-[13px] tracking-[.04em] text-ink">ติดต่อ</b>
+          <a
+            :href="contact.tel"
+            class="font-condensed text-[28px] font-bold leading-tight hover:text-brand"
+            >{{ contact.phone }}</a
           >
-        </div>
-        <div class="flex flex-col gap-2.5 text-sm">
-          <b class="text-[13px] tracking-[.04em] text-brand">ติดต่อ</b>
-          <a :href="contact.tel" class="hover:text-brand">โทร {{ contact.phone }}</a>
           <a :href="contact.facebook" class="hover:text-brand" rel="noopener" target="_blank">
             Facebook: {{ contact.facebookName }}
           </a>
-          <span class="text-muted">{{ contact.address.join(' ') }}</span>
-          <span class="text-muted">{{ contact.hours }}</span>
+          <span class="text-body">{{ contact.address.join(' ') }}</span>
+          <span class="text-body">{{ contact.hours }}</span>
+        </div>
+        <div
+          class="flex flex-wrap gap-2 rounded-[28px] border border-line bg-white p-5 text-sm sm:col-span-2 lg:col-span-4"
+        >
+          <router-link class="footer-chip" to="/about">เกี่ยวกับเรา</router-link>
+          <router-link v-for="p in programs" :key="p.slug" :to="p.path" class="footer-chip">
+            {{ p.label }}
+          </router-link>
+          <router-link class="footer-chip" to="/hall-of-fame">Hall of Fame</router-link>
+          <router-link class="footer-chip" to="/results">ดูผลการเรียน</router-link>
+          <router-link class="footer-chip" to="/news">ข่าวสารและกิจกรรม</router-link>
+          <router-link class="footer-chip" to="/privacy-policy">นโยบายความเป็นส่วนตัว</router-link>
         </div>
       </div>
-      <div
-        class="mt-12 flex flex-col justify-between gap-2 border-t border-line2 pt-5 text-xs text-muted sm:flex-row"
-      >
+      <div class="mt-6 flex flex-col justify-between gap-2 px-2 text-xs text-muted sm:flex-row">
         <span>© {{ year }} Brighton Education Co., Ltd.</span>
         <span>brightonedu.com</span>
       </div>

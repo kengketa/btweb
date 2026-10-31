@@ -13,7 +13,14 @@ export default {
         line: '#EADFD2',
         line2: '#E2D5C5',
         sun: '#F4B63F',
+        // soft sun tint for bento cards
+        sunsoft: '#FCF1D6',
         blush: '#F9E3E0',
+        // extra soft tones so bento grids can vary card colour (BeBetter-style)
+        sage: '#E6EEE3',
+        sagedeep: '#3F6B4A',
+        peach: '#FCE6D9',
+        peachdeep: '#B4532A',
         // the LINE parent app (Student Progress), for the phone demo on /results
         app: {
           navy: '#1B2559',

@@ -1,13 +1,15 @@
 <template>
   <main>
-    <section class="wrap flex flex-col gap-3 pb-6 pt-12 md:gap-5 md:pb-12 md:pt-[88px]">
-      <span class="eyebrow">Our Courses</span>
-      <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-end lg:gap-10">
-        <h1
-          class="font-display text-[36px] font-bold leading-[1.35] md:text-[56px] xl:text-[64px] xl:leading-[1.3]"
-        >
-          หลักสูตรของเรา
-        </h1>
+    <section class="wrap pb-6 pt-10 md:pb-10 md:pt-16">
+      <div class="flex flex-col justify-between gap-5 lg:flex-row lg:items-end lg:gap-10">
+        <SectionHead
+          :count="`${courses.length} หลักสูตร`"
+          :level="1"
+          eyebrow="Our Courses"
+          icon="book"
+          title="หลักสูตรของเรา"
+          tone="brand"
+        />
         <p class="max-w-[440px] text-base leading-[1.75] text-muted md:text-[17px]">
           ออกแบบตามช่วงวัยและพัฒนาการ เน้นความเข้าใจ ไม่ใช่การท่องจำ ทุกคลาสเริ่มจากการวัดระดับฟรี
           เพื่อให้ลูกได้เรียนในกลุ่มที่เหมาะสม
@@ -16,7 +18,7 @@
     </section>
 
     <div
-      class="mx-auto flex max-w-[1280px] gap-2 overflow-x-auto px-5 pb-5 md:flex-wrap md:gap-2.5 md:px-10 lg:px-14"
+      class="mx-auto flex max-w-[1280px] gap-2 overflow-x-auto px-5 pb-5 md:flex-wrap md:gap-2.5 md:px-10 md:pb-7 lg:px-14"
     >
       <button
         v-for="[key, label] in groups"
@@ -29,95 +31,113 @@
       </button>
     </div>
 
+    <!-- one bento card per course; widths alternate 7/5, 5/7 so rows don't line up -->
     <section
       v-reveal="{ stagger: 80 }"
-      class="wrap flex flex-col gap-3.5 pb-12 md:gap-0 md:pb-[72px]"
+      class="wrap grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 md:gap-5 md:pb-5 lg:grid-cols-12"
     >
-      <article
-        v-for="c in filtered"
+      <BentoCard
+        v-for="(c, i) in filtered"
         :key="c.slug"
-        class="overflow-hidden rounded-[22px] border border-line bg-white md:grid md:grid-cols-[200px_160px_1fr] md:items-center md:gap-8 md:rounded-none md:border-0 md:border-t md:border-line2 md:bg-transparent md:py-8 lg:grid-cols-[240px_200px_1fr_auto] lg:gap-10"
+        :class="filtered.length === 1 ? 'md:col-span-2 lg:col-span-12' : spans[i % 4]"
+        :sub="c.sub"
+        :tag="c.curriculum"
+        :title="c.name"
+        :to="`/courses/${c.slug}`"
       >
-        <PhotoBox
-          :alt="c.name"
-          :src="c.photo"
-          class="h-[150px] md:h-[160px] md:rounded-[20px]"
-          sizes="(min-width: 1024px) 240px, (min-width: 768px) 200px, 100vw"
-        />
-        <div class="hidden flex-col gap-1.5 md:flex">
-          <span class="text-[13px] font-semibold text-muted">{{ c.tag }}</span>
-          <span :class="ageFont(c.age)" class="text-[44px] font-bold leading-[1.1] text-brand">
-            {{ c.age }}
-          </span>
-          <span class="text-sm text-muted">{{ c.ageUnit }}</span>
-        </div>
-        <div class="flex flex-col gap-1.5 p-[18px] md:gap-2.5 md:p-0">
-          <div class="flex items-baseline justify-between gap-3">
-            <b class="text-xl md:text-[26px]">{{ c.name }}</b>
-            <span :class="ageFont(c.age)" class="text-[22px] font-bold text-brand md:hidden">{{
-              c.age
-            }}</span>
-          </div>
-          <span class="text-sm font-medium text-brand md:text-[15px]">{{ c.sub }}</span>
-          <span
-            class="max-w-[460px] text-sm leading-[1.65] text-muted md:text-[15px] md:leading-[1.7]"
+        <div class="flex flex-1 flex-col gap-5">
+          <PhotoBox
+            :alt="c.name"
+            :src="c.photo"
+            class="h-[180px] rounded-[20px] md:h-[220px] md:rounded-[24px]"
+            sizes="(min-width: 1024px) 700px, (min-width: 768px) 50vw, 100vw"
+          />
+          <div
+            class="flex flex-1 flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-5"
           >
-            {{ c.desc }}
-          </span>
-          <router-link :to="`/courses/${c.slug}`" class="mt-2 text-sm font-semibold lg:hidden">
-            ดูรายละเอียด →
-          </router-link>
+            <p class="max-w-[460px] text-[15px] leading-[1.7] text-muted">{{ c.desc }}</p>
+            <span
+              :class="toneClass[c.tone]"
+              class="flex flex-none -rotate-2 flex-col items-start gap-1 rounded-[20px] px-4 py-3"
+            >
+              <span class="text-[12px] font-semibold opacity-90">{{ c.tag }}</span>
+              <span :class="ageFont(c.age)" class="text-[34px] font-bold leading-none">{{
+                c.age
+              }}</span>
+              <span class="text-[12px] opacity-90">{{ c.ageUnit }}</span>
+            </span>
+          </div>
         </div>
-        <router-link
-          :to="`/courses/${c.slug}`"
-          class="btn-outline hidden h-12 px-6 text-[15px] lg:inline-flex"
-        >
-          ดูรายละเอียด →
-        </router-link>
-      </article>
+        <template #foot><span class="link-arrow">ดูรายละเอียด →</span></template>
+      </BentoCard>
     </section>
 
-    <section class="wrap pb-16 md:pb-[104px]">
-      <div
-        v-reveal
-        class="flex flex-col justify-between gap-4 rounded-[22px] bg-sun p-6 md:flex-row md:items-center md:gap-8 md:rounded-[28px] md:px-12 md:py-11"
+    <section
+      v-reveal="{ stagger: 90 }"
+      class="wrap grid grid-cols-1 gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+    >
+      <BentoCard
+        class="lg:col-span-7"
+        icon="target"
+        sub="ให้ครูช่วยประเมิน — วัดระดับภาษาฟรี ไม่มีค่าใช้จ่าย"
+        title="ไม่แน่ใจว่าลูกควรเริ่มที่ระดับไหน?"
+        tone="sun"
       >
-        <div class="flex flex-col gap-2">
-          <b class="font-display text-xl font-bold md:text-[30px]"
-            >ไม่แน่ใจว่าลูกควรเริ่มที่ระดับไหน?</b
+        <div class="mt-auto flex flex-wrap items-end justify-between gap-5">
+          <p class="flex items-baseline gap-2">
+            <span class="text-sm text-body">เริ่มเรียนได้ตั้งแต่</span>
+            <span class="font-condensed text-[64px] font-bold leading-none">3</span>
+            <span class="text-sm text-body">ขวบ</span>
+          </p>
+          <router-link
+            class="inline-flex h-14 items-center justify-center whitespace-nowrap rounded-full bg-ink px-[30px] text-base font-semibold text-white transition-colors hover:bg-brand"
+            to="/contact"
           >
-          <span class="text-[15px] md:text-base"
-            >ให้ครูช่วยประเมิน — วัดระดับภาษาฟรี ไม่มีค่าใช้จ่าย</span
+            นัดวัดระดับฟรี →
+          </router-link>
+        </div>
+      </BentoCard>
+      <BentoCard
+        class="lg:col-span-5"
+        icon="sparkle"
+        sub="นอกจากคลาสประจำ เรายังมีโครงการและบริการอื่นๆ"
+        title="บริการอื่นๆ"
+        tone="sage"
+      >
+        <div class="mt-auto flex flex-wrap gap-2">
+          <router-link
+            v-for="p in programs"
+            :key="p.slug"
+            :to="p.path"
+            class="rounded-full bg-white px-3.5 py-2 text-sm font-medium transition-colors hover:bg-ink hover:text-white"
+            >{{ p.label }} →</router-link
+          >
+          <span class="rounded-full border border-white px-3.5 py-2 text-sm">Exam Prep</span>
+          <span class="rounded-full border border-white px-3.5 py-2 text-sm"
+            >Corporate Training</span
           >
         </div>
-        <router-link
-          class="inline-flex h-12 items-center justify-center whitespace-nowrap rounded-full bg-ink px-[30px] text-[15px] font-semibold text-white md:h-14 md:text-base"
-          to="/contact"
-        >
-          นัดวัดระดับฟรี →
-        </router-link>
-      </div>
-      <p class="mt-6 text-sm text-muted">
-        บริการอื่นๆ:
-        <template v-for="p in programs" :key="p.slug">
-          <router-link class="link-arrow" :to="p.path">{{ p.label }}</router-link> ·
+        <template #foot>
+          <router-link class="font-semibold text-sagedeep hover:underline" to="/contact"
+            >สอบถามรายละเอียด →</router-link
+          >
         </template>
-        คอร์สเตรียมสอบ (Exam Prep) · อบรมภาษาอังกฤษสำหรับองค์กร (Corporate Training) —
-        <router-link class="link-arrow" to="/contact">สอบถามรายละเอียด</router-link>
-      </p>
+      </BentoCard>
     </section>
   </main>
 </template>
 
 <script>
 import { useHead } from '@vueuse/head'
+import BentoCard from '@/components/BentoCard.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
-import { ageFont, courseGroups, courses } from '@/data/courses'
+import SectionHead from '@/components/SectionHead.vue'
+import { ageFont, courseGroups, courses, toneClass } from '@/data/courses'
 import { programs } from '@/data/programs'
 
 export default {
   name: 'CoursesView',
-  components: { PhotoBox },
+  components: { BentoCard, PhotoBox, SectionHead },
   setup() {
     useHead({
       title: 'คอร์สเรียนพิเศษภาษาอังกฤษ พะเยา - Brighton Language Academy',
@@ -131,7 +151,15 @@ export default {
     })
   },
   data() {
-    return { filter: 'all', groups: courseGroups, courses, programs, ageFont }
+    return {
+      filter: 'all',
+      groups: courseGroups,
+      courses,
+      programs,
+      ageFont,
+      toneClass,
+      spans: ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7']
+    }
   },
   computed: {
     filtered() {

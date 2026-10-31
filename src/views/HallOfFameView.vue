@@ -24,20 +24,32 @@
       </div>
     </section>
 
-    <!-- IELTS -->
-    <section class="wrap pb-10">
+    <!-- IELTS: the report and the band scale, then one card per student -->
+    <section class="wrap pb-16 md:pb-[104px]">
+      <SectionHead
+        v-reveal
+        :count="`${ieltsStudents.length} คน`"
+        class="mb-6 md:mb-10"
+        eyebrow="IELTS Academic"
+        icon="trophy"
+        sub="ผลสอบ IELTS Academic ของนักเรียนไบรท์ตันอยู่ในระดับ CEFR C1 — ระดับที่มหาวิทยาลัยชั้นนำทั่วโลกใช้เป็นเกณฑ์รับเข้าศึกษา"
+        title="พร้อมเรียนต่อระดับนานาชาติ"
+        tone="brand"
+      />
       <div
-        class="relative overflow-hidden rounded-[28px] bg-blush px-3.5 pb-4 pt-10 md:rounded-[32px] md:px-11 md:pb-11 md:pt-12"
+        v-reveal="{ stagger: 90 }"
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
-        <div class="absolute inset-x-0 top-0 h-2 bg-brand"></div>
-        <div class="mb-11 grid items-center gap-14 lg:grid-cols-[minmax(0,.85fr)_minmax(0,1.15fr)]">
-          <figure class="relative flex justify-center">
+        <BentoCard class="lg:col-span-5" tone="blush">
+          <figure
+            class="relative mx-auto flex w-full max-w-[340px] flex-1 items-center justify-center px-3 pb-8 pt-2"
+          >
             <div
-              class="absolute inset-[8%_14%_4%_4%] -rotate-[5deg] rounded-[10px] bg-white shadow-[0_14px_30px_rgba(33,26,23,.1)]"
+              class="absolute inset-[6%_14%_12%_4%] -rotate-[5deg] rounded-[10px] bg-white/70 shadow-[0_14px_30px_rgba(33,26,23,.1)]"
             ></div>
             <a
               :href="ieltsReport"
-              class="relative block w-full max-w-[380px] rotate-[2.5deg] rounded-[10px] bg-white p-2.5 shadow-[0_26px_50px_rgba(33,26,23,.22)] transition-transform hover:rotate-0 hover:scale-[1.02]"
+              class="relative block w-full rotate-[2.5deg] rounded-[10px] bg-white p-2.5 shadow-[0_26px_50px_rgba(33,26,23,.22)] transition-transform hover:rotate-0 hover:scale-[1.02]"
               rel="noopener"
               target="_blank"
             >
@@ -51,268 +63,239 @@
               />
             </a>
             <figcaption
-              class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink px-4 py-2 text-[13.5px] font-medium text-white shadow-[0_8px_20px_rgba(33,26,23,.25)]"
+              class="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink px-4 py-2 text-[13.5px] font-medium text-white shadow-[0_8px_20px_rgba(33,26,23,.25)]"
             >
               ใบรายงานผลจริงจาก IELTS
             </figcaption>
           </figure>
-          <div>
-            <span
-              class="mb-[18px] inline-flex rounded-full border border-[#F2CFCF] bg-white px-3.5 py-[7px] font-condensed text-xs font-bold tracking-[.16em] md:text-sm"
-              >BRITISH COUNCIL · IDP · CAMBRIDGE</span
-            >
-            <div
-              class="mb-2.5 font-condensed text-[15px] font-bold uppercase tracking-[.18em] text-brand"
-            >
-              IELTS Academic
-            </div>
-            <h2 class="mb-3.5 font-display text-[28px] font-bold leading-[1.2] md:text-[40px]">
-              พร้อมเรียนต่อระดับนานาชาติ
-            </h2>
-            <p class="mb-7 text-[17px] leading-[1.7] text-muted" style="text-wrap: pretty">
-              ผลสอบ IELTS Academic ของนักเรียนไบรท์ตันอยู่ในระดับ CEFR C1 —
-              ระดับที่มหาวิทยาลัยชั้นนำทั่วโลกใช้เป็นเกณฑ์รับเข้าศึกษา
-            </p>
-            <div class="rounded-[18px] border border-[#F2CFCF] bg-white px-[18px] pb-3.5 pt-[18px]">
-              <div class="mb-2.5 text-[13px] text-muted">IELTS band score · เทียบระดับ CEFR</div>
-              <div class="grid grid-cols-4 gap-1 text-center">
-                <div v-for="(b, i) in ieltsScale" :key="b.cefr">
-                  <div
-                    :class="b.on ? 'font-bold text-brand' : 'font-medium text-[#7A706B]'"
-                    class="mb-[5px] text-[11px] md:text-[12.5px]"
-                  >
-                    {{ b.band }}
-                  </div>
-                  <div
-                    :class="[
-                      b.on
-                        ? 'bg-brand text-white shadow-[0_6px_14px_rgba(190,30,45,.35)]'
-                        : 'bg-[#F4EDE6] text-[#7A706B]',
-                      scaleCorners(i, ieltsScale.length)
-                    ]"
-                    class="px-1 py-2.5 font-condensed text-[17px] font-bold"
-                  >
-                    {{ b.cefr }}
-                  </div>
-                </div>
+        </BentoCard>
+
+        <BentoCard
+          :level="3"
+          class="lg:col-span-7"
+          icon="chart"
+          sub="BRITISH COUNCIL · IDP · CAMBRIDGE"
+          title="IELTS band score · เทียบระดับ CEFR"
+        >
+          <div class="grid grid-cols-4 gap-1 text-center">
+            <div v-for="(b, i) in ieltsScale" :key="b.cefr">
+              <div
+                :class="b.on ? 'font-bold text-brand' : 'font-medium text-muted'"
+                class="mb-[5px] text-[11px] md:text-[12.5px]"
+              >
+                {{ b.band }}
+              </div>
+              <div
+                :class="[
+                  b.on
+                    ? 'bg-brand text-white shadow-[0_6px_14px_rgba(190,30,45,.35)]'
+                    : 'bg-paper text-muted',
+                  scaleCorners(i, ieltsScale.length)
+                ]"
+                class="px-1 py-2.5 font-condensed text-[17px] font-bold"
+              >
+                {{ b.cefr }}
               </div>
             </div>
           </div>
-        </div>
+          <!-- reading the scores -->
+          <div class="mt-7 grid gap-5 border-t border-line pt-6 sm:grid-cols-2 sm:gap-7">
+            <div v-for="r in ieltsReading" :key="r.title" class="flex flex-col gap-1.5">
+              <span
+                class="font-condensed text-[13px] font-bold uppercase tracking-[.16em] text-brand"
+                >{{ r.eyebrow }}</span
+              >
+              <h3 class="font-display text-xl font-bold leading-[1.35]">{{ r.title }}</h3>
+              <p class="text-[15px] leading-[1.7] text-muted">{{ r.text }}</p>
+            </div>
+          </div>
+        </BentoCard>
 
-        <div class="grid gap-6 lg:grid-cols-2">
-          <article
-            v-for="s in ieltsStudents"
-            :key="s.name"
-            class="flex flex-col overflow-hidden rounded-[28px] border border-line bg-white shadow-[0_18px_44px_rgba(33,26,23,.08)]"
-          >
+        <BentoCard
+          v-for="(s, i) in ieltsStudents"
+          :key="s.name"
+          :class="studentSpans[i % studentSpans.length]"
+          :tone="i === 0 ? 'brand' : 'white'"
+        >
+          <article class="flex flex-1 flex-col gap-5 md:gap-6">
             <div
-              class="relative grid grid-cols-[60px_minmax(0,1fr)_auto] items-center gap-3 overflow-hidden bg-brand p-4 md:grid-cols-[112px_minmax(0,1fr)_auto] md:gap-[22px] md:px-[30px] md:py-7"
+              class="grid grid-cols-[60px_minmax(0,1fr)_auto] items-center gap-3 md:grid-cols-[84px_minmax(0,1fr)_auto] md:gap-5"
             >
-              <div
-                class="absolute -right-[60px] -top-20 h-[260px] w-[260px] rounded-full bg-[radial-gradient(circle,rgba(244,182,63,.35),rgba(244,182,63,0)_70%)]"
-              ></div>
               <div
                 :aria-label="s.name"
                 :style="s.photo ? { backgroundImage: `url('${s.photo}')` } : null"
-                class="relative grid aspect-square place-items-center rounded-2xl border-[3px] border-sun bg-[#FBE9EA] bg-cover bg-center font-display text-2xl font-bold text-brand md:rounded-[22px] md:text-[38px]"
+                class="grid aspect-square place-items-center rounded-2xl border-[3px] border-sun bg-blush bg-cover bg-center font-display text-2xl font-bold text-brand md:rounded-[20px] md:text-[32px]"
                 role="img"
               >
                 {{ s.photo ? '' : s.initials }}
               </div>
-              <div class="relative min-w-0">
+              <div class="min-w-0">
                 <div
-                  class="mb-1.5 text-[11px] font-semibold uppercase tracking-[.1em] text-[#F6CDD1] md:text-[13px]"
+                  :class="i === 0 ? 'text-white/75' : 'text-muted'"
+                  class="mb-1 text-[11px] font-semibold uppercase tracking-[.1em] md:text-[12.5px]"
                 >
                   {{ s.testDate }}
                 </div>
-                <h3
-                  class="mb-1 font-display text-lg font-bold leading-[1.2] text-cream md:text-2xl"
-                >
+                <h3 class="mb-0.5 font-display text-lg font-bold leading-[1.2] md:text-[22px]">
                   {{ s.first }}
                 </h3>
-                <div class="text-[13px] text-[#FBE9EA] [overflow-wrap:anywhere] md:text-[15px]">
+                <div
+                  :class="i === 0 ? 'text-white/80' : 'text-muted'"
+                  class="text-[13px] [overflow-wrap:anywhere] md:text-[15px]"
+                >
                   {{ s.last }}
                 </div>
               </div>
               <div
-                class="relative min-w-[64px] rounded-2xl bg-sun px-2 pb-2 pt-2.5 md:min-w-[92px] md:rounded-[20px] text-center md:px-4 md:pb-2.5 md:pt-3"
+                class="min-w-[62px] rounded-2xl bg-sun px-2 pb-2 pt-2.5 text-center text-ink md:min-w-[84px] md:rounded-[20px] md:px-3.5"
               >
-                <div class="font-condensed text-[32px] font-bold leading-none md:text-[50px]">
+                <div class="font-condensed text-[30px] font-bold leading-none md:text-[44px]">
                   {{ s.overall }}
                 </div>
                 <div class="mt-1 text-[10px] font-bold tracking-[.06em] md:text-xs">OVERALL</div>
               </div>
             </div>
 
-            <div class="flex flex-1 flex-col gap-[22px] p-4 md:px-[30px] md:pb-7 md:pt-[26px]">
-              <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              <div
+                v-for="k in s.skills"
+                :key="k.label"
+                :class="i === 0 ? 'border-white/15 bg-white/10' : 'border-line bg-cream'"
+                class="rounded-2xl border px-3 pb-3 pt-3"
+              >
+                <div :class="i === 0 ? 'text-white/75' : 'text-muted'" class="mb-1.5 text-[12.5px]">
+                  {{ k.label }}
+                </div>
                 <div
-                  v-for="k in s.skills"
-                  :key="k.label"
-                  class="rounded-2xl border border-line bg-cream px-3.5 pb-3 pt-3.5"
+                  :class="i === 0 ? 'text-sun' : 'text-brand'"
+                  class="mb-2.5 font-condensed text-[28px] font-bold leading-none"
                 >
-                  <div class="mb-1.5 text-[13px] text-[#7A706B]">{{ k.label }}</div>
-                  <div class="mb-2.5 font-condensed text-[30px] font-bold leading-none text-brand">
-                    {{ k.score }}
-                  </div>
-                  <div class="h-1.5 overflow-hidden rounded-md bg-line">
-                    <div
-                      :class="k.top ? 'bg-sun' : 'bg-brand'"
-                      :style="{ width: k.pct }"
-                      class="h-full rounded-md"
-                    ></div>
-                  </div>
+                  {{ k.score }}
+                </div>
+                <div
+                  :class="i === 0 ? 'bg-white/20' : 'bg-line'"
+                  class="h-1.5 overflow-hidden rounded-md"
+                >
+                  <div
+                    :class="k.top ? 'bg-sun' : i === 0 ? 'bg-white' : 'bg-brand'"
+                    :style="{ width: k.pct }"
+                    class="h-full rounded-md"
+                  ></div>
                 </div>
               </div>
-              <div class="mt-auto flex flex-wrap items-center gap-2 text-[13.5px] font-semibold">
-                <span class="rounded-full bg-blush px-3 py-1.5 text-brand">CEFR {{ s.cefr }}</span>
-                <span class="rounded-full bg-blush px-3 py-1.5 text-brand-deep">Academic</span>
-              </div>
+            </div>
+
+            <div class="mt-auto flex flex-wrap items-center gap-2 text-[13.5px] font-semibold">
+              <span
+                v-for="pill in [`CEFR ${s.cefr}`, 'Academic']"
+                :key="pill"
+                :class="i === 0 ? 'bg-white/15 text-white' : 'bg-blush text-brand'"
+                class="rounded-full px-3 py-1.5"
+                >{{ pill }}</span
+              >
             </div>
           </article>
-        </div>
-      </div>
-    </section>
+        </BentoCard>
 
-    <!-- one student from Oxford to IELTS -->
-    <section class="wrap pb-6 pt-10">
-      <div
-        class="relative grid items-center gap-7 overflow-hidden rounded-[28px] bg-ink p-7 md:p-10 lg:grid-cols-[auto_minmax(0,1fr)_auto_minmax(0,1fr)]"
-      >
-        <div
-          class="absolute -bottom-[120px] -right-20 h-[340px] w-[340px] rounded-full bg-[radial-gradient(circle,rgba(190,30,45,.45),rgba(190,30,45,0)_70%)]"
-        ></div>
-        <div
-          :style="{ backgroundImage: `url('${journey.photo}')` }"
-          class="relative h-24 w-24 rounded-[22px] border-[3px] border-sun bg-cover bg-center"
-        ></div>
-        <div class="relative">
-          <div class="mb-2 font-condensed text-sm font-bold uppercase tracking-[.18em] text-sun">
-            Brighton Journey
-          </div>
-          <h3 class="mb-1.5 font-display text-[26px] font-semibold leading-[1.25] text-cream">
-            {{ journey.name }}
-          </h3>
-          <p class="text-base leading-[1.6] text-[#C9BFB8]">
-            เติบโตไปกับไบรท์ตัน จากเด็กประถมสู่ผลสอบ IELTS ระดับ C1
-          </p>
-        </div>
-        <div class="relative flex items-center gap-3.5">
-          <div
-            class="rounded-[18px] border border-cream/15 bg-cream/[.08] px-[18px] py-3.5 text-center"
-          >
-            <div class="mb-1 text-[13px] text-[#9C918A]">{{ journey.from.label }}</div>
-            <div class="font-condensed text-4xl font-bold leading-none text-cream">
-              {{ journey.from.score }}
+        <!-- one student from Oxford to IELTS -->
+        <BentoCard
+          sub="เติบโตไปกับไบรท์ตัน จากเด็กประถมสู่ผลสอบ IELTS ระดับ C1"
+          :title="journey.name"
+          class="md:col-span-2 lg:col-span-7"
+          icon="route"
+          tag="Brighton Journey"
+          tone="ink"
+        >
+          <div class="mt-auto flex flex-wrap items-center gap-4 md:gap-5">
+            <div
+              :style="{ backgroundImage: `url('${journey.photo}')` }"
+              aria-hidden="true"
+              class="h-20 w-20 flex-none rounded-[20px] border-[3px] border-sun bg-cover bg-center md:h-24 md:w-24 md:rounded-[22px]"
+            ></div>
+            <div class="flex items-center gap-3">
+              <div
+                class="rounded-[18px] border border-cream/15 bg-cream/[.08] px-4 py-3 text-center"
+              >
+                <div class="mb-1 text-[13px] text-cream/60">{{ journey.from.label }}</div>
+                <div class="font-condensed text-4xl font-bold leading-none text-cream">
+                  {{ journey.from.score }}
+                </div>
+              </div>
+              <span class="text-[26px] text-sun">→</span>
+              <div class="rounded-[18px] bg-sun px-4 py-3 text-center text-ink">
+                <div class="mb-1 text-[13px]">{{ journey.to.label }}</div>
+                <div class="font-condensed text-4xl font-bold leading-none">
+                  {{ journey.to.score }}
+                </div>
+              </div>
             </div>
           </div>
-          <span class="text-[26px] text-sun">→</span>
-          <div class="rounded-[18px] bg-sun px-[18px] py-3.5 text-center">
-            <div class="mb-1 text-[13px]">{{ journey.to.label }}</div>
-            <div class="font-condensed text-4xl font-bold leading-none">{{ journey.to.score }}</div>
-          </div>
-        </div>
-        <p class="relative text-[15px] leading-[1.65] text-[#C9BFB8]">
-          ห้าปีจากผลสอบ Oxford Young Learners สู่ Overall Band 7.5 —
-          ทักษะที่สร้างอย่างต่อเนื่องตั้งแต่วัยเด็ก
-        </p>
-      </div>
-    </section>
-
-    <!-- reading the IELTS scores -->
-    <section class="wrap pt-6">
-      <div class="grid overflow-hidden rounded-[26px] bg-blush md:grid-cols-2">
-        <div class="border-b border-line p-8 md:border-b-0 md:border-r md:px-[38px] md:py-10">
-          <div
-            class="mb-3.5 font-condensed text-[15px] font-bold uppercase tracking-[.18em] text-brand"
+          <template #foot
+            >ห้าปีจากผลสอบ Oxford Young Learners สู่ Overall Band 7.5 —
+            ทักษะที่สร้างอย่างต่อเนื่องตั้งแต่วัยเด็ก</template
           >
-            อ่านผลคะแนน
-          </div>
-          <h3 class="mb-3 font-display text-[26px] font-bold leading-[1.3]">CEFR C1 คืออะไร?</h3>
-          <p class="text-base leading-[1.75] text-muted">
-            ระดับ C1 คือผู้ใช้ภาษาอังกฤษในระดับ “เชี่ยวชาญ” เข้าใจเนื้อหาซับซ้อน
-            สื่อสารได้คล่องและเป็นธรรมชาติ — เพียงพอสำหรับการเรียนต่อมหาวิทยาลัยชั้นนำในต่างประเทศ
-          </p>
-        </div>
-        <div class="p-8 md:px-[38px] md:py-10">
-          <div
-            class="mb-3.5 font-condensed text-[15px] font-bold uppercase tracking-[.18em] text-brand"
-          >
-            คะแนนเต็ม 9.0
-          </div>
-          <h3 class="mb-3 font-display text-[26px] font-bold leading-[1.3]">Band 7.0 ขึ้นไป</h3>
-          <p class="text-base leading-[1.75] text-muted">
-            เป็นเกณฑ์ที่มหาวิทยาลัยส่วนใหญ่ในสหราชอาณาจักร ออสเตรเลีย
-            และหลักสูตรนานาชาติในไทยใช้รับเข้าศึกษา
-          </p>
-        </div>
+        </BentoCard>
       </div>
     </section>
 
     <!-- Oxford Placement Test -->
-    <section class="wrap pb-16 pt-12 md:pb-[88px] md:pt-16">
+    <section class="wrap pb-16 md:pb-[104px]">
+      <SectionHead
+        v-reveal
+        :count="`${oxfordStudents.length} คน`"
+        class="mb-6 md:mb-10"
+        eyebrow="Oxford Placement Test for Young Learners"
+        icon="book"
+        sub="นักเรียนระดับประถมศึกษาของไบรท์ตันทุกคนในรายชื่อนี้ สอบได้ระดับ B1 ขึ้นไป — เทียบเท่าเป้าหมายของนักเรียนจบ ม.6 ตามกรอบ CEFR ของกระทรวงศึกษาธิการ"
+        title="วัดระดับมาตรฐาน CEFR กับ Oxford"
+        tone="sage"
+      />
       <div
-        class="relative overflow-hidden rounded-[28px] bg-[#E3F3FA] px-3.5 pb-4 pt-10 md:rounded-[32px] md:px-11 md:pb-11 md:pt-12"
+        v-reveal="{ stagger: 90 }"
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
-        <div class="absolute inset-x-0 top-0 h-2 bg-[#0096C8]"></div>
-        <div
-          :class="oxfordReport ? 'lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.85fr)]' : ''"
-          class="mb-10 grid items-center gap-12"
+        <BentoCard
+          :class="oxfordReport ? 'lg:col-span-7' : 'md:col-span-2 lg:col-span-12'"
+          icon="chart"
+          sub="OXFORD UNIVERSITY PRESS"
+          title="Score guide · Oxford Placement Test"
+          tone="sage"
         >
-          <div :class="oxfordReport ? '' : 'max-w-[720px]'">
-            <span
-              class="mb-[18px] inline-flex rounded-full border border-[#B8E0F0] bg-white px-3.5 py-[7px] font-condensed text-xs font-bold tracking-[.16em] text-[#1B2357] md:text-sm"
-              >OXFORD UNIVERSITY PRESS</span
-            >
-            <div
-              class="mb-2.5 font-condensed text-[15px] font-bold uppercase tracking-[.18em] text-[#0083B0]"
-            >
-              Oxford Placement Test for Young Learners
-            </div>
-            <h2
-              class="mb-3.5 font-display text-[28px] font-bold leading-[1.2] text-[#1B2357] md:text-[40px]"
-            >
-              วัดระดับมาตรฐาน CEFR กับ Oxford
-            </h2>
-            <p class="mb-7 text-[17px] leading-[1.7] text-[#3D4A6B]" style="text-wrap: pretty">
-              นักเรียนระดับประถมศึกษาของไบรท์ตันทุกคนในรายชื่อนี้ สอบได้ระดับ B1 ขึ้นไป —
-              เทียบเท่าเป้าหมายของนักเรียนจบ ม.6 ตามกรอบ CEFR ของกระทรวงศึกษาธิการ
-            </p>
-            <div class="rounded-[18px] border border-[#B8E0F0] bg-white px-[18px] pb-3.5 pt-[18px]">
-              <div class="mb-2.5 text-[13px] text-[#3D4A6B]">
-                Score guide · Oxford Placement Test
-              </div>
-              <div class="grid grid-cols-4 gap-1 text-center">
-                <div v-for="(b, i) in oxfordScale" :key="b.cefr">
-                  <div
-                    :class="b.on ? 'font-bold text-[#0083B0]' : 'font-medium text-[#7A8099]'"
-                    class="mb-[5px] text-[11px] md:text-[12.5px]"
-                  >
-                    {{ b.band }}
-                  </div>
-                  <div
-                    :class="[
-                      b.on
-                        ? 'bg-[#0096C8] text-white shadow-[0_6px_14px_rgba(0,150,200,.35)]'
-                        : `${b.bg} text-[#7A8099]`,
-                      scaleCorners(i, oxfordScale.length)
-                    ]"
-                    class="px-1 py-2.5 font-condensed text-[15px] font-bold md:text-[17px]"
-                  >
-                    {{ b.cefr }}
-                  </div>
+          <div class="mt-auto rounded-[20px] bg-white p-4 md:p-5">
+            <div class="grid grid-cols-4 gap-1 text-center">
+              <div v-for="(b, i) in oxfordScale" :key="b.cefr">
+                <div
+                  :class="b.on ? 'font-bold text-sagedeep' : 'font-medium text-muted'"
+                  class="mb-[5px] text-[11px] md:text-[12.5px]"
+                >
+                  {{ b.band }}
+                </div>
+                <div
+                  :class="[
+                    b.on
+                      ? 'bg-sagedeep text-white shadow-[0_6px_14px_rgba(63,107,74,.35)]'
+                      : `${b.bg} text-muted`,
+                    scaleCorners(i, oxfordScale.length)
+                  ]"
+                  class="px-1 py-2.5 font-condensed text-[15px] font-bold md:text-[17px]"
+                >
+                  {{ b.cefr }}
                 </div>
               </div>
             </div>
           </div>
-          <figure v-if="oxfordReport" class="relative flex justify-center">
+        </BentoCard>
+
+        <BentoCard v-if="oxfordReport" class="lg:col-span-5">
+          <figure
+            class="relative mx-auto flex w-full max-w-[250px] flex-1 items-center justify-center px-3 pb-8 pt-2"
+          >
             <div
-              class="absolute inset-[8%_4%_4%_14%] rotate-[5deg] rounded-[10px] bg-white shadow-[0_14px_30px_rgba(27,35,87,.1)]"
+              class="absolute inset-[6%_4%_12%_14%] rotate-[5deg] rounded-[10px] bg-sage shadow-[0_14px_30px_rgba(33,26,23,.08)]"
             ></div>
             <a
               :href="oxfordReport"
-              class="relative block w-full max-w-[380px] -rotate-[2.5deg] rounded-[10px] bg-white p-2.5 shadow-[0_26px_50px_rgba(27,35,87,.22)] transition-transform hover:rotate-0 hover:scale-[1.02]"
+              class="relative block w-full -rotate-[2.5deg] rounded-[10px] bg-white p-2.5 shadow-[0_26px_50px_rgba(33,26,23,.2)] transition-transform hover:rotate-0 hover:scale-[1.02]"
               rel="noopener"
               target="_blank"
             >
@@ -326,75 +309,94 @@
               />
             </a>
             <figcaption
-              class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1B2357] px-4 py-2 text-[13.5px] font-medium text-white shadow-[0_8px_20px_rgba(27,35,87,.25)]"
+              class="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-sagedeep px-4 py-2 text-[13.5px] font-medium text-white shadow-[0_8px_20px_rgba(33,26,23,.25)]"
             >
               ใบรายงานผลจริงจาก Oxford
             </figcaption>
           </figure>
-        </div>
+        </BentoCard>
 
-        <div class="grid gap-3 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))]">
-          <div
-            v-for="o in oxfordStudents"
-            :key="o.first + o.last"
-            :class="o.top ? 'border-sun bg-[#FDF1D8]' : 'border-[#C9E6F2] bg-white'"
-            class="flex items-center gap-3.5 rounded-[18px] border px-[18px] py-4"
-          >
+        <BentoCard class="md:col-span-2 lg:col-span-12">
+          <div class="grid gap-3 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))]">
             <div
-              :class="o.top ? 'bg-sun text-ink' : 'bg-[#0083B0] text-white'"
-              class="grid h-[58px] w-[58px] flex-none place-items-center rounded-[14px] font-condensed text-2xl font-bold"
+              v-for="o in oxfordStudents"
+              :key="o.first + o.last"
+              :class="o.top ? 'border-[#F1DFAE] bg-sunsoft' : 'border-line bg-cream'"
+              class="flex items-center gap-3.5 rounded-[20px] border px-4 py-3.5"
             >
-              {{ o.cefr }}
-            </div>
-            <div class="min-w-0">
-              <div class="text-[16.5px] font-medium leading-[1.3] text-[#1B2357]">
-                {{ o.first }}
+              <div
+                :class="o.top ? 'bg-sun text-ink' : 'bg-sagedeep text-white'"
+                class="grid h-[54px] w-[54px] flex-none place-items-center rounded-[16px] font-condensed text-[22px] font-bold"
+              >
+                {{ o.cefr }}
               </div>
-              <div class="text-[13.5px] leading-[1.4] text-[#7A706B] [overflow-wrap:anywhere]">
-                {{ o.last }}
-              </div>
-              <div v-if="o.testDate" class="mt-[3px] text-[12.5px] text-[#9C918A]">
-                {{ o.testDate }}
+              <div class="min-w-0">
+                <div class="text-[16px] font-medium leading-[1.3]">{{ o.first }}</div>
+                <div class="text-[13.5px] leading-[1.4] text-muted [overflow-wrap:anywhere]">
+                  {{ o.last }}
+                </div>
+                <div v-if="o.testDate" class="mt-[3px] text-[12.5px] text-muted/80">
+                  {{ o.testDate }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </BentoCard>
       </div>
     </section>
 
-    <section class="bg-ink px-5 py-16 text-cream md:py-20">
-      <div class="mx-auto max-w-[900px] text-center">
-        <h2
-          class="mb-4 font-display text-[30px] font-bold leading-[1.25] tracking-[-.02em] md:text-[46px]"
-        >
-          คนต่อไปใน Hall of Fame<br />อาจเป็นลูกของคุณ
-        </h2>
-        <p class="mx-auto mb-8 max-w-[560px] text-[17px] leading-[1.7] text-[#C9BFB8] md:text-lg">
-          ปรึกษาเส้นทางการเรียนภาษาอังกฤษตั้งแต่พื้นฐานจนถึงเป้าหมาย IELTS กับทีมไบรท์ตัน
-        </p>
-        <div class="flex flex-wrap justify-center gap-3">
+    <section
+      v-reveal="{ stagger: 90 }"
+      class="wrap grid grid-cols-1 gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+    >
+      <BentoCard class="lg:col-span-7" tone="ink">
+        <div class="flex flex-1 flex-col gap-4">
+          <h2
+            class="font-display text-[28px] font-bold leading-[1.3] text-cream md:text-[40px]"
+            style="text-wrap: balance"
+          >
+            คนต่อไปใน Hall of Fame<br />อาจเป็นลูกของคุณ
+          </h2>
+          <p class="max-w-[520px] text-base leading-[1.7] text-cream/70 md:text-[17px]">
+            ปรึกษาเส้นทางการเรียนภาษาอังกฤษตั้งแต่พื้นฐานจนถึงเป้าหมาย IELTS กับทีมไบรท์ตัน
+          </p>
           <router-link
-            class="inline-flex h-14 items-center whitespace-nowrap rounded-full bg-sun px-7 text-[17px] font-bold text-ink transition-colors hover:bg-[#F6C55E]"
+            class="mt-auto inline-flex h-14 items-center self-start whitespace-nowrap rounded-full bg-sun px-7 text-[17px] font-bold text-ink transition-colors hover:bg-[#F6C55E]"
             to="/contact"
           >
             นัดวัดระดับฟรี →
           </router-link>
-          <a
-            :href="contact.tel"
-            class="inline-flex h-14 items-center whitespace-nowrap rounded-full border border-cream/20 bg-cream/[.08] px-7 text-[17px] font-semibold transition-colors hover:bg-cream/[.16]"
-            >โทร {{ contact.phone }}</a
-          >
         </div>
-        <div class="mt-14 border-t border-cream/15 pt-6 text-sm text-[#9C918A]">
-          คะแนน IELTS ตรวจสอบได้ที่ ielts.org/verify
-        </div>
-      </div>
+        <template #foot>คะแนน IELTS ตรวจสอบได้ที่ ielts.org/verify</template>
+      </BentoCard>
+      <BentoCard
+        :sub="contact.hours"
+        class="lg:col-span-5"
+        icon="phone"
+        title="โทรหาเรา"
+        tone="sun"
+      >
+        <a
+          :href="contact.tel"
+          class="mt-auto whitespace-nowrap font-condensed text-[40px] font-bold leading-none hover:text-brand md:text-[48px]"
+          >{{ contact.phone }}</a
+        >
+        <a
+          :href="contact.facebook"
+          class="mt-4 font-semibold hover:underline"
+          rel="noopener"
+          target="_blank"
+          >{{ contact.facebookName }} บน Facebook →</a
+        >
+      </BentoCard>
     </section>
   </main>
 </template>
 
 <script>
 import { useHead } from '@vueuse/head'
+import BentoCard from '@/components/BentoCard.vue'
+import SectionHead from '@/components/SectionHead.vue'
 import { contact } from '@/data/site'
 import {
   ieltsReport,
@@ -406,6 +408,7 @@ import {
 
 export default {
   name: 'HallOfFameView',
+  components: { BentoCard, SectionHead },
   setup() {
     useHead({
       title: 'Hall of Fame ผลสอบ IELTS และ Oxford - Brighton Language Academy',
@@ -432,10 +435,29 @@ export default {
         { band: 'Band 7.0–8.0 ★', cefr: 'C1', on: true },
         { band: 'Band 8.5–9.0', cefr: 'C2' }
       ],
+      // the top student spans the wide brand card; the next two share a row with the journey
+      studentSpans: [
+        'md:col-span-2 lg:col-span-7',
+        'lg:col-span-5',
+        'lg:col-span-5',
+        'lg:col-span-7'
+      ],
+      ieltsReading: [
+        {
+          eyebrow: 'อ่านผลคะแนน',
+          title: 'CEFR C1 คืออะไร?',
+          text: 'ระดับ C1 คือผู้ใช้ภาษาอังกฤษในระดับ “เชี่ยวชาญ” เข้าใจเนื้อหาซับซ้อน สื่อสารได้คล่องและเป็นธรรมชาติ — เพียงพอสำหรับการเรียนต่อมหาวิทยาลัยชั้นนำในต่างประเทศ'
+        },
+        {
+          eyebrow: 'คะแนนเต็ม 9.0',
+          title: 'Band 7.0 ขึ้นไป',
+          text: 'เป็นเกณฑ์ที่มหาวิทยาลัยส่วนใหญ่ในสหราชอาณาจักร ออสเตรเลีย และหลักสูตรนานาชาติในไทยใช้รับเข้าศึกษา'
+        }
+      ],
       oxfordScale: [
-        { band: 'Countdown', cefr: 'Pre-A1', bg: 'bg-[#FBE5DD]' },
-        { band: 'Lift off', cefr: 'A1', bg: 'bg-[#FBF1D3]' },
-        { band: 'Zoom', cefr: 'A2', bg: 'bg-[#E6F1DA]' },
+        { band: 'Countdown', cefr: 'Pre-A1', bg: 'bg-peach' },
+        { band: 'Lift off', cefr: 'A1', bg: 'bg-sunsoft' },
+        { band: 'Zoom', cefr: 'A2', bg: 'bg-sage' },
         { band: 'Orbit ★', cefr: 'B1', on: true }
       ]
     }

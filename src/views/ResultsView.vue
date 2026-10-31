@@ -43,7 +43,7 @@
         </div>
         <div class="flex justify-center">
           <div
-            class="relative w-full max-w-[360px] rounded-[28px] border border-line bg-white px-7 pb-6 pt-7 text-center shadow-[0_24px_56px_rgba(33,26,23,.12)]"
+            class="relative w-full max-w-[360px] rounded-[28px] border border-line bg-white px-7 pb-6 pt-7 text-center shadow-[0_24px_56px_rgba(33,26,23,.12)] md:rounded-[32px]"
           >
             <div
               class="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink px-4 py-1.5 text-sm font-normal text-white"
@@ -70,21 +70,20 @@
       </div>
     </section>
 
-    <section id="how" class="border-y border-line bg-white pb-[110px] pt-14 lg:pb-[88px] lg:pt-20">
-      <div class="wrap grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-16">
-        <div>
-          <div
-            class="mb-3 font-condensed text-[15px] font-bold uppercase tracking-[.18em] text-brand"
-          >
-            How it works
-          </div>
-          <h2 class="mb-3 font-display text-[30px] font-bold leading-[1.2] md:text-[44px]">
-            {{ steps.length }} ขั้นตอนง่าย ๆ
-          </h2>
-          <p class="mb-8 text-[17px] leading-[1.7] text-muted">
-            แตะแต่ละขั้นตอนเพื่อดูหน้าจอตัวอย่าง — ลองกรอกข้อมูลเพิ่มลูกได้จริงในขั้นตอนที่ 3
-          </p>
-          <div class="hidden flex-col gap-3 lg:flex">
+    <section id="how" class="wrap pb-16 md:pb-[104px]">
+      <SectionHead
+        v-reveal
+        :title="`${steps.length} ขั้นตอนง่าย ๆ`"
+        class="mb-6 md:mb-10"
+        eyebrow="How it works"
+        icon="route"
+        sub="แตะแต่ละขั้นตอนเพื่อดูหน้าจอตัวอย่าง — ลองกรอกข้อมูลเพิ่มลูกได้จริงในขั้นตอนที่ 3"
+        tone="brand"
+      />
+      <div class="grid grid-cols-1 items-start gap-4 md:gap-5 lg:grid-cols-12">
+        <!-- desktop: the steps as a list beside the phone; phones get number tabs instead -->
+        <BentoCard class="hidden lg:col-span-7 lg:flex">
+          <div class="flex flex-col gap-3">
             <button
               v-for="(s, i) in steps"
               :key="s.title"
@@ -106,10 +105,12 @@
               </span>
             </button>
           </div>
-        </div>
+        </BentoCard>
 
-        <!-- phone demo -->
-        <div class="flex flex-col items-center gap-4 lg:sticky lg:top-[108px]">
+        <!-- phone demo: a sun card from tablet up; on phones the phone itself is the card -->
+        <div
+          class="flex flex-col items-center gap-4 md:rounded-[32px] md:border md:border-[#F1DFAE] md:bg-sunsoft md:p-8 lg:sticky lg:top-[108px] lg:col-span-5"
+        >
           <!-- phones: number tabs and the current step stand in for the list -->
           <div class="flex w-full max-w-[420px] flex-col gap-2.5 lg:hidden">
             <div class="grid grid-cols-6 gap-2">
@@ -125,7 +126,7 @@
                 {{ i + 1 }}
               </button>
             </div>
-            <div class="min-h-[100px] rounded-2xl border-[1.5px] border-brand bg-cream px-4 py-3.5">
+            <div class="min-h-[100px] rounded-2xl border-[1.5px] border-brand bg-white px-4 py-3.5">
               <div class="mb-1 text-[17px] font-medium leading-[1.4]">
                 {{ step + 1 }}. {{ steps[step].title }}
               </div>
@@ -391,79 +392,13 @@
                             <div class="text-[15px] font-semibold">ผลการประเมิน</div>
                             <div class="text-[11px] text-app-muted">เดือนล่าสุด</div>
                           </div>
-                          <svg
-                            :aria-label="`กราฟทักษะ ${radar.axes.length} ด้านของ${child.nickname} เทียบค่าเฉลี่ยระดับชั้น`"
-                            class="mb-1 mt-1 block h-auto w-full"
-                            role="img"
-                            viewBox="-4 50 328 202"
-                          >
-                            <polygon
-                              v-for="r in chart.rings"
-                              :key="r.v"
-                              :fill="r.v === 100 ? '#F3F8FD' : 'none'"
-                              :points="r.points"
-                              stroke="#DCE7F2"
-                            />
-                            <line
-                              v-for="(a, i) in chart.spokes"
-                              :key="i"
-                              :x1="CX"
-                              :x2="a[0]"
-                              :y1="CY"
-                              :y2="a[1]"
-                              stroke="#DCE7F2"
-                            />
-                            <polygon
-                              :points="chart.average"
-                              fill="none"
-                              stroke="#8A93B2"
-                              stroke-dasharray="5 4"
-                              stroke-width="1.6"
-                            />
-                            <polygon
-                              :points="chart.child"
-                              fill="rgba(18,161,80,.16)"
-                              stroke="#12A150"
-                              stroke-linejoin="round"
-                              stroke-width="2.2"
-                            />
-                            <circle
-                              v-for="(d, i) in chart.dots"
-                              :key="'d' + i"
-                              :cx="d[0]"
-                              :cy="d[1]"
-                              fill="#12A150"
-                              r="3.4"
-                              stroke="#fff"
-                              stroke-width="1.5"
-                            />
-                            <text
-                              v-for="l in chart.labels"
-                              :key="l.text"
-                              :text-anchor="l.anchor"
-                              :x="l.x"
-                              :y="l.y"
-                              class="font-condensed"
-                              fill="#3D4770"
-                              font-size="11"
-                            >
-                              {{ l.text }}
-                            </text>
-                          </svg>
-                          <div class="flex justify-center gap-4 text-[11.5px] text-[#3D4770]">
-                            <span class="flex items-center gap-1.5"
-                              ><span
-                                class="h-2.5 w-[18px] rounded-sm border-2 border-[#12A150] bg-[#12A150]/[.16]"
-                              ></span
-                              >{{ child.nickname }}</span
-                            >
-                            <span class="flex items-center gap-1.5"
-                              ><span
-                                class="h-2.5 w-[18px] rounded-sm border-2 border-dashed border-[#8A93B2]"
-                              ></span
-                              >ค่าเฉลี่ยระดับชั้น</span
-                            >
-                          </div>
+                          <SkillRadar
+                            :average="radar.average"
+                            :axes="radar.axes"
+                            :child="radar.child"
+                            :name="child.nickname"
+                            class="mb-1 mt-1"
+                          />
                         </div>
                         <div class="px-1 pt-1 text-[16px] font-semibold">ประวัติการประเมิน</div>
                         <div
@@ -807,59 +742,93 @@
       </div>
     </section>
 
-    <section class="wrap py-16 md:py-[88px]">
-      <div class="mb-11 max-w-[640px]">
-        <div
-          class="mb-3 font-condensed text-[15px] font-bold uppercase tracking-[.18em] text-brand"
-        >
-          What you'll see
-        </div>
-        <h2 class="mb-3 font-display text-[30px] font-bold leading-[1.2] md:text-[44px]">
-          เห็นการเติบโตของลูกในทุก ๆ ก้าว
-        </h2>
-        <p class="text-[17px] leading-[1.7] text-muted">
-          บางครั้งจุดเด่นเล็ก ๆ ของลูกเป็นสิ่งที่มองไม่เห็นจากที่บ้าน
-          แต่แสดงออกอย่างเต็มที่เมื่ออยู่ในห้องเรียน
-        </p>
-      </div>
-      <div class="grid gap-5 md:grid-cols-3">
-        <div
-          v-for="(f, i) in features"
-          :key="f.title"
-          class="rounded-3xl border border-line bg-white px-7 py-[30px]"
-        >
-          <div class="mb-4 font-condensed text-[40px] font-bold leading-none text-brand">
-            0{{ i + 1 }}
-          </div>
-          <h3 class="mb-2 font-display text-[21px] font-medium">{{ f.title }}</h3>
-          <p class="text-base leading-[1.65] text-muted">{{ f.text }}</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="help" class="wrap pb-16 md:pb-[88px]">
+    <section class="wrap pb-16 md:pb-[104px]">
+      <SectionHead
+        v-reveal
+        class="mb-6 md:mb-10"
+        eyebrow="What you'll see"
+        icon="chart"
+        sub="บางครั้งจุดเด่นเล็ก ๆ ของลูกเป็นสิ่งที่มองไม่เห็นจากที่บ้าน แต่แสดงออกอย่างเต็มที่เมื่ออยู่ในห้องเรียน"
+        title="เห็นการเติบโตของลูกในทุก ๆ ก้าว"
+        tone="sun"
+      />
       <div
-        class="flex flex-wrap items-center justify-between gap-x-8 gap-y-5 rounded-[26px] bg-blush p-7 md:px-[38px] md:py-[34px]"
+        v-reveal="{ stagger: 90 }"
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
-        <div class="max-w-[640px]">
-          <h3 class="mb-1.5 font-display text-2xl font-semibold">มีข้อสงสัย? ทักเราได้เลย</h3>
-          <p class="text-base leading-[1.65] text-muted">
-            เพิ่มลูกไม่ได้ หาชื่อลูกไม่เจอ หรือสงสัยเรื่องเครดิตและการชำระค่าเรียน ทักแชทเพจ
-            Facebook หรือโทรหาเจ้าหน้าที่ได้เลยค่ะ
+        <BentoCard
+          :sub="features[0].text"
+          :title="features[0].title"
+          class="md:col-span-2 lg:col-span-7 lg:row-span-2"
+          icon="chart"
+          tag="ตัวอย่าง"
+        >
+          <SkillRadar
+            :average="radar.average"
+            :axes="radar.axes"
+            :child="radar.child"
+            :name="child.nickname"
+            class="mt-auto"
+          />
+          <template #foot>ตัวอย่างกราฟจากแอป Student Progress</template>
+        </BentoCard>
+
+        <BentoCard
+          :sub="features[1].text"
+          :title="features[1].title"
+          class="lg:col-span-5"
+          icon="calendar"
+          tag="ตัวอย่าง"
+          tone="sun"
+        >
+          <p class="mt-auto flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <span class="font-condensed text-[56px] font-bold leading-none">{{
+              child.credit
+            }}</span>
+            <span class="text-sm text-body">เครดิต · ใช้ได้ถึง {{ child.validUntil }}</span>
           </p>
-        </div>
-        <div class="flex flex-wrap gap-2.5">
-          <a :href="contact.tel" class="btn-primary h-[52px] px-6 text-base"
-            >โทร {{ contact.phone }}</a
-          >
-          <a
-            :href="chatUrl('สอบถามเรื่องแอปผู้ปกครองใน LINE (Student Progress)')"
-            class="inline-flex h-[52px] items-center whitespace-nowrap rounded-full border-[1.5px] border-[#F2CFCF] bg-white px-6 text-base font-normal transition-colors hover:border-brand hover:text-brand"
-            rel="noopener"
-            target="_blank"
-            >ทักแชท Messenger</a
-          >
-        </div>
+        </BentoCard>
+
+        <BentoCard
+          :sub="features[2].text"
+          :title="features[2].title"
+          class="lg:col-span-5"
+          icon="wallet"
+          tag="ตัวอย่าง"
+          tone="sage"
+        >
+          <div class="mt-auto flex flex-wrap items-center gap-2">
+            <span class="font-condensed text-[40px] font-bold leading-none">{{
+              invoice.amount
+            }}</span>
+            <span class="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium">{{
+              invoice.title
+            }}</span>
+          </div>
+        </BentoCard>
+
+        <BentoCard
+          id="help"
+          :level="2"
+          class="md:col-span-2 lg:col-span-12"
+          icon="help"
+          sub="เพิ่มลูกไม่ได้ หาชื่อลูกไม่เจอ หรือสงสัยเรื่องเครดิตและการชำระค่าเรียน ทักแชทเพจ Facebook หรือโทรหาเจ้าหน้าที่ได้เลยค่ะ"
+          title="มีข้อสงสัย? ทักเราได้เลย"
+          tone="blush"
+        >
+          <div class="flex flex-wrap gap-2.5">
+            <a :href="contact.tel" class="btn-primary h-[52px] px-6 text-base"
+              >โทร {{ contact.phone }}</a
+            >
+            <a
+              :href="chatUrl('สอบถามเรื่องแอปผู้ปกครองใน LINE (Student Progress)')"
+              class="inline-flex h-[52px] items-center whitespace-nowrap rounded-full border-[1.5px] border-[#F2CFCF] bg-white px-6 text-base font-normal transition-colors hover:border-brand hover:text-brand"
+              rel="noopener"
+              target="_blank"
+              >ทักแชท Messenger</a
+            >
+          </div>
+        </BentoCard>
       </div>
     </section>
   </main>
@@ -867,7 +836,10 @@
 
 <script>
 import { useHead } from '@vueuse/head'
+import BentoCard from '@/components/BentoCard.vue'
 import BrandLogo from '@/components/BrandLogo.vue'
+import SectionHead from '@/components/SectionHead.vue'
+import SkillRadar from '@/components/SkillRadar.vue'
 import { chatUrl, contact } from '@/data/site'
 import {
   history,
@@ -879,43 +851,6 @@ import {
   steps,
   transactions
 } from '@/data/parentReport'
-
-// radar chart geometry, in the SVG's own units: centre, and the radius of a score of 100
-const CX = 160
-const CY = 150
-const R = 70
-const angle = (i) => -Math.PI / 2 + (i * 2 * Math.PI) / radar.axes.length
-// scores run 50 (centre) to 100 (edge)
-const point = (i, v) => {
-  const r = (Math.max(0, v - 50) / 50) * R
-  return [CX + r * Math.cos(angle(i)), CY + r * Math.sin(angle(i))]
-}
-const polygon = (values) =>
-  values
-    .map((v, i) =>
-      point(i, v)
-        .map((n) => n.toFixed(1))
-        .join(',')
-    )
-    .join(' ')
-
-const chart = {
-  rings: [100, 90, 80, 70, 60].map((v) => ({ v, points: polygon(radar.axes.map(() => v)) })),
-  spokes: radar.axes.map((_, i) => point(i, 100)),
-  average: polygon(radar.average),
-  child: polygon(radar.child),
-  dots: radar.child.map((v, i) => point(i, v)),
-  labels: radar.axes.map((text, i) => {
-    const c = Math.cos(angle(i))
-    const s = Math.sin(angle(i))
-    return {
-      text,
-      x: CX + (R + 8) * c,
-      y: CY + (R + 8) * s + (s > 0.5 ? 11 : s < -0.5 ? -3 : 4),
-      anchor: c > 0.15 ? 'start' : c < -0.15 ? 'end' : 'middle'
-    }
-  })
-}
 
 // a QR-looking pattern for the payment screen: random modules around the three corner
 // finders. It is not a real code, so nothing can be paid from the page.
@@ -946,7 +881,7 @@ const validId = (d) =>
 
 export default {
   name: 'ResultsView',
-  components: { BrandLogo },
+  components: { BentoCard, BrandLogo, SectionHead, SkillRadar },
   setup() {
     useHead({
       title: 'ดูผลการเรียนของลูกผ่าน LINE - Brighton Language Academy',
@@ -971,10 +906,7 @@ export default {
       transactions,
       invoice,
       radar,
-      chart,
       qr,
-      CX,
-      CY,
       clouds: [
         [64, 50],
         [78, 60],

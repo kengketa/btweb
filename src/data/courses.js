@@ -181,6 +181,14 @@ export const courses = [
   }
 ]
 
+// one lesson at Brighton, the same shape in every class (course pages and the home page)
+export const lessonSteps = [
+  ['Warm-up', 'เพลง เกม และพูดคุยเปิดคาบ'],
+  ['Learn', 'เนื้อหาใหม่ทีละช่วง ผ่านภาพและเรื่องราว'],
+  ['Activity', 'ลงมือทำ เล่นเกม งานศิลปะและงานประดิษฐ์'],
+  ['Wrap-up', 'ทบทวนสิ่งที่เรียน และใช้ภาษาจริงก่อนจบคาบ']
+]
+
 export const courseGroups = [
   ['all', 'ทั้งหมด'],
   ['kids', 'อนุบาล – ประถม'],

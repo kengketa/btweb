@@ -37,155 +37,172 @@
         </div>
       </div>
 
-      <div v-if="program.stats" class="mt-12 grid gap-8 sm:grid-cols-3 md:mt-16 lg:gap-10">
-        <div
-          v-for="[value, label] in program.stats"
-          :key="label"
-          class="flex items-baseline gap-3 border-t-2 border-ink pt-5"
-        >
+      <div
+        v-if="program.stats"
+        v-reveal="{ stagger: 70 }"
+        class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 md:mt-14 md:gap-5"
+      >
+        <BentoCard v-for="([value, label], i) in program.stats" :key="label" :tone="stat[i].tone">
           <span
-            class="font-condensed text-[44px] font-bold leading-none text-brand md:text-[56px]"
+            :class="stat[i].value"
+            class="font-condensed text-[48px] font-bold leading-none md:text-[56px]"
             >{{ value }}</span
           >
-          <span class="text-[15px] leading-[1.5] text-muted">{{ label }}</span>
-        </div>
+          <span :class="stat[i].label" class="mt-auto pt-4 text-[15px] leading-[1.5]">{{
+            label
+          }}</span>
+        </BentoCard>
       </div>
     </section>
 
-    <section v-if="program.camp" class="bg-white py-16 md:py-[88px]">
-      <div class="wrap flex flex-col gap-8">
-        <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div class="flex flex-col gap-2">
-            <span class="eyebrow">Next camp</span>
-            <h2 class="font-display text-2xl font-bold leading-[1.4] md:text-[36px]">
-              {{ program.camp.term }}
-            </h2>
-          </div>
-          <div class="flex flex-wrap gap-2.5 text-[15px]">
-            <span class="rounded-full bg-cream px-4 py-2">{{ program.camp.schedule }}</span>
-            <span class="rounded-full bg-sun px-4 py-2 font-semibold">{{
-              program.camp.priceLabel
+    <section v-if="program.camp" class="wrap pb-16 md:pb-[104px]">
+      <SectionHead
+        v-reveal
+        :count="`${program.camp.weeks.length} สัปดาห์`"
+        :sub="program.camp.schedule"
+        :title="program.camp.term"
+        class="mb-6 md:mb-10"
+        eyebrow="Next camp"
+        icon="calendar"
+        tone="sun"
+      />
+      <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-12">
+        <BentoCard class="lg:col-span-7" icon="route" title="ตารางค่าย">
+          <ol class="relative flex flex-col gap-5">
+            <span
+              aria-hidden="true"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-sun/60"
+            ></span>
+            <li
+              v-for="(week, i) in program.camp.weeks"
+              :key="week.name"
+              class="relative flex gap-4"
+            >
+              <span
+                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold text-ink ring-4 ring-white"
+                >{{ i + 1 }}</span
+              >
+              <span class="flex min-w-0 flex-col gap-1">
+                <span class="font-condensed text-sm font-semibold text-brand">{{
+                  dateRange(week.start, week.end)
+                }}</span>
+                <b class="font-condensed text-xl font-bold leading-tight">{{ week.name }}</b>
+                <span class="text-[15px] leading-[1.7] text-muted">{{ week.text }}</span>
+              </span>
+            </li>
+          </ol>
+        </BentoCard>
+        <BentoCard class="lg:col-span-5" icon="wallet" title="ค่าค่าย" tone="sun">
+          <p class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <span class="font-condensed text-[56px] font-bold leading-none md:text-[64px]">{{
+              campPrice.value
             }}</span>
-            <span class="rounded-full bg-brand px-4 py-2 font-semibold text-white">{{
-              program.camp.bundleLabel
-            }}</span>
-          </div>
-        </div>
-        <div class="grid gap-3 md:grid-cols-3 md:gap-4">
-          <div
-            v-for="week in program.camp.weeks"
-            :key="week.name"
-            class="flex flex-col gap-3 rounded-[20px] bg-cream p-6 md:p-7"
+            <span class="text-base text-body">{{ campPrice.unit }}</span>
+          </p>
+          <span
+            class="mt-auto self-start rounded-full bg-ink px-4 py-2 text-[14px] font-semibold text-sun md:mt-8"
+            >{{ program.camp.bundleLabel }}</span
           >
-            <span class="font-condensed text-sm font-semibold text-brand">{{
-              dateRange(week.start, week.end)
-            }}</span>
-            <b class="font-condensed text-[22px] font-bold leading-tight">{{ week.name }}</b>
-            <span class="text-[15px] leading-[1.7] text-muted">{{ week.text }}</span>
-          </div>
-        </div>
+        </BentoCard>
       </div>
     </section>
 
     <section
       v-for="(section, s) in program.sections"
       :key="section.heading"
-      :class="s === 0 ? 'pt-16 md:pt-[88px]' : ''"
-      class="wrap pb-16 md:pb-[88px]"
+      class="wrap pb-16 md:pb-[104px]"
     >
-      <h2 class="mb-7 font-display text-[26px] font-bold leading-[1.4] md:mb-9 md:text-[36px]">
-        {{ section.heading }}
-      </h2>
+      <SectionHead
+        v-reveal
+        :icon="section.style === 'cards' ? 'sparkle' : 'checkCircle'"
+        :title="section.heading"
+        :tone="headTones[s % headTones.length]"
+        class="mb-6 md:mb-10"
+      />
       <div
-        v-if="section.style === 'cards'"
-        :class="section.items.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'"
-        class="grid gap-3 rounded-[10px] bg-brand p-3 md:gap-4 md:p-4"
+        v-reveal="{ stagger: 80 }"
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
-        <div
+        <BentoCard
           v-for="([title, text], i) in section.items"
           :key="title"
-          class="flex flex-col gap-3 rounded bg-cream p-6 md:p-8"
+          :class="spanFor(i, section.items.length)"
+          :icon="section.style === 'cards' ? '' : 'checkCircle'"
+          :sub="text"
+          :title="title"
+          :tone="toneFor(section.style, i)"
         >
-          <span class="font-condensed text-[13px] font-medium text-brand">0{{ i + 1 }}</span>
-          <b class="text-xl md:text-[22px]">{{ title }}</b>
-          <span class="text-[15px] leading-[1.7] text-muted">{{ text }}</span>
-        </div>
-      </div>
-      <div v-else class="grid gap-x-10 gap-y-5 md:grid-cols-2">
-        <div v-for="[title, text] in section.items" :key="title" class="flex items-start gap-3.5">
-          <span class="mt-2 h-3 w-3 flex-none rounded-sm bg-sun"></span>
-          <span class="text-base leading-[1.75]"
-            ><b>{{ title }}</b> — {{ text }}</span
+          <span
+            v-if="section.style === 'cards'"
+            :class="numberTone[toneFor(section.style, i)]"
+            class="mt-auto font-condensed text-[44px] font-bold leading-none md:text-[52px]"
+            >0{{ i + 1 }}</span
           >
+        </BentoCard>
+      </div>
+    </section>
+
+    <section
+      v-reveal="{ stagger: 90 }"
+      class="wrap grid grid-cols-1 gap-4 pb-4 md:gap-5 md:pb-5 lg:grid-cols-12"
+    >
+      <BentoCard :level="2" class="lg:col-span-7" icon="help" title="คำถามที่พบบ่อย">
+        <FaqList :key="program.slug" :faqs="program.faqs" heading="" />
+      </BentoCard>
+      <BentoCard class="lg:col-span-5" icon="sparkle" title="ดูเพิ่มเติม" tone="sage">
+        <div class="flex flex-col gap-2.5">
+          <router-link
+            v-for="p in moreLinks"
+            :key="p.path"
+            :to="p.path"
+            class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-4 transition hover:-translate-y-0.5 md:px-5"
+          >
+            <span class="flex min-w-0 flex-col gap-0.5">
+              <b class="text-[16px]">{{ p.label }}</b>
+              <span class="text-sm text-muted">{{ p.card }}</span>
+            </span>
+            <span class="text-sagedeep">→</span>
+          </router-link>
         </div>
-      </div>
+      </BentoCard>
     </section>
 
-    <section class="wrap pb-16 md:pb-[88px]">
-      <div
-        class="flex flex-col gap-3 rounded-[22px] border border-line bg-white p-6 md:rounded-[28px] md:p-10"
-        :lang="summaryLang"
-      >
-        <span class="eyebrow">{{ summaryLang === 'en' ? 'In English' : 'สรุป' }}</span>
-        <!-- Roboto Condensed has no Thai glyphs, so a Thai summary keeps the heading font -->
-        <h2
-          :class="
-            summaryLang === 'en' ? 'font-condensed leading-tight' : 'font-display leading-[1.4]'
-          "
-          class="text-2xl font-bold md:text-[32px]"
-        >
-          {{ program.english.heading }}
-        </h2>
-        <p class="max-w-[820px] text-base leading-[1.75] text-body md:text-[17px]">
-          {{ program.english.text }}
-        </p>
-      </div>
-    </section>
-
-    <section class="wrap grid gap-12 pb-16 md:pb-[88px] lg:grid-cols-[1.4fr_1fr] lg:gap-16">
-      <FaqList :faqs="program.faqs" />
-      <div class="flex flex-col gap-3 self-start">
-        <b class="font-display text-lg font-bold">ดูเพิ่มเติม</b>
-        <router-link
-          v-for="p in others"
-          :key="p.slug"
-          :to="p.path"
-          class="flex items-center justify-between gap-4 rounded-[20px] border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-ink"
-        >
-          <span class="flex flex-col gap-1">
-            <b class="text-[17px]">{{ p.label }}</b>
-            <span class="text-sm text-muted">{{ p.card }}</span>
-          </span>
-          <span class="text-brand">→</span>
-        </router-link>
-        <router-link
-          class="flex items-center justify-between gap-4 rounded-[20px] border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-ink"
-          to="/courses"
-        >
-          <span class="flex flex-col gap-1">
-            <b class="text-[17px]">หลักสูตรทั้งหมด</b>
-            <span class="text-sm text-muted">คอร์สเรียนภาษาอังกฤษตามช่วงวัย</span>
-          </span>
-          <span class="text-brand">→</span>
-        </router-link>
-      </div>
-    </section>
-
-    <section class="wrap pb-16 md:pb-[104px]">
-      <div
-        class="flex flex-col justify-between gap-4 rounded-[22px] bg-sun p-6 md:flex-row md:items-center md:gap-8 md:rounded-[28px] md:px-12 md:py-11"
-      >
-        <div class="flex flex-col gap-2">
-          <b class="font-display text-xl font-bold md:text-[30px]">{{ program.cta.title }}</b>
-          <span class="text-[15px] md:text-base">{{ program.cta.text }}</span>
+    <section
+      v-reveal="{ stagger: 90 }"
+      class="wrap grid grid-cols-1 gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+    >
+      <BentoCard :lang="summaryLang" class="lg:col-span-7" tone="paper">
+        <div class="flex flex-col gap-3">
+          <span class="eyebrow">{{ summaryLang === 'en' ? 'In English' : 'สรุป' }}</span>
+          <!-- Roboto Condensed has no Thai glyphs, so a Thai summary keeps the heading font -->
+          <h2
+            :class="
+              summaryLang === 'en' ? 'font-condensed leading-tight' : 'font-display leading-[1.4]'
+            "
+            class="text-2xl font-bold md:text-[30px]"
+          >
+            {{ program.english.heading }}
+          </h2>
+          <p class="text-base leading-[1.75] text-body md:text-[17px]">
+            {{ program.english.text }}
+          </p>
         </div>
+      </BentoCard>
+      <BentoCard
+        :level="2"
+        :sub="program.cta.text"
+        :title="program.cta.title"
+        class="lg:col-span-5"
+        icon="target"
+        tone="sun"
+      >
         <router-link
-          class="inline-flex h-12 items-center justify-center whitespace-nowrap rounded-full bg-ink px-[30px] text-[15px] font-semibold text-white md:h-14 md:text-base"
+          class="mt-auto inline-flex h-14 items-center justify-center self-start whitespace-nowrap rounded-full bg-ink px-[30px] text-base font-semibold text-white transition-colors hover:bg-brand"
           to="/contact"
         >
           นัดวัดระดับฟรี →
         </router-link>
-      </div>
+      </BentoCard>
     </section>
   </main>
 </template>
@@ -193,8 +210,10 @@
 <script>
 import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
+import BentoCard from '@/components/BentoCard.vue'
 import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
+import SectionHead from '@/components/SectionHead.vue'
 import { useFeed } from '@/composables/useFeed'
 import { contact } from '@/data/site'
 import { programBySlug, programs } from '@/data/programs'
@@ -225,9 +244,34 @@ function dateRange(start, end) {
   return `${d1} ${tail(m1, y1)} – ${d2} ${tail(m2, y2)}`
 }
 
+// Bento spans for a section's cards by how many there are, so every row fills: 7+5 pairs,
+// 4+4+4 threes. An odd last card takes the full row on the two-column tablet grid.
+const SPANS = {
+  2: ['lg:col-span-7', 'lg:col-span-5'],
+  3: ['lg:col-span-4', 'lg:col-span-4', 'lg:col-span-4'],
+  4: ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7'],
+  5: ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-4', 'lg:col-span-4', 'lg:col-span-4']
+}
+function spanFor(i, count) {
+  const span = SPANS[count]?.[i] ?? 'lg:col-span-6'
+  return count % 2 && i === count - 1 ? `${span} md:col-span-2` : span
+}
+
+// numbered "cards" sections: one dark and one tinted card per pair; "points" sections lead
+// with a sage card
+const CARD_TONES = ['ink', 'white', 'white', 'sun']
+const toneFor = (style, i) =>
+  style === 'cards' ? CARD_TONES[i % CARD_TONES.length] : i === 0 ? 'sage' : 'white'
+
+const STAT = [
+  { tone: 'ink', value: 'text-sun', label: 'text-cream/70' },
+  { tone: 'sun', value: 'text-ink', label: 'text-body' },
+  { tone: 'white', value: 'text-brand', label: 'text-muted' }
+]
+
 export default {
   name: 'ProgramView',
-  components: { FaqList, PhotoBox },
+  components: { BentoCard, FaqList, PhotoBox, SectionHead },
   props: {
     slug: { type: String, required: true }
   },
@@ -242,7 +286,35 @@ export default {
     const photoIndex = computed(() => programs.indexOf(program.value) * 4 + 1)
     const others = computed(() => programs.filter((p) => p !== program.value))
     const summaryLang = computed(() => program.value.english.lang || 'en')
-    return { program, photoFor, photoIndex, others, summaryLang, contact, dateRange }
+    const moreLinks = computed(() => [
+      ...others.value,
+      { path: '/courses', label: 'หลักสูตรทั้งหมด', card: 'คอร์สเรียนภาษาอังกฤษตามช่วงวัย' }
+    ])
+    // "1,900 บาท / สัปดาห์" → a big "1,900" and its unit; the digits are grouped by hand so
+    // the pre-rendered page and the browser print the same text
+    const campPrice = computed(() => {
+      const camp = program.value.camp
+      if (!camp) return null
+      return {
+        value: String(camp.price).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+        unit: camp.priceLabel.replace(/^[\d,]+\s*/, '')
+      }
+    })
+    return {
+      program,
+      photoFor,
+      photoIndex,
+      moreLinks,
+      summaryLang,
+      campPrice,
+      contact,
+      dateRange,
+      spanFor,
+      toneFor,
+      stat: STAT,
+      headTones: ['brand', 'sun', 'sage', 'peach'],
+      numberTone: { ink: 'text-sun', sun: 'text-ink', white: 'text-brand' }
+    }
   }
 }
 </script>

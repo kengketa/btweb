@@ -37,125 +37,145 @@
       </div>
     </section>
 
-    <section class="bg-white pb-16 pt-8 md:pb-[104px]">
-      <div class="wrap grid items-start gap-12 lg:grid-cols-[1fr_380px] lg:gap-16">
-        <div class="flex flex-col gap-14 lg:gap-16 lg:pt-8">
-          <div class="flex flex-col gap-6">
-            <h2 v-reveal class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
-              สิ่งที่ลูกจะได้เรียน
-            </h2>
-            <div v-reveal="{ stagger: 70 }" class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
-              <div
-                v-for="[title, text] in course.points"
-                :key="title"
-                class="flex items-start gap-3.5"
+    <!-- the course as bento cards beside a sticky facts card (issue #33) -->
+    <section
+      class="wrap grid grid-cols-1 items-start gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+    >
+      <div v-reveal="{ stagger: 80 }" class="flex min-w-0 flex-col gap-4 md:gap-5 lg:col-span-8">
+        <BentoCard :level="2" icon="checkCircle" title="สิ่งที่ลูกจะได้เรียน">
+          <ul class="grid gap-x-7 gap-y-4 sm:grid-cols-2">
+            <li v-for="[title, text] in course.points" :key="title" class="flex items-start gap-3">
+              <BentoIcon class="mt-0.5 h-6 w-6 flex-none text-brand" name="checkCircle" />
+              <span class="text-[15px] leading-[1.7] text-muted"
+                ><b class="text-ink">{{ title }}</b> — {{ text }}</span
               >
-                <span class="mt-2 h-3 w-3 flex-none rounded-sm bg-sun"></span>
-                <span class="text-base leading-[1.7]"
-                  ><b>{{ title }}</b> — {{ text }}</span
-                >
-              </div>
-            </div>
-          </div>
+            </li>
+          </ul>
+        </BentoCard>
 
-          <div v-if="course.levels" class="flex flex-col gap-6">
-            <h2 v-reveal class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
-              {{ course.levels.heading }}
-            </h2>
-            <ol v-reveal="{ stagger: 80 }" class="flex flex-col">
-              <li
-                v-for="([title, text], i) in course.levels.items"
-                :key="title"
-                class="flex gap-4 border-t border-line2 py-5 first:border-t-0 first:pt-0"
-              >
-                <span
-                  class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand font-condensed text-sm font-semibold text-white"
-                  >{{ i + 1 }}</span
-                >
-                <span class="flex flex-col gap-1">
-                  <b class="text-lg">{{ title }}</b>
-                  <span class="text-[15px] leading-[1.75] text-muted">{{ text }}</span>
-                </span>
-              </li>
-            </ol>
-          </div>
-
-          <div class="flex flex-col gap-6">
-            <h2 v-reveal class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
-              หนึ่งคาบเรียนที่ Brighton
-            </h2>
-            <div v-reveal="{ stagger: 90 }" class="grid grid-cols-2 gap-3 md:grid-cols-4">
-              <div
-                v-for="(step, i) in steps"
-                :key="step[0]"
-                :class="i === steps.length - 1 ? 'bg-brand text-white' : 'bg-cream'"
-                class="flex flex-col gap-2 rounded-[20px] p-5 md:p-[22px]"
-              >
-                <span
-                  :class="i === steps.length - 1 ? 'opacity-85' : 'text-brand'"
-                  class="font-condensed text-xs font-medium"
-                >
-                  0{{ i + 1 }}
-                </span>
-                <b class="font-condensed text-xl font-semibold">{{ step[0] }}</b>
-                <span
-                  :class="i === steps.length - 1 ? '' : 'text-muted'"
-                  class="text-sm leading-[1.6]"
-                  >{{ step[1] }}</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <FaqList :key="course.slug" v-reveal="{ stagger: 60 }" :faqs="faqs" />
-        </div>
-
-        <aside
-          v-reveal
-          class="flex flex-col gap-5 rounded-[28px] border border-line bg-cream p-6 shadow-[0_30px_60px_-40px_rgba(0,0,0,.3)] md:p-8 lg:sticky lg:top-28 lg:-mt-24"
+        <BentoCard
+          v-if="course.levels"
+          :level="2"
+          :tag="`${course.levels.items.length} ขั้น`"
+          :title="course.levels.heading"
+          icon="route"
+          tone="ink"
         >
-          <b class="font-display text-[22px] font-bold">ข้อมูลหลักสูตร</b>
-          <div class="flex flex-col text-[15px]">
-            <div
-              v-for="[k, v] in facts"
-              :key="k"
-              class="flex justify-between gap-4 border-b border-line py-3.5 last:border-0"
+          <!-- a study-plan path: numbered nodes joined by one line -->
+          <ol class="relative flex flex-col gap-5">
+            <span
+              aria-hidden="true"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-cream/15"
+            ></span>
+            <li
+              v-for="([title, text], i) in course.levels.items"
+              :key="title"
+              class="relative flex gap-4"
             >
-              <span class="text-muted">{{ k }}</span
-              ><b class="text-right">{{ v }}</b>
-            </div>
+              <span
+                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold text-ink ring-4 ring-ink"
+                >{{ i + 1 }}</span
+              >
+              <span class="flex min-w-0 flex-col gap-1 pt-1">
+                <b class="text-[17px] text-cream">{{ title }}</b>
+                <span class="text-[15px] leading-[1.7] text-cream/70">{{ text }}</span>
+              </span>
+            </li>
+          </ol>
+        </BentoCard>
+
+        <BentoCard
+          :level="2"
+          icon="calendar"
+          sub="Active Learning ผ่านเกม งานศิลปะ และงานประดิษฐ์ ไม่ใช่การท่องจำ"
+          title="หนึ่งคาบเรียนที่ Brighton"
+          tone="sun"
+        >
+          <!-- the four lesson steps as a timeline: down on phones, across from sm up -->
+          <ol class="relative grid gap-4 sm:grid-cols-4 sm:gap-3">
+            <span
+              aria-hidden="true"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-ink/15 sm:bottom-auto sm:left-[18px] sm:right-[calc(25%_-_27px)] sm:top-[17px] sm:h-0.5 sm:w-auto"
+            ></span>
+            <li
+              v-for="([name, text], i) in steps"
+              :key="name"
+              class="relative flex gap-3.5 sm:flex-col sm:gap-3"
+            >
+              <span
+                :class="i === steps.length - 1 ? 'bg-ink text-sun' : 'bg-white text-ink'"
+                class="flex h-9 w-9 flex-none items-center justify-center rounded-full font-condensed text-sm font-bold ring-4 ring-sunsoft"
+                >0{{ i + 1 }}</span
+              >
+              <span class="flex min-w-0 flex-col gap-1 pt-1 sm:pt-0">
+                <b class="font-condensed text-lg font-semibold">{{ name }}</b>
+                <span class="text-sm leading-[1.6] text-body">{{ text }}</span>
+              </span>
+            </li>
+          </ol>
+        </BentoCard>
+
+        <BentoCard :level="2" icon="help" title="คำถามที่พบบ่อย">
+          <FaqList :key="course.slug" :faqs="faqs" heading="" />
+        </BentoCard>
+      </div>
+
+      <BentoCard
+        v-reveal
+        class="lg:sticky lg:top-28 lg:col-span-4"
+        icon="book"
+        :level="2"
+        title="ข้อมูลหลักสูตร"
+        tone="paper"
+      >
+        <dl class="flex flex-col gap-3 text-[15px]">
+          <div v-for="[k, v] in facts" :key="k" class="flex items-center justify-between gap-3">
+            <dt class="text-muted">{{ k }}</dt>
+            <dd class="rounded-full bg-white px-3.5 py-1.5 text-right text-[14px] font-semibold">
+              {{ v }}
+            </dd>
           </div>
+        </dl>
+        <div class="mt-6 flex flex-col gap-3">
           <router-link class="btn-primary h-14 text-base shadow-none" to="/contact"
             >นัดวัดระดับฟรี →</router-link
           >
-          <a :href="contact.tel" class="btn-outline h-[52px] text-[15px]"
+          <a :href="contact.tel" class="btn-outline h-[52px] bg-white text-[15px]"
             >โทร {{ contact.phone }}</a
           >
-          <div class="flex flex-col gap-2 rounded-[18px] bg-white p-[18px]">
-            <span class="font-display text-[15px] font-medium leading-[1.6]">
-              วัดระดับภาษาฟรีตามกรอบ CEFR ก่อนเริ่มเรียนทุกคอร์ส
-            </span>
-            <span class="text-xs text-muted">{{ contact.hours }}</span>
-          </div>
-        </aside>
-      </div>
+        </div>
+        <template #foot>
+          <span class="block font-medium text-ink"
+            >วัดระดับภาษาฟรีตามกรอบ CEFR ก่อนเริ่มเรียนทุกคอร์ส</span
+          >
+          {{ contact.hours }}
+        </template>
+      </BentoCard>
     </section>
 
-    <section class="wrap py-16 md:py-20">
-      <h2 v-reveal class="mb-6 font-display text-2xl font-bold md:text-[32px]">หลักสูตรอื่นๆ</h2>
-      <div v-reveal="{ stagger: 80 }" class="grid gap-3 sm:grid-cols-3 md:gap-5">
-        <router-link
+    <section class="wrap pb-16 md:pb-[104px]">
+      <SectionHead v-reveal class="mb-6 md:mb-10" icon="book" title="หลักสูตรอื่นๆ" tone="sun" />
+      <div v-reveal="{ stagger: 80 }" class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+        <BentoCard
           v-for="c in others"
           :key="c.slug"
+          :sub="c.sub"
+          :title="c.name"
           :to="`/courses/${c.slug}`"
-          class="flex items-center justify-between gap-4 rounded-[20px] border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-ink"
         >
-          <span class="flex flex-col gap-1">
-            <b class="text-lg">{{ c.name }}</b>
-            <span class="text-sm text-muted">{{ c.sub }}</span>
-          </span>
-          <span class="text-brand">→</span>
-        </router-link>
+          <div class="mt-auto flex items-end justify-between gap-4">
+            <span class="link-arrow">ดูรายละเอียด →</span>
+            <span
+              :class="toneClass[c.tone]"
+              class="flex flex-none -rotate-2 flex-col items-start gap-0.5 rounded-[18px] px-3.5 py-2.5"
+            >
+              <span :class="ageFont(c.age)" class="text-[28px] font-bold leading-none">{{
+                c.age
+              }}</span>
+              <span class="text-[12px] opacity-90">{{ c.ageUnit }}</span>
+            </span>
+          </div>
+        </BentoCard>
       </div>
     </section>
   </main>
@@ -165,15 +185,18 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
+import BentoCard from '@/components/BentoCard.vue'
+import BentoIcon from '@/components/BentoIcon.vue'
 import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
+import SectionHead from '@/components/SectionHead.vue'
 import { contact } from '@/data/site'
-import { courses, faqs } from '@/data/courses'
+import { ageFont, courses, faqs, lessonSteps, toneClass } from '@/data/courses'
 import { courseSchema, jsonLd } from '@/data/schema'
 
 export default {
   name: 'CourseDetailView',
-  components: { FaqList, PhotoBox },
+  components: { BentoCard, BentoIcon, FaqList, PhotoBox, SectionHead },
   beforeRouteEnter(to, from, next) {
     next(courses.some((c) => c.slug === to.params.slug) ? undefined : '/courses')
   },
@@ -192,14 +215,11 @@ export default {
   },
   data() {
     return {
+      ageFont,
       contact,
       faqs,
-      steps: [
-        ['Warm-up', 'เพลง เกม และพูดคุยเปิดคาบ'],
-        ['Learn', 'เนื้อหาใหม่ทีละช่วง ผ่านภาพและเรื่องราว'],
-        ['Activity', 'ลงมือทำ เล่นเกม งานศิลปะและงานประดิษฐ์'],
-        ['Wrap-up', 'ทบทวนสิ่งที่เรียน และใช้ภาษาจริงก่อนจบคาบ']
-      ]
+      steps: lessonSteps,
+      toneClass
     }
   },
   computed: {

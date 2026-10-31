@@ -1,7 +1,7 @@
 <template>
   <main>
     <section
-      class="wrap grid items-start gap-10 pb-16 pt-10 md:pb-[104px] md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16"
+      class="wrap grid items-start gap-10 pb-16 pt-10 md:pb-[104px] md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-16"
     >
       <div class="flex flex-col gap-5 md:gap-6">
         <span class="eyebrow">Contact &amp; Booking</span>
@@ -9,7 +9,7 @@
           class="font-display text-[32px] font-bold leading-[1.4] md:text-5xl xl:text-[56px] xl:leading-[1.35]"
         >
           นัดวัดระดับภาษา<br class="hidden md:block" />
-          <span class="text-brand">ฟรี</span>สำหรับลูกของคุณ
+          <span class="marker">ฟรี</span>สำหรับลูกของคุณ
         </h1>
         <p class="max-w-[480px] text-[15px] leading-[1.75] text-muted md:text-[17px]">
           กรอกข้อมูลสั้นๆ แล้ว{{ booking.endpoint ? 'กดส่ง' : 'ส่งให้เราทาง Messenger' }}
@@ -18,21 +18,23 @@
         <div class="mt-2 grid gap-3 sm:grid-cols-[auto_1fr] lg:grid-cols-1 xl:grid-cols-[auto_1fr]">
           <a
             :href="contact.tel"
-            class="flex flex-col gap-2.5 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
+            class="flex flex-col gap-2.5 rounded-[24px] border border-[#F1DFAE] bg-sunsoft px-4 py-4 transition hover:-translate-y-0.5 md:px-[22px] md:py-5"
           >
             <span class="flex items-center gap-2.5 text-[13px] text-muted">
               <span
-                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-blush text-brand"
+                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun text-ink"
               >
                 <IconMobile class="h-5 w-5" />
               </span>
               โทรศัพท์
             </span>
-            <b class="whitespace-nowrap text-base md:text-lg">{{ contact.phone }}</b>
+            <b class="whitespace-nowrap font-condensed text-2xl md:text-[28px]">{{
+              contact.phone
+            }}</b>
           </a>
           <a
             :href="contact.facebook"
-            class="flex flex-col gap-2.5 rounded-[20px] border border-line bg-white px-4 py-4 transition-colors hover:border-brand md:px-[22px] md:py-5"
+            class="flex flex-col gap-2.5 rounded-[24px] border border-line bg-white px-4 py-4 transition hover:-translate-y-0.5 md:px-[22px] md:py-5"
             rel="noopener"
             target="_blank"
           >
@@ -48,13 +50,13 @@
           </a>
         </div>
         <div
-          class="flex flex-col gap-1 rounded-[20px] border border-line bg-white px-4 py-4 md:px-[22px] md:py-5"
+          class="flex flex-col gap-1 rounded-[24px] border border-[#D3E0CF] bg-sage px-4 py-4 md:px-[22px] md:py-5"
         >
-          <span class="text-[13px] text-muted">ที่ตั้งและเวลาทำการ</span>
+          <span class="text-[13px] text-body">ที่ตั้งและเวลาทำการ</span>
           <b class="text-base font-semibold leading-relaxed">{{ contact.address.join(' ') }}</b>
-          <span class="text-sm text-muted">{{ contact.hours }}</span>
+          <span class="text-sm text-body">{{ contact.hours }}</span>
         </div>
-        <div class="ph h-[260px] overflow-hidden rounded-3xl">
+        <div class="ph h-[260px] overflow-hidden rounded-[28px] border border-line">
           <iframe
             :src="contact.mapEmbed"
             allowfullscreen
@@ -67,7 +69,7 @@
       </div>
 
       <div
-        class="rounded-3xl border border-line bg-white p-5 shadow-[0_30px_60px_-40px_rgba(0,0,0,.3)] md:rounded-[32px] md:p-11 lg:sticky lg:top-28"
+        class="rounded-3xl border border-line bg-white p-5 shadow-[0_30px_60px_-40px_rgba(0,0,0,.3)] md:rounded-[32px] md:p-11 lg:sticky lg:top-24"
       >
         <form
           v-show="!submitted"

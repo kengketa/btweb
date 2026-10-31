@@ -41,6 +41,17 @@
   .chip-on {
     @apply border-ink bg-ink font-semibold text-white;
   }
+  .footer-chip {
+    @apply rounded-full bg-cream px-3.5 py-1.5 transition-colors hover:bg-sunsoft hover:text-ink;
+  }
+  /* yellow highlighter block behind a word, as in bebetter.education's headlines */
+  .marker {
+    @apply relative z-0 inline-block whitespace-nowrap px-[.18em];
+  }
+  .marker::before {
+    content: '';
+    @apply absolute inset-x-0 bottom-[.06em] top-[.18em] -z-10 -rotate-1 rounded-[.18em] bg-sun shadow-[0_6px_0_-2px_rgba(190,140,30,.35)];
+  }
   /* striped stand-in shown while a photo loads or when none exists */
   .ph {
     background: repeating-linear-gradient(135deg, #f0e6d9 0 9px, #eadfd0 9px 18px);
