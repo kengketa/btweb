@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { createHead } from '@vueuse/head'
 
 import App from './App.vue'
+import reveal from './directives/reveal'
 import { createAppRouter } from './router'
 
 // Shared by the browser (src/main.js) and the build's pre-renderer (src/entry-server.js).
@@ -15,6 +16,7 @@ export function createApp({ hydrate = false } = {}) {
   app.use(createPinia())
   app.use(router)
   app.use(head)
+  app.directive('reveal', reveal)
 
   return { app, router, head }
 }

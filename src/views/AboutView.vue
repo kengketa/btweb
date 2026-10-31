@@ -43,7 +43,7 @@
     <section
       class="wrap grid gap-8 pb-16 pt-24 md:pb-24 md:pt-32 lg:grid-cols-[1fr_1.4fr] lg:gap-20"
     >
-      <div class="flex flex-col gap-4">
+      <div v-reveal class="flex flex-col gap-4">
         <span class="eyebrow">Our Story</span>
         <h2
           class="font-display text-[28px] font-bold leading-[1.4] md:text-[40px]"
@@ -52,7 +52,7 @@
           {{ story.heading }}
         </h2>
       </div>
-      <article class="flex flex-col gap-5 md:gap-6">
+      <article v-reveal="{ stagger: 80 }" class="flex flex-col gap-5 md:gap-6">
         <p
           v-for="(text, i) in story.paragraphs"
           :key="i"
@@ -76,7 +76,7 @@
     </section>
 
     <section class="bg-white py-14 md:py-20">
-      <div class="wrap grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-10">
+      <div v-reveal="{ stagger: 90 }" class="wrap grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-10">
         <div
           v-for="[value, label] in stats"
           :key="label"
@@ -92,10 +92,16 @@
     </section>
 
     <section class="wrap py-16 md:py-[104px]">
-      <h2 class="mb-7 font-display text-[28px] font-bold leading-[1.4] md:mb-9 md:text-[40px]">
+      <h2
+        v-reveal
+        class="mb-7 font-display text-[28px] font-bold leading-[1.4] md:mb-9 md:text-[40px]"
+      >
         วิธีการสอนของเรา
       </h2>
-      <div class="grid gap-3 rounded-[10px] bg-brand p-3 md:grid-cols-2 md:gap-4 md:p-4">
+      <div
+        v-reveal="{ stagger: 90 }"
+        class="grid gap-3 rounded-[10px] bg-brand p-3 md:grid-cols-2 md:gap-4 md:p-4"
+      >
         <div
           v-for="(m, i) in methods"
           :key="m.title"
@@ -112,7 +118,7 @@
 
     <!-- Teachers -->
     <section class="wrap grid gap-8 pb-16 md:pb-[104px] lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-      <div class="flex flex-col gap-4">
+      <div v-reveal class="flex flex-col gap-4">
         <span class="eyebrow">Our Teachers</span>
         <h2 class="font-display text-[28px] font-bold leading-[1.4] md:text-[40px]">
           ครูของเรา คัดเลือกและอบรมอย่างไร
@@ -121,7 +127,7 @@
           >ดูทีมครูชาวต่างชาติของเรา →</router-link
         >
       </div>
-      <div class="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+      <div v-reveal="{ stagger: 70 }" class="grid gap-x-10 gap-y-6 sm:grid-cols-2">
         <div
           v-for="[title, text] in teacherStandards"
           :key="title"
@@ -139,6 +145,7 @@
     <!-- Success story -->
     <section class="wrap pb-16 md:pb-[104px]">
       <div
+        v-reveal="{ variant: 'scale' }"
         class="grid gap-6 rounded-3xl bg-sun p-7 md:rounded-[32px] md:p-14 lg:grid-cols-[1fr_1.3fr] lg:gap-14"
       >
         <div class="flex flex-col gap-3">
@@ -161,7 +168,7 @@
 
     <!-- Team culture -->
     <section class="wrap grid gap-8 pb-16 md:pb-[104px] lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-      <div class="flex flex-col gap-4">
+      <div v-reveal class="flex flex-col gap-4">
         <span class="eyebrow">Our Team</span>
         <h2 class="font-display text-[24px] font-bold leading-[1.4] md:text-[40px]">
           ครูมีความสุข
@@ -174,7 +181,7 @@
           เพราะครูที่มีเวลาและมีแรงบันดาลใจ จะส่งต่อสิ่งเหล่านั้นให้นักเรียน
         </p>
       </div>
-      <div class="flex flex-col">
+      <div v-reveal="{ stagger: 80 }" class="flex flex-col">
         <div
           v-for="[title, text] in teamCulture"
           :key="title"
@@ -191,13 +198,13 @@
     <!-- Next decade -->
     <section class="bg-white py-16 md:py-[104px]">
       <div class="wrap">
-        <div class="mb-7 flex flex-col gap-3 md:mb-9">
+        <div v-reveal class="mb-7 flex flex-col gap-3 md:mb-9">
           <span class="eyebrow">The Next 10 Years</span>
           <h2 class="font-display text-[28px] font-bold leading-[1.4] md:text-[40px]">
             ก้าวต่อไปของ Brighton
           </h2>
         </div>
-        <div class="grid gap-8 md:grid-cols-3 lg:gap-10">
+        <div v-reveal="{ stagger: 90 }" class="grid gap-8 md:grid-cols-3 lg:gap-10">
           <div
             v-for="([title, text], i) in vision"
             :key="title"
@@ -215,8 +222,10 @@
     </section>
 
     <section class="wrap grid gap-8 py-16 md:py-[104px] lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-      <h2 class="font-display text-[28px] font-bold leading-[1.4] md:text-[40px]">พันธกิจของเรา</h2>
-      <div class="flex flex-col">
+      <h2 v-reveal class="font-display text-[28px] font-bold leading-[1.4] md:text-[40px]">
+        พันธกิจของเรา
+      </h2>
+      <div v-reveal="{ stagger: 80 }" class="flex flex-col">
         <div
           v-for="m in missions"
           :key="m.title"
@@ -231,7 +240,10 @@
       </div>
     </section>
 
-    <section class="wrap grid gap-3 pb-16 sm:grid-cols-[1fr_1.3fr_1fr] md:gap-4 md:pb-[104px]">
+    <section
+      v-reveal="{ stagger: 90, variant: 'scale' }"
+      class="wrap grid gap-3 pb-16 sm:grid-cols-[1fr_1.3fr_1fr] md:gap-4 md:pb-[104px]"
+    >
       <PhotoBox
         v-for="(src, i) in strip"
         :key="i"

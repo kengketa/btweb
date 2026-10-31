@@ -41,10 +41,10 @@
       <div class="wrap grid items-start gap-12 lg:grid-cols-[1fr_380px] lg:gap-16">
         <div class="flex flex-col gap-14 lg:gap-16 lg:pt-8">
           <div class="flex flex-col gap-6">
-            <h2 class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
+            <h2 v-reveal class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
               สิ่งที่ลูกจะได้เรียน
             </h2>
-            <div class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            <div v-reveal="{ stagger: 70 }" class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
               <div
                 v-for="[title, text] in course.points"
                 :key="title"
@@ -59,10 +59,10 @@
           </div>
 
           <div v-if="course.levels" class="flex flex-col gap-6">
-            <h2 class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
+            <h2 v-reveal class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
               {{ course.levels.heading }}
             </h2>
-            <ol class="flex flex-col">
+            <ol v-reveal="{ stagger: 80 }" class="flex flex-col">
               <li
                 v-for="([title, text], i) in course.levels.items"
                 :key="title"
@@ -81,10 +81,10 @@
           </div>
 
           <div class="flex flex-col gap-6">
-            <h2 class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
+            <h2 v-reveal class="font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
               หนึ่งคาบเรียนที่ Brighton
             </h2>
-            <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+            <div v-reveal="{ stagger: 90 }" class="grid grid-cols-2 gap-3 md:grid-cols-4">
               <div
                 v-for="(step, i) in steps"
                 :key="step[0]"
@@ -107,10 +107,11 @@
             </div>
           </div>
 
-          <FaqList :key="course.slug" :faqs="faqs" />
+          <FaqList :key="course.slug" v-reveal="{ stagger: 60 }" :faqs="faqs" />
         </div>
 
         <aside
+          v-reveal
           class="flex flex-col gap-5 rounded-[28px] border border-line bg-cream p-6 shadow-[0_30px_60px_-40px_rgba(0,0,0,.3)] md:p-8 lg:sticky lg:top-28 lg:-mt-24"
         >
           <b class="font-display text-[22px] font-bold">ข้อมูลหลักสูตร</b>
@@ -141,8 +142,8 @@
     </section>
 
     <section class="wrap py-16 md:py-20">
-      <h2 class="mb-6 font-display text-2xl font-bold md:text-[32px]">หลักสูตรอื่นๆ</h2>
-      <div class="grid gap-3 sm:grid-cols-3 md:gap-5">
+      <h2 v-reveal class="mb-6 font-display text-2xl font-bold md:text-[32px]">หลักสูตรอื่นๆ</h2>
+      <div v-reveal="{ stagger: 80 }" class="grid gap-3 sm:grid-cols-3 md:gap-5">
         <router-link
           v-for="c in others"
           :key="c.slug"

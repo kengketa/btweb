@@ -46,3 +46,47 @@
     background: repeating-linear-gradient(135deg, #f0e6d9 0 9px, #eadfd0 9px 18px);
   }
 }
+
+/* v-reveal (src/directives/reveal.js): elements slide/fade in the first time they scroll
+   into view. The directive only sets data-reveal-state while it waits and while the
+   motion plays; it never runs with "reduce motion" on. Individual `translate` / `scale`
+   properties keep the motion clear of `transform`, which the cards' hover lift uses. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+[data-reveal='up'] {
+  --reveal-anim: reveal-up;
+}
+[data-reveal='fade'] {
+  --reveal-anim: reveal-fade;
+}
+[data-reveal='scale'] {
+  --reveal-anim: reveal-scale;
+}
+[data-reveal-state='hidden'] {
+  opacity: 0;
+}
+[data-reveal-state='in'] {
+  animation: var(--reveal-anim, reveal-up) 0.7s cubic-bezier(0.19, 1, 0.22, 1)
+    var(--reveal-delay, 0ms) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-state] {
+    opacity: 1;
+    animation: none;
+  }
+}
