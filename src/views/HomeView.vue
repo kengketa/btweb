@@ -100,7 +100,10 @@
     <!-- Welcome -->
     <section class="bg-white py-16 md:py-[104px]">
       <div class="wrap">
-        <div class="grid items-end gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+        <div
+          v-reveal="{ stagger: 120 }"
+          class="grid items-end gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-20"
+        >
           <div class="flex flex-col gap-3 md:gap-5">
             <span class="eyebrow">Welcome to Our Family</span>
             <h2
@@ -118,7 +121,10 @@
             เพื่อให้ลูกเติบโตอย่างมั่นคงทั้งทักษะภาษาและทัศนคติ
           </p>
         </div>
-        <div class="mt-12 grid gap-8 sm:grid-cols-2 md:mt-[72px] lg:grid-cols-4 lg:gap-10">
+        <div
+          v-reveal="{ stagger: 90 }"
+          class="mt-12 grid gap-8 sm:grid-cols-2 md:mt-[72px] lg:grid-cols-4 lg:gap-10"
+        >
           <div
             v-for="(item, i) in pillars"
             :key="item.title"
@@ -134,7 +140,7 @@
 
     <!-- Courses -->
     <section class="py-16 md:py-[104px]">
-      <div class="wrap mb-6 flex items-end justify-between gap-6 md:mb-10">
+      <div v-reveal class="wrap mb-6 flex items-end justify-between gap-6 md:mb-10">
         <div class="flex flex-col gap-3">
           <span class="eyebrow">Our Courses</span>
           <h2 class="font-display text-2xl font-bold leading-[1.35] md:text-[44px]">
@@ -147,6 +153,7 @@
         </router-link>
       </div>
       <div
+        v-reveal.together="{ stagger: 80 }"
         class="mx-auto flex max-w-[1280px] snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 pb-1 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-10 lg:grid-cols-4 lg:px-14"
       >
         <router-link
@@ -179,13 +186,13 @@
 
     <!-- Programs: camp, teachers, MEP/EP, EF -->
     <section class="wrap pb-16 md:pb-[104px]">
-      <div class="mb-6 flex flex-col gap-3 md:mb-10">
+      <div v-reveal class="mb-6 flex flex-col gap-3 md:mb-10">
         <span class="eyebrow">More at Brighton</span>
         <h2 class="font-display text-2xl font-bold leading-[1.35] md:text-[44px]">
           มากกว่าคลาสภาษาอังกฤษ
         </h2>
       </div>
-      <div class="grid gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
+      <div v-reveal="{ stagger: 90 }" class="grid gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
         <router-link
           v-for="p in programs"
           :key="p.slug"
@@ -204,6 +211,7 @@
     <!-- Our story: founder, students, a success story; the full version is on /about -->
     <section class="wrap pb-16 md:pb-[104px]">
       <div
+        v-reveal="{ variant: 'scale' }"
         class="grid gap-8 rounded-3xl bg-ink p-7 text-cream md:rounded-[32px] md:p-14 lg:grid-cols-[1.2fr_1fr] lg:gap-14"
       >
         <div class="flex flex-col gap-4">
@@ -224,7 +232,7 @@
             >อ่านเรื่องราวของเรา →</router-link
           >
         </div>
-        <div class="grid grid-cols-2 gap-3 self-center">
+        <div v-reveal="{ stagger: 90, delay: 200 }" class="grid grid-cols-2 gap-3 self-center">
           <div
             v-for="[value, label] in storyStats"
             :key="label"
@@ -242,7 +250,7 @@
 
     <!-- Gallery -->
     <section class="wrap pb-16 md:pb-[104px]">
-      <div class="mb-6 flex items-end justify-between gap-6 md:mb-8">
+      <div v-reveal class="mb-6 flex items-end justify-between gap-6 md:mb-8">
         <h2 class="font-display text-2xl font-bold leading-[1.35] md:text-[44px]">
           บรรยากาศที่ Brighton
         </h2>
@@ -256,6 +264,7 @@
         </a>
       </div>
       <div
+        v-reveal="{ stagger: 90, variant: 'scale' }"
         class="grid grid-cols-2 grid-rows-[140px_140px_140px] gap-2.5 md:grid-cols-4 md:grid-rows-[220px_220px] md:gap-4"
       >
         <PhotoBox
@@ -294,7 +303,10 @@
         <div v-for="n in 4" :key="n" class="h-[90px] border-[10px] border-white"></div>
       </div>
       <div class="wrap relative">
-        <div class="grid items-end gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
+        <div
+          v-reveal="{ stagger: 120 }"
+          class="grid items-end gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-14"
+        >
           <div class="flex flex-col gap-4">
             <span
               class="text-xs font-semibold uppercase tracking-[.14em] opacity-85 md:text-[13px]"
@@ -319,7 +331,10 @@
         </div>
 
         <!-- comments vary a lot in length, so cards flow down columns instead of rows -->
-        <div class="mt-10 gap-3 sm:columns-2 md:mt-12 md:gap-4 lg:columns-3">
+        <div
+          v-reveal="{ stagger: 80 }"
+          class="mt-10 gap-3 sm:columns-2 md:mt-12 md:gap-4 lg:columns-3"
+        >
           <figure
             v-for="r in reviews"
             :key="r.name"
@@ -374,6 +389,7 @@
     <!-- Booking CTA -->
     <section class="wrap py-16 md:py-24">
       <div
+        v-reveal
         class="grid items-center gap-8 rounded-3xl border border-line bg-white p-7 md:rounded-[32px] md:p-14 lg:grid-cols-[1.3fr_1fr] lg:gap-12"
       >
         <div class="flex flex-col gap-4">

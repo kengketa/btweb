@@ -29,7 +29,10 @@
       </button>
     </div>
 
-    <section class="wrap flex flex-col gap-3.5 pb-12 md:gap-0 md:pb-[72px]">
+    <section
+      v-reveal="{ stagger: 80 }"
+      class="wrap flex flex-col gap-3.5 pb-12 md:gap-0 md:pb-[72px]"
+    >
       <article
         v-for="c in filtered"
         :key="c.slug"
@@ -76,6 +79,7 @@
 
     <section class="wrap pb-16 md:pb-[104px]">
       <div
+        v-reveal
         class="flex flex-col justify-between gap-4 rounded-[22px] bg-sun p-6 md:flex-row md:items-center md:gap-8 md:rounded-[28px] md:px-12 md:py-11"
       >
         <div class="flex flex-col gap-2">
