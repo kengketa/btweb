@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <div class="wrap flex items-center gap-3 pb-2 pt-10 text-sm text-muted">
-      <span class="h-px flex-1 bg-line2"></span>
-      <span
-        >หน้าถัดไป · <b class="font-semibold text-ink">{{ label }}</b></span
-      >
-      <span class="h-px flex-1 bg-line2"></span>
-    </div>
+  <div class="feed-page">
+    <!-- the wrapper is what the feed measures to tell which page is being read (the comment
+         sits inside it: outside, the dev build keeps it and the page gets two roots) -->
     <component :is="component" />
   </div>
 </template>
@@ -22,7 +17,6 @@ export default {
   name: 'FeedPage',
   props: {
     component: { type: Object, required: true },
-    label: { type: String, required: true },
     active: { type: Boolean, default: false }
   },
   setup(props) {
@@ -61,3 +55,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* A page's first section leaves room for the nav above it. Fed in below another page it
+   follows that page's own bottom spacing instead, like any section after another. */
+.feed-page :deep(main > :first-child) {
+  padding-top: 0;
+}
+</style>

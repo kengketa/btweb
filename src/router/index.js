@@ -80,14 +80,54 @@ export function replaceKeepingScroll(router, path) {
   })
 }
 
+// room for the sticky nav above a section the page scrolls to
+export const NAV_OFFSET = 96
+
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// Scroll to a section of the current page ('' is the top), smoothly unless the visitor
+// asked for less motion. Used for taps on a link to the section already in the address,
+// which the router doesn't treat as a navigation.
+export function scrollToSection(hash) {
+  let el = hash && document.querySelector(hash)
+  if (hash && !el) return
+  // a target limited to some screen sizes (data-scroll-media) means the top elsewhere
+  if (el && el.dataset.scrollMedia && !window.matchMedia(el.dataset.scrollMedia).matches) el = null
+  const top = el ? el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET : 0
+  window.scrollTo({ top, behavior: reducedMotion() ? 'auto' : 'smooth' })
+}
+
 function scrollBehavior(to, from, savedPosition) {
   if (to.path === keepScrollFor) {
     keepScrollFor = null
     return false
   }
   if (savedPosition) return savedPosition
-  // leave room for the sticky nav when jumping to a section
-  if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }
+  // a section: glide there within the page, jump straight there when arriving from
+  // another page, and leave room for the sticky nav either way
+  // A target can limit itself to some screen sizes (data-scroll-media): elsewhere the
+  // page opens at the top as usual.
+  const target = to.hash ? document.querySelector(to.hash) : null
+  const media = target?.dataset.scrollMedia
+  if (media && !window.matchMedia(media).matches) {
+    return from === START_LOCATION ? false : { top: 0 }
+  }
+  if (to.hash) {
+    // A target marked data-scroll-glide (the booking form) glides in from the top of
+    // its page even when arriving from another page; the page opens at the top first,
+    // then scrolls down to it.
+    if (target?.dataset.scrollGlide !== undefined && from.path !== to.path && !reducedMotion()) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      return new Promise((resolve) =>
+        setTimeout(() => resolve({ el: to.hash, top: NAV_OFFSET, behavior: 'smooth' }), 150)
+      )
+    }
+    const glide = from.path === to.path && !reducedMotion()
+    return { el: to.hash, top: NAV_OFFSET, behavior: glide ? 'smooth' : 'auto' }
+  }
+  // back to the top of the page already open, e.g. หน้าแรก from a section of it
+  if (from.path === to.path && from !== START_LOCATION)
+    return { top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' }
   // first page load: already at the top, and scrolling there would force a
   // layout while the page is still rendering
   if (from === START_LOCATION) return false

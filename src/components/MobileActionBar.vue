@@ -16,9 +16,10 @@
     >
       Facebook
     </a>
+    <!-- straight to the booking form on /contact (the bar is hidden on that page) -->
     <router-link
+      :to="bookingLink"
       class="flex h-12 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white"
-      to="/contact"
     >
       นัดวัดระดับฟรี
     </router-link>
@@ -26,12 +27,13 @@
 </template>
 
 <script>
+import { bookingLink } from '@/data/pages'
 import { contact } from '@/data/site'
 
 export default {
   name: 'MobileActionBar',
   data() {
-    return { contact }
+    return { bookingLink, contact }
   }
 }
 </script>

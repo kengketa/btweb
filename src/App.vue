@@ -8,7 +8,6 @@
       :ref="(page) => (item.el = page?.$el)"
       :active="$route.path === item.path"
       :component="item.component"
-      :label="item.label"
     />
     <SiteFooter v-if="!hidesFooter" />
     <MobileActionBar v-if="$route.name !== 'contact'" />
@@ -23,6 +22,7 @@ import { useHead } from '@vueuse/head'
 import { SITE_URL } from '@/data/pages'
 import { jsonLd, school } from '@/data/schema'
 import { usePageFeed } from '@/composables/usePageFeed'
+import { useSectionLinks } from '@/composables/useSectionLinks'
 import BackToTop from '@/components/BackToTop.vue'
 import FeedPage from '@/components/FeedPage.vue'
 import SiteNav from '@/components/SiteNav.vue'
@@ -58,6 +58,7 @@ export default {
       link: [{ rel: 'canonical', href: url }],
       script: [jsonLd(school)]
     })
+    useSectionLinks()
     return usePageFeed()
   }
 }

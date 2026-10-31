@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
-    <h2 class="mb-4 font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
-      คำถามที่พบบ่อย
+    <h2 v-if="heading" class="mb-4 font-display text-2xl font-bold leading-[1.4] md:text-[32px]">
+      {{ heading }}
     </h2>
     <div v-for="([q, a], i) in faqs" :key="q" class="border-t border-line2">
       <button
@@ -25,10 +25,12 @@
 
 <script>
 // Question/answer accordion; the first answer starts open. `faqs` is a list of [question, answer].
+// Pass heading="" when a surrounding card already titles it.
 export default {
   name: 'FaqList',
   props: {
-    faqs: { type: Array, required: true }
+    faqs: { type: Array, required: true },
+    heading: { type: String, default: 'คำถามที่พบบ่อย' }
   },
   data() {
     return { open: 0 }
