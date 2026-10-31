@@ -1,5 +1,7 @@
 <template>
-  <main v-if="course">
+  <!-- keyed by course: moving from one course straight to another reuses this page, so
+       without a key its scroll-in animations (v-reveal, count-ups) would not play again -->
+  <main v-if="course" :key="course.slug">
     <section class="wrap pb-12 pt-8 md:pb-16 md:pt-10">
       <div class="mb-7 text-sm text-muted md:mb-9">
         <router-link class="hover:text-brand" to="/courses">หลักสูตร</router-link>
@@ -43,9 +45,10 @@
     >
       <div v-reveal="{ stagger: 80 }" class="flex min-w-0 flex-col gap-3 md:gap-5 lg:col-span-8">
         <BentoCard :level="2" icon="checkCircle" title="สิ่งที่ลูกจะได้เรียน">
-          <ul class="grid gap-x-7 gap-y-4 sm:grid-cols-2">
+          <!-- the points tick in one after another -->
+          <ul v-reveal="{ stagger: 160, delay: 150 }" class="grid gap-x-7 gap-y-4 sm:grid-cols-2">
             <li v-for="[title, text] in course.points" :key="title" class="flex items-start gap-3">
-              <BentoIcon class="mt-0.5 h-6 w-6 flex-none text-brand" name="checkCircle" />
+              <BentoIcon class="tick-pop mt-0.5 h-6 w-6 flex-none text-brand" name="checkCircle" />
               <span class="text-[15px] leading-[1.7] text-muted"
                 ><b class="text-ink">{{ title }}</b> — {{ text }}</span
               >
@@ -59,29 +62,41 @@
           :tag="`${course.levels.items.length} ขั้น`"
           :title="course.levels.heading"
           icon="route"
-          tone="ink"
+          tone="paper"
         >
-          <!-- a study-plan path: numbered nodes joined by one line -->
-          <ol class="relative flex flex-col gap-5">
+          <!-- a study-plan path: numbered nodes joined by one line. As it scrolls in, the
+               line draws downward in yellow and each step pops in as the line reaches it -->
+          <div class="relative">
             <span
               aria-hidden="true"
-              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-cream/15"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-brand/15"
             ></span>
-            <li
-              v-for="([title, text], i) in course.levels.items"
-              :key="title"
-              class="relative flex gap-4"
+            <span
+              v-reveal="{ variant: 'grow', delay: 150 }"
+              :style="{ '--grow-duration': `${course.levels.items.length * 320 + 300}ms` }"
+              aria-hidden="true"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-sun/70"
+            ></span>
+            <ol
+              v-reveal.together="{ stagger: 320, delay: 150 }"
+              class="relative flex flex-col gap-5"
             >
-              <span
-                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold text-ink ring-4 ring-ink"
-                >{{ i + 1 }}</span
+              <li
+                v-for="([title, text], i) in course.levels.items"
+                :key="title"
+                class="relative flex gap-4"
               >
-              <span class="flex min-w-0 flex-col gap-1 pt-1">
-                <b class="text-[17px] text-cream">{{ title }}</b>
-                <span class="text-[15px] leading-[1.7] text-cream/70">{{ text }}</span>
-              </span>
-            </li>
-          </ol>
+                <span
+                  class="tick-pop flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold text-ink ring-4 ring-paper"
+                  >{{ i + 1 }}</span
+                >
+                <span class="flex min-w-0 flex-col gap-1 pt-1">
+                  <b class="text-[17px] text-ink">{{ title }}</b>
+                  <span class="text-[15px] leading-[1.7] text-body">{{ text }}</span>
+                </span>
+              </li>
+            </ol>
+          </div>
         </BentoCard>
 
         <BentoCard
@@ -91,28 +106,39 @@
           title="หนึ่งคาบเรียนที่ Brighton"
           tone="sun"
         >
-          <!-- the four lesson steps as a timeline: down on phones, across from sm up -->
-          <ol class="relative grid gap-4 sm:grid-cols-4 sm:gap-3">
+          <!-- the four lesson steps as a timeline: down on phones, across from sm up. As it
+               scrolls in, the line draws itself and each step pops in as the line reaches it -->
+          <div class="relative">
             <span
               aria-hidden="true"
               class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-ink/15 sm:bottom-auto sm:left-[18px] sm:right-[calc(25%_-_27px)] sm:top-[17px] sm:h-0.5 sm:w-auto"
             ></span>
-            <li
-              v-for="([name, text], i) in steps"
-              :key="name"
-              class="relative flex gap-3.5 sm:flex-col sm:gap-3"
+            <span
+              v-reveal="{ variant: 'grow', delay: 150 }"
+              aria-hidden="true"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-ink/55 [--grow-duration:1500ms] sm:bottom-auto sm:left-[18px] sm:right-[calc(25%_-_27px)] sm:top-[17px] sm:h-0.5 sm:w-auto sm:[--grow-from:0_1] sm:[--grow-origin:left]"
+            ></span>
+            <ol
+              v-reveal.together="{ stagger: 380, delay: 150 }"
+              class="relative grid gap-4 sm:grid-cols-4 sm:gap-3"
             >
-              <span
-                :class="i === steps.length - 1 ? 'bg-ink text-sun' : 'bg-white text-ink'"
-                class="flex h-9 w-9 flex-none items-center justify-center rounded-full font-condensed text-sm font-bold ring-4 ring-sunsoft"
-                >0{{ i + 1 }}</span
+              <li
+                v-for="([name, text], i) in steps"
+                :key="name"
+                class="relative flex gap-3.5 sm:flex-col sm:gap-3"
               >
-              <span class="flex min-w-0 flex-col gap-1 pt-1 sm:pt-0">
-                <b class="font-condensed text-lg font-semibold">{{ name }}</b>
-                <span class="text-sm leading-[1.6] text-body">{{ text }}</span>
-              </span>
-            </li>
-          </ol>
+                <span
+                  :class="i === steps.length - 1 ? 'bg-ink text-sun' : 'bg-white text-ink'"
+                  class="tick-pop flex h-9 w-9 flex-none items-center justify-center rounded-full font-condensed text-sm font-bold ring-4 ring-sunsoft"
+                  >0{{ i + 1 }}</span
+                >
+                <span class="flex min-w-0 flex-col gap-1 pt-1 sm:pt-0">
+                  <b class="font-condensed text-lg font-semibold">{{ name }}</b>
+                  <span class="text-sm leading-[1.6] text-body">{{ text }}</span>
+                </span>
+              </li>
+            </ol>
+          </div>
         </BentoCard>
 
         <BentoCard :level="2" icon="help" title="คำถามที่พบบ่อย">
@@ -128,8 +154,13 @@
         title="ข้อมูลหลักสูตร"
         tone="paper"
       >
-        <dl class="flex flex-col gap-3 text-[15px]">
-          <div v-for="[k, v] in facts" :key="k" class="flex items-center justify-between gap-3">
+        <dl class="in-cascade flex flex-col gap-3 text-[15px]">
+          <div
+            v-for="([k, v], fi) in facts"
+            :key="k"
+            :style="{ '--i': fi }"
+            class="flex items-center justify-between gap-3"
+          >
             <dt class="text-muted">{{ k }}</dt>
             <dd class="rounded-full bg-white px-3.5 py-1.5 text-right text-[14px] font-semibold">
               {{ v }}
@@ -167,11 +198,11 @@
             <span class="link-arrow">ดูรายละเอียด →</span>
             <span
               :class="toneClass[c.tone]"
-              class="flex flex-none -rotate-2 flex-col items-start gap-0.5 rounded-[18px] px-3.5 py-2.5"
+              class="in-pop flex flex-none -rotate-2 flex-col items-start gap-0.5 rounded-[18px] px-3.5 py-2.5"
             >
-              <span :class="ageFont(c.age)" class="text-[28px] font-bold leading-none">{{
-                c.age
-              }}</span>
+              <span :class="ageFont(c.age)" class="text-[28px] font-bold leading-none"
+                ><CountUp :delay="300" :value="c.age"
+              /></span>
               <span class="text-[12px] opacity-90">{{ c.ageUnit }}</span>
             </span>
           </div>
@@ -186,6 +217,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
+import CountUp from '@/components/CountUp.vue'
 import BentoIcon from '@/components/BentoIcon.vue'
 import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
@@ -196,7 +228,7 @@ import { courseSchema, jsonLd } from '@/data/schema'
 
 export default {
   name: 'CourseDetailView',
-  components: { BentoCard, BentoIcon, FaqList, PhotoBox, SectionHead },
+  components: { BentoCard, BentoIcon, CountUp, FaqList, PhotoBox, SectionHead },
   beforeRouteEnter(to, from, next) {
     next(courses.some((c) => c.slug === to.params.slug) ? undefined : '/courses')
   },
@@ -232,7 +264,7 @@ export default {
         ['เหมาะสำหรับ', c.ageUnit === 'ปี' ? `อายุ ${c.age} ปี` : c.tag],
         ['หลักสูตร', c.curriculum],
         ['วันเรียน', 'อังคาร – อาทิตย์'],
-        ['ค่าเรียน', 'สอบถามที่โรงเรียน']
+        ['ค่าเรียน', c.price ?? 'สอบถามที่โรงเรียน']
       ]
     }
   }

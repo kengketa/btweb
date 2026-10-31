@@ -15,11 +15,11 @@
           <h1
             class="font-display text-[36px] font-bold leading-[1.4] tracking-[-0.01em] md:text-5xl md:leading-[1.38] lg:text-[46px] xl:text-[56px] xl:leading-[1.34]"
           >
-            <span class="sm:block sm:whitespace-nowrap">ให้ลูกเรียนภาษาอังกฤษ</span>
-            <span class="sm:block sm:whitespace-nowrap"
-              >อย่าง<span class="marker">มีความสุข</span></span
+            <span class="rise sm:block sm:whitespace-nowrap">ให้ลูกเรียนภาษาอังกฤษ</span>
+            <span class="rise sm:block sm:whitespace-nowrap" style="--d: 90ms"
+              >อย่าง<span class="marker marker-intro">มีความสุข</span></span
             >
-            <span class="sm:block sm:whitespace-nowrap">และใช้ได้จริง</span>
+            <span class="rise sm:block sm:whitespace-nowrap" style="--d: 180ms">และใช้ได้จริง</span>
           </h1>
           <p class="max-w-[520px] text-base leading-[1.7] text-muted md:text-lg md:leading-[1.75]">
             Brighton Language Academy โรงเรียนสอนภาษามาตรฐานสากลในพะเยา หลักสูตร Oxford และ Jolly
@@ -46,19 +46,19 @@
           <PhotoBox
             :src="heroPhotos[0]"
             alt="บรรยากาศการเรียนที่ Brighton"
-            class="col-span-2 row-span-2 rounded-[24px] md:rounded-[28px]"
+            class="in-zoom lift col-span-2 row-span-2 rounded-[24px] md:rounded-[28px]"
             priority
             sizes="(min-width: 1024px) 300px, 100vw"
           />
           <PhotoBox
             :src="heroPhotos[1]"
             alt="ครูและนักเรียนที่ Brighton"
-            class="rounded-[24px] md:rounded-[28px]"
+            class="in-zoom lift rounded-[24px] md:rounded-[28px]"
             priority
             sizes="(min-width: 1024px) 150px, 50vw"
           />
           <div
-            class="flex -rotate-2 flex-col justify-between rounded-[24px] bg-sun p-4 shadow-[inset_0_-5px_0_rgba(0,0,0,.08)] md:rounded-[28px] md:p-5"
+            class="in-zoom lift flex flex-col [rotate:-2deg] justify-between rounded-[24px] bg-sun p-4 shadow-[inset_0_-5px_0_rgba(0,0,0,.08)] md:rounded-[28px] md:p-5"
           >
             <BentoIcon class="h-6 w-6" name="sparkle" />
             <span class="font-condensed text-[17px] font-semibold italic leading-[1.15] md:text-lg"
@@ -68,39 +68,42 @@
           <PhotoBox
             :src="heroPhotos[2]"
             alt="นักเรียน Brighton"
-            class="col-span-2 hidden rounded-[24px] sm:block md:rounded-[28px]"
+            class="in-zoom lift col-span-2 hidden rounded-[24px] sm:block md:rounded-[28px]"
             priority
             sizes="(min-width: 1024px) 300px, 50vw"
           />
           <div
-            class="flex flex-col justify-between rounded-[24px] bg-ink p-4 text-cream md:rounded-[28px] md:p-5"
+            class="in-zoom lift flex flex-col justify-between rounded-[24px] bg-paper p-4 text-ink md:rounded-[28px] md:p-5"
           >
-            <span class="text-[12px] text-cream/70 md:text-[13px]">ดูแลเด็กๆ ในพะเยา</span>
+            <span class="text-[12px] text-body md:text-[13px]">ดูแลเด็กๆ ในพะเยา</span>
             <span class="flex items-baseline gap-1.5">
               <span
-                class="font-condensed text-[40px] font-bold leading-none text-sun md:text-[48px]"
-                >{{ years }}</span
-              >
-              <span class="text-sm text-cream/80">ปี</span>
+                class="font-condensed text-[40px] font-bold leading-none text-brand md:text-[48px]"
+                ><CountUp :value="years"
+              /></span>
+              <span class="text-sm text-body">ปี</span>
             </span>
           </div>
           <router-link
             :to="{ hash: '#reviews' }"
-            class="group col-span-2 flex flex-col justify-between rounded-[24px] border border-line bg-white p-4 transition hover:-translate-y-0.5 md:rounded-[28px] md:p-5"
+            class="group col-span-2 flex flex-col justify-between rounded-[24px] border border-line bg-white p-4 lift md:rounded-[28px] md:p-5"
           >
             <span class="flex items-center justify-between gap-2">
-              <span class="flex -space-x-2.5">
+              <span class="pop-load flex -space-x-2.5">
                 <span
-                  v-for="r in reviews.slice(0, 4)"
+                  v-for="(r, i) in reviews.slice(0, 4)"
                   :key="r.name"
+                  :style="{ '--i': i }"
                   class="flex h-9 w-9 items-center justify-center rounded-full bg-blush text-sm font-semibold text-brand ring-2 ring-white"
                   >{{ r.initial }}</span
                 >
               </span>
-              <span class="flex gap-0.5 text-sun" aria-hidden="true">
+              <!-- the five stars stamp down one after another as the page loads -->
+              <span class="stamp-load flex gap-0.5 text-sun" aria-hidden="true">
                 <svg
                   v-for="n in 5"
                   :key="n"
+                  :style="{ '--i': n - 1 }"
                   class="h-4 w-4"
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -123,7 +126,7 @@
           <PhotoBox
             :src="heroPhotos[3]"
             alt="กิจกรรมในห้องเรียน Brighton"
-            class="rounded-[24px] md:rounded-[28px]"
+            class="in-zoom lift rounded-[24px] md:rounded-[28px]"
             sizes="(min-width: 1024px) 150px, 50vw"
           />
         </div>
@@ -175,7 +178,8 @@
               style="text-wrap: balance"
             >
               “เพราะเราเชื่อว่า…
-              <span class="marker">ความสุข</span>คือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด”
+              <span v-reveal="{ variant: 'wipe', delay: 350 }" class="marker">ความสุข</span
+              >คือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด”
             </h2>
           </div>
           <p class="text-base leading-[1.85] text-muted md:text-[17px]">
@@ -210,41 +214,7 @@
             sub="Active Learning ผ่านเกม งานศิลปะ และงานประดิษฐ์ ไม่ใช่การท่องจำ"
             title="หนึ่งคาบเรียนที่ Brighton"
           >
-            <ol class="relative flex flex-col gap-2">
-              <span
-                aria-hidden="true"
-                class="absolute bottom-7 left-[29px] top-7 w-0.5 bg-sun/60"
-              ></span>
-              <li v-for="([name, text], i) in lessonSteps" :key="name" class="relative">
-                <button
-                  :aria-pressed="step === i"
-                  :class="step === i ? 'bg-sunsoft' : 'hover:bg-cream'"
-                  class="flex w-full items-start gap-3.5 rounded-2xl p-3 text-left transition-colors"
-                  type="button"
-                  @click="step = i"
-                  @mouseenter="step = i"
-                >
-                  <span
-                    :class="
-                      step === i ? 'bg-ink text-sun ring-sunsoft' : 'bg-sun text-ink ring-white'
-                    "
-                    class="flex h-9 w-9 flex-none items-center justify-center rounded-full font-condensed text-sm font-bold ring-4 transition-colors"
-                    >{{ i + 1 }}</span
-                  >
-                  <span class="flex min-w-0 flex-1 flex-col gap-0.5 pt-0.5">
-                    <span class="flex items-center justify-between gap-2">
-                      <b class="font-condensed text-[17px] font-semibold">{{ name }}</b>
-                      <span
-                        v-if="step === i"
-                        class="rounded-full bg-sun px-2.5 py-0.5 text-[12px] font-semibold"
-                        >{{ stepMinutes[i] }}</span
-                      >
-                    </span>
-                    <span class="text-sm leading-[1.6] text-muted">{{ text }}</span>
-                  </span>
-                </button>
-              </li>
-            </ol>
+            <LessonSteps :minutes="[10, 15, 25, 10]" :steps="lessonSteps" />
           </BentoCard>
 
           <BentoCard
@@ -252,20 +222,14 @@
             icon="users"
             sub="ครูผู้สอนคลาสที่ Brighton ใช้ภาษาอังกฤษเป็นภาษาแรก"
             title="ครูเจ้าของภาษา"
-            tone="ink"
+            tone="paper"
           >
-            <ul class="flex flex-col gap-2.5">
-              <li
-                v-for="[standard] in teacherStandards"
-                :key="standard"
-                class="flex items-center justify-between gap-3 rounded-full border border-cream/15 py-2.5 pl-4 pr-2.5 text-[15px]"
-              >
-                {{ standard }}
-                <BentoIcon class="h-6 w-6 flex-none text-sun" name="checkCircle" />
-              </li>
-            </ul>
+            <CheckSteps
+              :items="teacherStandards.map(([standard]) => standard)"
+              complete-label="ครูของ Brighton ทุกคนผ่านครบทุกข้อ"
+            />
             <template #foot>
-              <router-link class="font-semibold text-sun hover:underline" to="/teachers"
+              <router-link class="font-semibold text-brand hover:underline" to="/teachers"
                 >ดูทีมครูชาวต่างชาติของเรา →</router-link
               >
             </template>
@@ -289,6 +253,7 @@
             title="เห็นพัฒนาการของลูก"
           >
             <SkillRadar
+              animated
               :average="radar.average"
               :axes="radar.axes"
               :child="radar.child"
@@ -296,7 +261,6 @@
               class="mt-auto"
             />
             <template #foot>
-              ตัวอย่างกราฟจากแอป Student Progress ·
               <router-link class="link-arrow" to="/results">ดูวิธีดูผลการเรียน →</router-link>
             </template>
           </BentoCard>
@@ -338,12 +302,13 @@
             <!-- the wide card keeps the course's colour block; the others show the age on the card -->
             <div
               v-if="i === 0"
+              v-reveal="{ variant: 'pop', delay: 150 }"
               :class="toneClass[c.tone]"
               class="flex flex-col justify-between gap-4 rounded-[22px] p-5 sm:min-h-[150px]"
             >
               <span class="text-[13px] font-semibold opacity-90">{{ c.tag }}</span>
               <span :class="ageFont(c.age)" class="text-[52px] font-bold leading-none"
-                >{{ c.age }}<span class="ml-1.5 text-lg">ปี</span></span
+                ><CountUp :delay="250" :value="c.age" /><span class="ml-1.5 text-lg">ปี</span></span
               >
             </div>
             <div v-else class="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
@@ -351,7 +316,11 @@
                 <span
                   :class="[ageFont(c.age), courseCards[i].age]"
                   class="text-[52px] font-bold leading-none"
-                  >{{ c.age }}<span v-if="c.ageUnit === 'ปี'" class="ml-1.5 text-lg">ปี</span></span
+                  ><CountUp :delay="150" :value="c.age" /><span
+                    v-if="c.ageUnit === 'ปี'"
+                    class="ml-1.5 text-lg"
+                    >ปี</span
+                  ></span
                 >
                 <span
                   v-if="c.ageUnit !== 'ปี'"
@@ -361,12 +330,13 @@
                 >
               </span>
               <span
+                v-reveal="{ variant: 'pop', delay: 450 }"
                 :class="courseCards[i].pill"
                 class="rounded-full px-3 py-1 text-[13px] font-semibold"
                 >{{ c.tag }}</span
               >
             </div>
-            <ul class="flex flex-col justify-end gap-2.5">
+            <ul v-reveal="{ stagger: 110, delay: 250 }" class="flex flex-col justify-end gap-2.5">
               <li
                 v-for="[point] in c.points.slice(0, 3)"
                 :key="point"
@@ -374,7 +344,7 @@
               >
                 <span
                   :class="courseCards[i].check"
-                  class="flex h-6 w-6 flex-none items-center justify-center rounded-full"
+                  class="tick-pop flex h-6 w-6 flex-none items-center justify-center rounded-full"
                 >
                   <BentoIcon class="h-3.5 w-3.5" name="check" />
                 </span>
@@ -399,7 +369,9 @@
           <div class="flex flex-1 flex-col justify-between gap-6">
             <p class="flex items-baseline gap-2">
               <span class="text-sm text-muted">เริ่มเรียนได้ตั้งแต่</span>
-              <span class="font-condensed text-[64px] font-bold leading-none text-brand">3</span>
+              <span class="font-condensed text-[64px] font-bold leading-none text-brand"
+                ><CountUp :delay="200" :duration="800" value="3"
+              /></span>
               <span class="text-sm text-muted">ขวบ</span>
             </p>
             <div class="flex flex-col gap-3">
@@ -440,15 +412,15 @@
           :title="prog.teachers.label"
           :to="prog.teachers.path"
           icon="globe"
-          tone="ink"
+          tone="paper"
         >
           <p class="mt-auto flex items-baseline gap-2">
-            <span class="font-condensed text-[56px] font-bold leading-none text-sun"
-              >~{{ team.foreignTeachers }}</span
-            >
-            <span class="text-sm text-cream/70">คน</span>
+            <span class="font-condensed text-[56px] font-bold leading-none text-brand"
+              ><CountUp :delay="250" :value="`~${team.foreignTeachers}`"
+            /></span>
+            <span class="text-sm text-body">คน</span>
           </p>
-          <template #foot><span class="font-semibold text-sun">ดูรายละเอียด →</span></template>
+          <template #foot><span class="font-semibold text-brand">ดูรายละเอียด →</span></template>
         </BentoCard>
 
         <BentoCard
@@ -459,13 +431,14 @@
           icon="sun"
           tone="sun"
         >
-          <div class="mt-auto flex flex-wrap gap-2">
+          <div class="in-stagger mt-auto flex flex-wrap gap-2">
             <span class="rounded-full bg-ink px-3 py-1.5 text-[13px] font-semibold text-sun">{{
               prog.camp.camp.term
             }}</span>
             <span
-              v-for="week in campWeeks"
+              v-for="(week, i) in campWeeks"
               :key="week"
+              :style="{ '--i': i + 1 }"
               class="rounded-full bg-white/70 px-3 py-1.5 text-[13px] font-medium"
               >{{ week }}</span
             >
@@ -481,10 +454,11 @@
           icon="sparkle"
           tone="sage"
         >
-          <div class="mt-auto flex flex-wrap gap-2">
+          <div class="in-stagger mt-auto flex flex-wrap gap-2">
             <span
-              v-for="skill in efSkills"
+              v-for="(skill, i) in efSkills"
               :key="skill"
+              :style="{ '--i': i }"
               class="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium"
               >{{ skill }}</span
             >
@@ -501,9 +475,9 @@
           tone="blush"
         >
           <p class="mt-auto flex items-baseline gap-2">
-            <span class="font-condensed text-[56px] font-bold leading-none text-brand">{{
-              team.schools
-            }}</span>
+            <span class="font-condensed text-[56px] font-bold leading-none text-brand"
+              ><CountUp :delay="250" :value="team.schools"
+            /></span>
             <span class="text-sm text-body">โรงเรียนในพะเยา</span>
           </p>
           <template #foot><span class="link-arrow">ดูรายละเอียด →</span></template>
@@ -531,31 +505,27 @@
           sub="ผลสอบ IELTS Academic และ Oxford Placement Test ของนักเรียนไบรท์ตัน"
           title="Hall of Fame"
           to="/hall-of-fame"
-          tone="ink"
+          tone="paper"
         >
           <div class="mt-auto grid grid-cols-2 gap-3">
-            <div
-              class="flex flex-col gap-1 rounded-[20px] border border-cream/15 bg-cream/[.08] p-4"
-            >
-              <span class="text-[13px] text-cream/70">IELTS Academic</span>
+            <div class="flex flex-col gap-1 rounded-[20px] border border-line2 bg-white/70 p-4">
+              <span class="text-[13px] text-body">IELTS Academic</span>
               <span
-                class="font-condensed text-[44px] font-bold leading-none text-sun md:text-[52px]"
-                >{{ topIelts.overall }}</span
-              >
-              <span class="text-[13px] text-cream/70">Overall · CEFR {{ topIelts.cefr }}</span>
+                class="font-condensed text-[44px] font-bold leading-none text-brand md:text-[52px]"
+                ><CountUp :delay="250" :value="topIelts.overall"
+              /></span>
+              <span class="text-[13px] text-body">Overall · CEFR {{ topIelts.cefr }}</span>
             </div>
-            <div
-              class="flex flex-col gap-1 rounded-[20px] border border-cream/15 bg-cream/[.08] p-4"
-            >
-              <span class="text-[13px] text-cream/70">Oxford Young Learners</span>
+            <div class="flex flex-col gap-1 rounded-[20px] border border-line2 bg-white/70 p-4">
+              <span class="text-[13px] text-body">Oxford Young Learners</span>
               <span
-                class="font-condensed text-[44px] font-bold leading-none text-cream md:text-[52px]"
-                >{{ oxfordCount }}</span
-              >
-              <span class="text-[13px] text-cream/70">คน ได้ระดับ B1 ขึ้นไป</span>
+                class="font-condensed text-[44px] font-bold leading-none text-ink md:text-[52px]"
+                ><CountUp :delay="350" :value="oxfordCount"
+              /></span>
+              <span class="text-[13px] text-body">คน ได้ระดับ B1 ขึ้นไป</span>
             </div>
           </div>
-          <template #foot><span class="font-semibold text-sun">ดู Hall of Fame →</span></template>
+          <template #foot><span class="font-semibold text-brand">ดู Hall of Fame →</span></template>
         </BentoCard>
 
         <BentoCard
@@ -566,10 +536,11 @@
           title="ดูผลการเรียนผ่าน LINE"
           tone="sage"
         >
-          <ul class="flex flex-col gap-2.5">
+          <ul class="in-cascade flex flex-col gap-2.5">
             <li
-              v-for="f in appFeatures"
+              v-for="(f, i) in appFeatures"
               :key="f.title"
+              :style="{ '--i': i }"
               class="flex items-center gap-2.5 text-[15px] font-medium"
             >
               <BentoIcon class="h-5 w-5 flex-none text-sagedeep" name="checkCircle" />{{ f.title }}
@@ -595,10 +566,10 @@
     <section class="wrap pb-12 md:pb-[104px]">
       <div
         v-reveal="{ variant: 'scale' }"
-        class="grid gap-6 rounded-3xl bg-ink p-6 text-cream md:gap-8 md:rounded-[32px] md:p-14 lg:grid-cols-[1.2fr_1fr] lg:gap-14"
+        class="grid gap-6 rounded-3xl bg-paper p-6 text-ink md:gap-8 md:rounded-[32px] md:p-14 lg:grid-cols-[1.2fr_1fr] lg:gap-14"
       >
         <div class="flex flex-col gap-4">
-          <span class="font-condensed text-xs font-semibold uppercase tracking-[.14em] text-sun"
+          <span class="font-condensed text-xs font-semibold uppercase tracking-[.14em] text-brand"
             >Our Story</span
           >
           <h2
@@ -611,7 +582,7 @@
             ผู้ก่อตั้ง Brighton เคยเรียนภาษาอังกฤษแบบท่องจำจนสื่อสารไม่ได้ ใช้เวลา 5
             ปีในออสเตรเลียจนใช้ภาษาได้จริง แล้วกลับมาพะเยาเพื่อส่งต่อวิธีเรียนแบบนั้นให้เด็กๆ
           </p>
-          <router-link class="mt-1 self-start font-semibold text-sun hover:underline" to="/about"
+          <router-link class="mt-1 self-start font-semibold text-brand hover:underline" to="/about"
             >อ่านเรื่องราวของเรา →</router-link
           >
         </div>
@@ -619,12 +590,12 @@
           <div
             v-for="[value, label] in storyStats"
             :key="label"
-            class="flex flex-col gap-2 rounded-[20px] bg-cream/10 p-5"
+            class="flex flex-col gap-2 rounded-[20px] bg-white/70 p-5"
           >
             <span
-              class="font-condensed text-[36px] font-bold leading-none text-sun md:text-[44px]"
-              >{{ value }}</span
-            >
+              class="font-condensed text-[36px] font-bold leading-none text-brand md:text-[44px]"
+              ><CountUp :delay="200" :value="value"
+            /></span>
             <span class="text-sm leading-[1.5] opacity-85">{{ label }}</span>
           </div>
         </div>
@@ -658,13 +629,13 @@
         <PhotoBox
           alt="นักเรียนและครูที่ Brighton"
           :src="photos[0]"
-          class="col-span-2 aspect-[16/10] rounded-[18px] md:row-span-2 md:aspect-auto md:rounded-3xl"
+          class="in-zoom col-span-2 aspect-[16/10] rounded-[18px] md:row-span-2 md:aspect-auto md:rounded-3xl"
           sizes="(min-width: 768px) 25vw, 100vw"
         />
         <PhotoBox
           :src="photos[1]"
           alt="กิจกรรมที่ Brighton"
-          class="aspect-square rounded-[18px] md:aspect-auto md:rounded-3xl"
+          class="in-zoom aspect-square rounded-[18px] md:aspect-auto md:rounded-3xl"
           sizes="(min-width: 768px) 25vw, 50vw"
         />
         <div class="flex flex-col justify-between rounded-[18px] bg-sun p-5 md:rounded-3xl md:p-6">
@@ -676,7 +647,7 @@
         <PhotoBox
           :src="photos[2]"
           alt="กิจกรรมที่ Brighton"
-          class="col-span-2 hidden rounded-3xl md:block"
+          class="in-zoom col-span-2 hidden rounded-3xl md:block"
           sizes="50vw"
         />
       </div>
@@ -711,9 +682,9 @@
             <div v-for="n in 4" :key="n" class="h-[60px] border-[7px] border-white"></div>
           </div>
           <span class="flex items-baseline gap-2">
-            <span class="font-condensed text-[64px] font-bold leading-none text-sun">{{
-              years
-            }}</span>
+            <span class="font-condensed text-[64px] font-bold leading-none text-sun"
+              ><CountUp :delay="250" :value="years"
+            /></span>
             <span class="text-[15px] font-medium">ปี</span>
           </span>
           <span class="text-[17px] font-medium leading-normal"
@@ -733,7 +704,7 @@
           v-for="(r, i) in reviews"
           :key="r.name"
           :class="i >= reviewsShown && 'hidden md:block'"
-          class="mb-3 break-inside-avoid rounded-[28px] border border-line bg-white p-5 text-ink md:mb-4 md:p-6"
+          class="lift mb-3 break-inside-avoid rounded-[28px] border border-line bg-white p-5 text-ink md:mb-4 md:p-6"
         >
           <blockquote
             :title="r.text"
@@ -750,10 +721,11 @@
               <b class="truncate text-[15px]">{{ r.name }}</b>
               <span aria-label="5 ดาว" class="mt-0.5 flex items-center gap-1.5" role="img">
                 <IconFacebook class="h-3.5 w-3.5 flex-none text-[#1877F2]" />
-                <span class="flex gap-0.5 text-sun">
+                <span class="stamp flex gap-0.5 text-sun">
                   <svg
                     v-for="n in 5"
                     :key="n"
+                    :style="{ '--i': n - 1 }"
                     aria-hidden="true"
                     class="h-3.5 w-3.5"
                     fill="currentColor"
@@ -790,10 +762,11 @@
           sub="นัดวัดระดับภาษาฟรี ครูจะพูดคุยกับลูกและแนะนำคลาสที่เหมาะกับวัยและพื้นฐานของลูกมากที่สุด"
           title="มาลองเรียนกับเราก่อน"
         >
-          <ol class="flex flex-col gap-3 sm:flex-row sm:gap-3">
+          <ol class="in-cascade flex flex-col gap-3 sm:flex-row sm:gap-3">
             <li
               v-for="(step, i) in bookingSteps"
               :key="step"
+              :style="{ '--i': i }"
               class="flex flex-1 items-center gap-3 rounded-2xl bg-cream p-4 sm:flex-col sm:items-start"
             >
               <span
@@ -816,15 +789,15 @@
           class="lg:col-span-5"
           icon="pin"
           title="ติดต่อเรา"
-          tone="ink"
+          tone="paper"
         >
           <div class="flex flex-col gap-2.5">
             <a
               :href="contact.tel"
-              class="flex items-center justify-between gap-3 rounded-full border border-cream/15 py-2.5 pl-4 pr-2.5 transition-colors hover:border-cream/40"
+              class="flex items-center justify-between gap-3 rounded-full border border-line2 py-2.5 pl-4 pr-2.5 transition-colors hover:border-brand/40"
             >
               <span class="flex items-center gap-2.5 text-[15px]">
-                <IconMobile class="h-[18px] w-[18px] text-sun" />{{ contact.phone }}
+                <IconMobile class="h-[18px] w-[18px] text-brand" />{{ contact.phone }}
               </span>
               <span class="rounded-full bg-sun px-3 py-1 text-[13px] font-semibold text-ink"
                 >โทร</span
@@ -832,15 +805,15 @@
             </a>
             <a
               :href="contact.facebook"
-              class="flex items-center justify-between gap-3 rounded-full border border-cream/15 py-2.5 pl-4 pr-2.5 transition-colors hover:border-cream/40"
+              class="flex items-center justify-between gap-3 rounded-full border border-line2 py-2.5 pl-4 pr-2.5 transition-colors hover:border-brand/40"
               rel="noopener"
               target="_blank"
             >
               <span class="flex min-w-0 items-center gap-2.5 text-[15px]">
-                <IconFacebook class="h-[18px] w-[18px] flex-none text-sun" />
+                <IconFacebook class="h-[18px] w-[18px] flex-none text-brand" />
                 <span class="truncate">{{ contact.facebookName }}</span>
               </span>
-              <span class="flex-none rounded-full bg-cream/10 px-3 py-1 text-[13px] font-semibold"
+              <span class="flex-none rounded-full bg-white/70 px-3 py-1 text-[13px] font-semibold"
                 >แชท</span
               >
             </a>
@@ -858,6 +831,9 @@ import BentoCard from '@/components/BentoCard.vue'
 import BentoIcon from '@/components/BentoIcon.vue'
 import CefrLadder from '@/components/CefrLadder.vue'
 import ChatDemo from '@/components/ChatDemo.vue'
+import CountUp from '@/components/CountUp.vue'
+import LessonSteps from '@/components/LessonSteps.vue'
+import CheckSteps from '@/components/CheckSteps.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import SkillRadar from '@/components/SkillRadar.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
@@ -880,6 +856,9 @@ export default {
     BentoIcon,
     CefrLadder,
     ChatDemo,
+    CountUp,
+    CheckSteps,
+    LessonSteps,
     SectionHead,
     SkillRadar,
     PhotoBox,
@@ -928,9 +907,6 @@ export default {
       team,
       teacherStandards,
       lessonSteps,
-      // the lesson card: which step is highlighted, and roughly how long each takes
-      step: 2,
-      stepMinutes: ['10 นาที', '15 นาที', '25 นาที', '10 นาที'],
       // the numbered strip under the hero, from first visit to seeing results
       journey: [
         { label: 'วัดระดับฟรี', to: { hash: '#why' } },
@@ -970,12 +946,12 @@ export default {
         },
         {
           span: 'lg:col-span-4',
-          tone: 'ink',
-          age: 'text-sun',
-          muted: 'text-cream/70',
-          pill: 'bg-cream/10 text-cream',
-          check: 'bg-cream/10 text-sun',
-          link: 'text-sun'
+          tone: 'paper',
+          age: 'text-brand',
+          muted: 'text-body',
+          pill: 'bg-white text-brand',
+          check: 'bg-white text-brand',
+          link: 'text-brand'
         }
       ],
       prog: programBySlug,

@@ -89,8 +89,10 @@ const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)'
 // asked for less motion. Used for taps on a link to the section already in the address,
 // which the router doesn't treat as a navigation.
 export function scrollToSection(hash) {
-  const el = hash && document.querySelector(hash)
+  let el = hash && document.querySelector(hash)
   if (hash && !el) return
+  // a target limited to some screen sizes (data-scroll-media) means the top elsewhere
+  if (el && el.dataset.scrollMedia && !window.matchMedia(el.dataset.scrollMedia).matches) el = null
   const top = el ? el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET : 0
   window.scrollTo({ top, behavior: reducedMotion() ? 'auto' : 'smooth' })
 }
@@ -103,7 +105,23 @@ function scrollBehavior(to, from, savedPosition) {
   if (savedPosition) return savedPosition
   // a section: glide there within the page, jump straight there when arriving from
   // another page, and leave room for the sticky nav either way
+  // A target can limit itself to some screen sizes (data-scroll-media): elsewhere the
+  // page opens at the top as usual.
+  const target = to.hash ? document.querySelector(to.hash) : null
+  const media = target?.dataset.scrollMedia
+  if (media && !window.matchMedia(media).matches) {
+    return from === START_LOCATION ? false : { top: 0 }
+  }
   if (to.hash) {
+    // A target marked data-scroll-glide (the booking form) glides in from the top of
+    // its page even when arriving from another page; the page opens at the top first,
+    // then scrolls down to it.
+    if (target?.dataset.scrollGlide !== undefined && from.path !== to.path && !reducedMotion()) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      return new Promise((resolve) =>
+        setTimeout(() => resolve({ el: to.hash, top: NAV_OFFSET, behavior: 'smooth' }), 150)
+      )
+    }
     const glide = from.path === to.path && !reducedMotion()
     return { el: to.hash, top: NAV_OFFSET, behavior: glide ? 'smooth' : 'auto' }
   }

@@ -1,9 +1,9 @@
 <template>
   <component
     :is="to ? 'router-link' : href ? 'a' : 'div'"
-    :class="[tones[tone].card, (to || href) && 'group hover:-translate-y-1']"
+    :class="[tones[tone].card, (to || href) && 'group']"
     v-bind="linkAttrs"
-    class="flex min-w-0 flex-col rounded-[28px] border p-5 transition duration-300 md:rounded-[32px] md:p-8"
+    class="lift flex min-w-0 flex-col rounded-[28px] border p-5 md:rounded-[32px] md:p-8"
   >
     <div v-if="title" class="flex flex-col gap-1.5">
       <!-- the icon keeps its place beside the title even when a long title wraps -->
@@ -12,7 +12,7 @@
           v-if="icon"
           :class="tones[tone].icon"
           :name="icon"
-          class="mt-[3px] h-6 w-6 flex-none md:mt-1"
+          class="card-icon mt-[3px] h-6 w-6 flex-none md:mt-1"
         />
         <div class="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
           <component
@@ -23,7 +23,7 @@
           <span
             v-if="tag"
             :class="tones[tone].tag"
-            class="rounded-full px-2.5 py-0.5 text-xs font-semibold leading-5"
+            class="card-tag rounded-full px-2.5 py-0.5 text-xs font-semibold leading-5"
             >{{ tag }}</span
           >
         </div>
@@ -42,7 +42,8 @@
 <script>
 import BentoIcon from './BentoIcon.vue'
 
-// One idea per card: icon + title + one-line subtitle, then the card's own visual (the
+// As a card arrives with v-reveal, its icon and tag pop in (.card-icon / .card-tag in
+// tailwind.scss). One idea per card: icon + title + one-line subtitle, then the card's own visual (the
 // default slot) and an optional footnote. Cards sit in bento grids of mixed widths
 // (issue #31). `to` makes the whole card a router link, `href` an external one (new tab).
 const TONES = {

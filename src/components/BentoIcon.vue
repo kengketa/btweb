@@ -68,6 +68,7 @@ const ICONS = {
   check: [path('M5 12.5 9.5 17 19 7.5')],
   checkCircle: [circle(12, 12, 9), path('M8 12.3l2.7 2.7L16 9.7')],
   arrow: [path('M5 12h14M13 6l6 6-6 6')],
+  home: [path('M3.5 11 12 4l8.5 7'), path('M5.5 9.5V20h13V9.5'), path('M10 20v-5.5h4V20')],
   trophy: [
     path('M7.5 4.5h9v5a4.5 4.5 0 0 1-9 0z'),
     path('M7.5 6.5H4.5a3 3 0 0 0 3 4M16.5 6.5h3a3 3 0 0 1-3 4'),

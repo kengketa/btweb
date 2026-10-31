@@ -1,5 +1,7 @@
 <template>
-  <main>
+  <!-- keyed by program: /teachers, /camp, /ef and /mep share this page, so without a key
+       moving between them would keep the old elements and skip their scroll-in animations -->
+  <main :key="slug">
     <section class="wrap pb-12 pt-12 md:pb-16 md:pt-[88px]">
       <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         <div class="flex flex-col gap-3 md:gap-5">
@@ -46,8 +48,8 @@
           <span
             :class="stat[i].value"
             class="font-condensed text-[48px] font-bold leading-none md:text-[56px]"
-            >{{ value }}</span
-          >
+            ><CountUp :delay="200" :value="value"
+          /></span>
           <span :class="stat[i].label" class="mt-auto pt-4 text-[15px] leading-[1.5]">{{
             label
           }}</span>
@@ -68,39 +70,52 @@
       />
       <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-3 md:gap-5 lg:grid-cols-12">
         <BentoCard class="lg:col-span-7" icon="route" title="ตารางค่าย">
-          <ol class="relative flex flex-col gap-5">
+          <!-- the weeks as a path: the line draws down and each week pops in as it's reached -->
+          <div class="relative">
             <span
               aria-hidden="true"
-              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-sun/60"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-sun/25"
             ></span>
-            <li
-              v-for="(week, i) in program.camp.weeks"
-              :key="week.name"
-              class="relative flex gap-4"
+            <span
+              v-reveal="{ variant: 'grow', delay: 150 }"
+              :style="{ '--grow-duration': `${program.camp.weeks.length * 320 + 300}ms` }"
+              aria-hidden="true"
+              class="absolute bottom-5 left-[17px] top-5 w-0.5 bg-sun"
+            ></span>
+            <ol
+              v-reveal.together="{ stagger: 320, delay: 150 }"
+              class="relative flex flex-col gap-5"
             >
-              <span
-                class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold text-ink ring-4 ring-white"
-                >{{ i + 1 }}</span
+              <li
+                v-for="(week, i) in program.camp.weeks"
+                :key="week.name"
+                class="relative flex gap-4"
               >
-              <span class="flex min-w-0 flex-col gap-1">
-                <span class="font-condensed text-sm font-semibold text-brand">{{
-                  dateRange(week.start, week.end)
-                }}</span>
-                <b class="font-condensed text-xl font-bold leading-tight">{{ week.name }}</b>
-                <span class="text-[15px] leading-[1.7] text-muted">{{ week.text }}</span>
-              </span>
-            </li>
-          </ol>
+                <span
+                  class="tick-pop flex h-9 w-9 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold text-ink ring-4 ring-white"
+                  >{{ i + 1 }}</span
+                >
+                <span class="flex min-w-0 flex-col gap-1">
+                  <span class="font-condensed text-sm font-semibold text-brand">{{
+                    dateRange(week.start, week.end)
+                  }}</span>
+                  <b class="font-condensed text-xl font-bold leading-tight">{{ week.name }}</b>
+                  <span class="text-[15px] leading-[1.7] text-muted">{{ week.text }}</span>
+                </span>
+              </li>
+            </ol>
+          </div>
         </BentoCard>
         <BentoCard class="lg:col-span-5" icon="wallet" title="ค่าค่าย" tone="sun">
           <p class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-            <span class="font-condensed text-[56px] font-bold leading-none md:text-[64px]">{{
-              campPrice.value
-            }}</span>
+            <span class="font-condensed text-[56px] font-bold leading-none md:text-[64px]"
+              ><CountUp :delay="200" :value="campPrice.value"
+            /></span>
             <span class="text-base text-body">{{ campPrice.unit }}</span>
           </p>
           <span
-            class="mt-auto self-start rounded-full bg-ink px-4 py-2 text-[14px] font-semibold text-sun md:mt-8"
+            class="in-pop mt-auto self-start rounded-full bg-ink px-4 py-2 text-[14px] font-semibold text-sun md:mt-8"
+            style="--in-delay: 600ms"
             >{{ program.camp.bundleLabel }}</span
           >
         </BentoCard>
@@ -135,7 +150,7 @@
           <span
             v-if="section.style === 'cards'"
             :class="numberTone[toneFor(section.style, i)]"
-            class="mt-auto font-condensed text-[44px] font-bold leading-none md:text-[52px]"
+            class="in-rise mt-auto font-condensed text-[44px] font-bold leading-none md:text-[52px]"
             >0{{ i + 1 }}</span
           >
         </BentoCard>
@@ -150,10 +165,11 @@
         <FaqList :key="program.slug" :faqs="program.faqs" heading="" />
       </BentoCard>
       <BentoCard class="lg:col-span-5" icon="sparkle" title="ดูเพิ่มเติม" tone="sage">
-        <div class="flex flex-col gap-2.5">
+        <div class="in-cascade flex flex-col gap-2.5">
           <router-link
-            v-for="p in moreLinks"
+            v-for="(p, i) in moreLinks"
             :key="p.path"
+            :style="{ '--i': i }"
             :to="p.path"
             class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-4 transition hover:-translate-y-0.5 md:px-5"
           >
@@ -211,6 +227,7 @@
 import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
+import CountUp from '@/components/CountUp.vue'
 import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
 import SectionHead from '@/components/SectionHead.vue'
@@ -259,19 +276,19 @@ function spanFor(i, count) {
 
 // numbered "cards" sections: one dark and one tinted card per pair; "points" sections lead
 // with a sage card
-const CARD_TONES = ['ink', 'white', 'white', 'sun']
+const CARD_TONES = ['paper', 'white', 'white', 'sun']
 const toneFor = (style, i) =>
   style === 'cards' ? CARD_TONES[i % CARD_TONES.length] : i === 0 ? 'sage' : 'white'
 
 const STAT = [
-  { tone: 'ink', value: 'text-sun', label: 'text-cream/70' },
+  { tone: 'paper', value: 'text-brand', label: 'text-body' },
   { tone: 'sun', value: 'text-ink', label: 'text-body' },
   { tone: 'white', value: 'text-brand', label: 'text-muted' }
 ]
 
 export default {
   name: 'ProgramView',
-  components: { BentoCard, FaqList, PhotoBox, SectionHead },
+  components: { BentoCard, CountUp, FaqList, PhotoBox, SectionHead },
   props: {
     slug: { type: String, required: true }
   },
@@ -313,7 +330,7 @@ export default {
       toneFor,
       stat: STAT,
       headTones: ['brand', 'sun', 'sage', 'peach'],
-      numberTone: { ink: 'text-sun', sun: 'text-ink', white: 'text-brand' }
+      numberTone: { paper: 'text-brand', sun: 'text-ink', white: 'text-brand' }
     }
   }
 }

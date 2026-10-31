@@ -1,6 +1,7 @@
 <template>
-  <!-- the wrapper is what the feed measures to tell which page is being read -->
   <div class="feed-page">
+    <!-- the wrapper is what the feed measures to tell which page is being read (the comment
+         sits inside it: outside, the dev build keeps it and the page gets two roots) -->
     <component :is="component" />
   </div>
 </template>

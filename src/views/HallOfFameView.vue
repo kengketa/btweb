@@ -77,8 +77,8 @@
           sub="BRITISH COUNCIL · IDP · CAMBRIDGE"
           title="IELTS band score · เทียบระดับ CEFR"
         >
-          <div class="grid grid-cols-4 gap-1 text-center">
-            <div v-for="(b, i) in ieltsScale" :key="b.cefr">
+          <div class="in-stagger grid grid-cols-4 gap-1 text-center">
+            <div v-for="(b, i) in ieltsScale" :key="b.cefr" :style="{ '--i': i }">
               <div
                 :class="b.on ? 'font-bold text-brand' : 'font-medium text-muted'"
                 class="mb-[5px] text-[11px] md:text-[12.5px]"
@@ -99,8 +99,16 @@
             </div>
           </div>
           <!-- reading the scores -->
-          <div class="mt-7 grid gap-5 border-t border-line pt-6 sm:grid-cols-2 sm:gap-7">
-            <div v-for="r in ieltsReading" :key="r.title" class="flex flex-col gap-1.5">
+          <div
+            class="in-cascade mt-7 grid gap-5 border-t border-line pt-6 sm:grid-cols-2 sm:gap-7"
+            style="--in-delay: 600ms"
+          >
+            <div
+              v-for="(r, ri) in ieltsReading"
+              :key="r.title"
+              :style="{ '--i': ri }"
+              class="flex flex-col gap-1.5"
+            >
               <span
                 class="font-condensed text-[13px] font-bold uppercase tracking-[.16em] text-brand"
                 >{{ r.eyebrow }}</span
@@ -147,19 +155,20 @@
                 </div>
               </div>
               <div
-                class="min-w-[62px] rounded-2xl bg-sun px-2 pb-2 pt-2.5 text-center text-ink md:min-w-[84px] md:rounded-[20px] md:px-3.5"
+                class="in-pop min-w-[62px] rounded-2xl bg-sun px-2 pb-2 pt-2.5 text-center text-ink md:min-w-[84px] md:rounded-[20px] md:px-3.5"
               >
                 <div class="font-condensed text-[30px] font-bold leading-none md:text-[44px]">
-                  {{ s.overall }}
+                  <CountUp :delay="250" :value="s.overall" />
                 </div>
                 <div class="mt-1 text-[10px] font-bold tracking-[.06em] md:text-xs">OVERALL</div>
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+            <div class="in-cascade grid grid-cols-2 gap-2.5 sm:grid-cols-4">
               <div
-                v-for="k in s.skills"
+                v-for="(k, ki) in s.skills"
                 :key="k.label"
+                :style="{ '--i': ki }"
                 :class="i === 0 ? 'border-white/15 bg-white/10' : 'border-line bg-cream'"
                 class="rounded-2xl border px-3 pb-3 pt-3"
               >
@@ -170,7 +179,7 @@
                   :class="i === 0 ? 'text-sun' : 'text-brand'"
                   class="mb-2.5 font-condensed text-[28px] font-bold leading-none"
                 >
-                  {{ k.score }}
+                  <CountUp :delay="300 + ki * 90" :value="k.score" />
                 </div>
                 <div
                   :class="i === 0 ? 'bg-white/20' : 'bg-line'"
@@ -178,17 +187,21 @@
                 >
                   <div
                     :class="k.top ? 'bg-sun' : i === 0 ? 'bg-white' : 'bg-brand'"
-                    :style="{ width: k.pct }"
-                    class="h-full rounded-md"
+                    :style="{ width: k.pct, '--i': ki }"
+                    class="in-bar h-full rounded-md"
                   ></div>
                 </div>
               </div>
             </div>
 
-            <div class="mt-auto flex flex-wrap items-center gap-2 text-[13.5px] font-semibold">
+            <div
+              class="in-stagger mt-auto flex flex-wrap items-center gap-2 text-[13.5px] font-semibold"
+              style="--in-delay: 700ms"
+            >
               <span
-                v-for="pill in [`CEFR ${s.cefr}`, 'Academic']"
+                v-for="(pill, pi) in [`CEFR ${s.cefr}`, 'Academic']"
                 :key="pill"
+                :style="{ '--i': pi }"
                 :class="i === 0 ? 'bg-white/15 text-white' : 'bg-blush text-brand'"
                 class="rounded-full px-3 py-1.5"
                 >{{ pill }}</span
@@ -204,7 +217,7 @@
           class="md:col-span-2 lg:col-span-7"
           icon="route"
           tag="Brighton Journey"
-          tone="ink"
+          tone="paper"
         >
           <div class="mt-auto flex flex-wrap items-center gap-3 md:gap-5">
             <div
@@ -213,15 +226,13 @@
               class="h-20 w-20 flex-none rounded-[20px] border-[3px] border-sun bg-cover bg-center md:h-24 md:w-24 md:rounded-[22px]"
             ></div>
             <div class="flex items-center gap-3">
-              <div
-                class="rounded-[18px] border border-cream/15 bg-cream/[.08] px-4 py-3 text-center"
-              >
-                <div class="mb-1 text-[13px] text-cream/60">{{ journey.from.label }}</div>
-                <div class="font-condensed text-4xl font-bold leading-none text-cream">
+              <div class="rounded-[18px] border border-line2 bg-white/70 px-4 py-3 text-center">
+                <div class="mb-1 text-[13px] text-muted">{{ journey.from.label }}</div>
+                <div class="font-condensed text-4xl font-bold leading-none text-ink">
                   {{ journey.from.score }}
                 </div>
               </div>
-              <span class="text-[26px] text-sun">→</span>
+              <span class="text-[26px] text-brand">→</span>
               <div class="rounded-[18px] bg-sun px-4 py-3 text-center text-ink">
                 <div class="mb-1 text-[13px]">{{ journey.to.label }}</div>
                 <div class="font-condensed text-4xl font-bold leading-none">
@@ -262,8 +273,8 @@
           tone="sage"
         >
           <div class="mt-auto rounded-[20px] bg-white p-4 md:p-5">
-            <div class="grid grid-cols-4 gap-1 text-center">
-              <div v-for="(b, i) in oxfordScale" :key="b.cefr">
+            <div class="in-stagger grid grid-cols-4 gap-1 text-center">
+              <div v-for="(b, i) in oxfordScale" :key="b.cefr" :style="{ '--i': i }">
                 <div
                   :class="b.on ? 'font-bold text-sagedeep' : 'font-medium text-muted'"
                   class="mb-[5px] text-[11px] md:text-[12.5px]"
@@ -317,10 +328,14 @@
         </BentoCard>
 
         <BentoCard class="md:col-span-2 lg:col-span-12">
-          <div class="grid gap-3 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))]">
+          <div
+            class="in-cascade grid gap-3 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))]"
+            style="--in-delay: 150ms"
+          >
             <div
-              v-for="o in oxfordStudents"
+              v-for="(o, oi) in oxfordStudents"
               :key="o.first + o.last"
+              :style="{ '--i': Math.min(oi, 10) }"
               :class="o.top ? 'border-[#F1DFAE] bg-sunsoft' : 'border-line bg-cream'"
               class="flex items-center gap-3.5 rounded-[20px] border px-4 py-3.5"
             >
@@ -349,15 +364,15 @@
       v-reveal="{ stagger: 90 }"
       class="wrap grid grid-cols-1 gap-3 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
     >
-      <BentoCard class="lg:col-span-7" tone="ink">
+      <BentoCard class="lg:col-span-7" tone="paper">
         <div class="flex flex-1 flex-col gap-4">
           <h2
-            class="font-display text-[28px] font-bold leading-[1.3] text-cream md:text-[40px]"
+            class="font-display text-[28px] font-bold leading-[1.3] text-ink md:text-[40px]"
             style="text-wrap: balance"
           >
             คนต่อไปใน Hall of Fame<br />อาจเป็นลูกของคุณ
           </h2>
-          <p class="max-w-[520px] text-base leading-[1.7] text-cream/70 md:text-[17px]">
+          <p class="max-w-[520px] text-base leading-[1.7] text-body md:text-[17px]">
             ปรึกษาเส้นทางการเรียนภาษาอังกฤษตั้งแต่พื้นฐานจนถึงเป้าหมาย IELTS กับทีมไบรท์ตัน
           </p>
           <router-link
@@ -396,6 +411,7 @@
 <script>
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
+import CountUp from '@/components/CountUp.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import { contact } from '@/data/site'
 import {
@@ -408,7 +424,7 @@ import {
 
 export default {
   name: 'HallOfFameView',
-  components: { BentoCard, SectionHead },
+  components: { BentoCard, CountUp, SectionHead },
   setup() {
     useHead({
       title: 'Hall of Fame ผลสอบ IELTS และ Oxford - Brighton Language Academy',

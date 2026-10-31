@@ -32,8 +32,9 @@ export const menu = [
   { label: 'ติดต่อเรา', hash: '#booking', pages: ['/contact'], phone: true }
 ]
 
-// where every "นัดวัดระดับฟรี" in the nav and the phone action bar goes
-export const bookingLink = { path: '/', hash: '#booking' }
+// where every "นัดวัดระดับฟรี" in the nav, the phone menu and the phone action bar goes:
+// the booking form on /contact (scrolled to on phones, see ContactView)
+export const bookingLink = { path: '/contact', hash: '#booking-form' }
 
 // On phones, scrolling past the end of one of these pages brings the next one in below
 // it (src/composables/usePageFeed.js).

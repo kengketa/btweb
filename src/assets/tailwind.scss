@@ -41,6 +41,24 @@
   .chip-on {
     @apply border-ink bg-ink font-semibold text-white;
   }
+  /* hover lift for cards, after bebetter.education: up 4px with a springy settle and a
+     soft, deep shadow underneath */
+  .lift {
+    transition:
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.3s ease;
+  }
+  @media (hover: hover) {
+    .lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 60px -36px rgb(34 28 25 / 0.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lift {
+      transition: box-shadow 0.3s ease;
+    }
+  }
   .footer-chip {
     @apply rounded-full bg-cream px-3.5 py-1.5 transition-colors hover:bg-sunsoft hover:text-ink;
   }
@@ -88,6 +106,202 @@
 [data-reveal='scale'] {
   --reveal-anim: reveal-scale;
 }
+/* the yellow .marker highlight: wipes on from the left like a sticker being laid down,
+   then lands with a small tilt (after bebetter.education's headline) */
+@keyframes reveal-wipe {
+  0% {
+    clip-path: inset(-30% 100% -30% 0);
+    transform: rotate(0deg) scale(1);
+  }
+  55% {
+    clip-path: inset(-30% 0 -30% 0);
+    transform: rotate(-3deg) scale(1.06);
+  }
+  78% {
+    transform: rotate(0.8deg) scale(0.99);
+  }
+  100% {
+    clip-path: inset(-30% -10% -30% -10%);
+    transform: none;
+  }
+}
+[data-reveal='wipe'] {
+  --reveal-anim: reveal-wipe;
+}
+/* a sticker slapped on; individual scale / rotate keep clear of the cards' hover lift */
+@keyframes reveal-pop {
+  0% {
+    opacity: 0;
+    scale: 0.6;
+    rotate: -6deg;
+  }
+  60% {
+    opacity: 1;
+    scale: 1.06;
+    rotate: 2deg;
+  }
+  100% {
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+[data-reveal='pop'] {
+  --reveal-anim: reveal-pop;
+}
+[data-reveal='pop'][data-reveal-state='in'] {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+/* a line drawing itself, e.g. the path joining numbered steps: downward from the top by
+   default; a sideways line sets --grow-from: 0 1 and --grow-origin: left */
+@keyframes reveal-grow {
+  from {
+    scale: var(--grow-from, 1 0);
+  }
+}
+[data-reveal='grow'] {
+  --reveal-anim: reveal-grow;
+  transform-origin: var(--grow-origin, top);
+}
+[data-reveal='grow'][data-reveal-state='in'] {
+  animation-duration: var(--grow-duration, 1.6s);
+  animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+}
+/* Things that play inside a card (or anything) as it arrives with v-reveal:
+     .card-icon / .card-tag  the icon and tag in every BentoCard heading pop in
+     .in-pop                 pops in like a sticker
+     .in-rise                rises into place
+     .in-stagger             its children pop in one after another (give each --i: 0, 1, 2…)
+     .in-cascade             its children rise in one after another (rows; --i as above)
+     .in-bar                 a progress bar's fill grows from the left (--i staggers it)
+     .in-zoom                a photo (PhotoBox) settles from a slight zoom; in a linked card it
+                             also leans in a little on hover
+   --in-delay shifts one of them later. */
+[data-reveal-state='in'] .card-icon {
+  animation: reveal-pop 0.55s cubic-bezier(0.25, 0.8, 0.3, 1) calc(var(--reveal-delay, 0ms) + 120ms)
+    backwards;
+}
+[data-reveal-state='in'] .card-tag {
+  animation: reveal-pop 0.55s cubic-bezier(0.25, 0.8, 0.3, 1) calc(var(--reveal-delay, 0ms) + 280ms)
+    backwards;
+}
+[data-reveal-state='in'] .in-pop {
+  animation: reveal-pop 0.6s cubic-bezier(0.25, 0.8, 0.3, 1)
+    calc(var(--reveal-delay, 0ms) + var(--in-delay, 250ms)) backwards;
+}
+[data-reveal-state='in'] .in-rise {
+  animation: rise 0.8s cubic-bezier(0.19, 1, 0.22, 1)
+    calc(var(--reveal-delay, 0ms) + var(--in-delay, 250ms)) backwards;
+}
+[data-reveal-state='in'] .in-stagger > * {
+  animation: reveal-pop 0.5s cubic-bezier(0.25, 0.8, 0.3, 1)
+    calc(var(--reveal-delay, 0ms) + var(--in-delay, 300ms) + var(--i, 0) * 70ms) backwards;
+}
+[data-reveal-state='in'] .in-cascade > * {
+  animation: rise 0.7s cubic-bezier(0.19, 1, 0.22, 1)
+    calc(var(--reveal-delay, 0ms) + var(--in-delay, 250ms) + var(--i, 0) * 110ms) backwards;
+}
+@keyframes bar-grow {
+  from {
+    scale: 0 1;
+  }
+}
+[data-reveal-state='in'] .in-bar {
+  transform-origin: left;
+  animation: bar-grow 0.9s cubic-bezier(0.34, 1.2, 0.64, 1)
+    calc(var(--reveal-delay, 0ms) + var(--in-delay, 350ms) + var(--i, 0) * 90ms) backwards;
+}
+@keyframes zoom-settle {
+  from {
+    scale: 1.14;
+  }
+}
+[data-reveal-state='in'] .in-zoom img,
+.in-zoom[data-reveal-state='in'] img {
+  animation: zoom-settle 1.4s cubic-bezier(0.19, 1, 0.22, 1) var(--reveal-delay, 0ms) backwards;
+}
+.in-zoom img {
+  transition: scale 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+@media (hover: hover) {
+  .group:hover .in-zoom img {
+    scale: 1.05;
+  }
+}
+/* Stars stamped onto a card one after another: each drops in big and tilted, slams down
+   past its size with a golden flash, and settles. Give each star --i: 0, 1, 2…
+     .stamp-load   plays as the page loads (for the hero, which is on screen from the start)
+     .stamp        plays as its card arrives with v-reveal */
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    scale: 2.6;
+    rotate: -28deg;
+  }
+  50% {
+    opacity: 1;
+    scale: 0.82;
+    rotate: 6deg;
+    filter: drop-shadow(0 0 5px rgb(244 182 63 / 0.9));
+  }
+  72% {
+    scale: 1.12;
+    rotate: -2deg;
+  }
+  100% {
+    scale: 1;
+    rotate: 0deg;
+    filter: none;
+  }
+}
+.stamp-load > * {
+  animation: stamp 0.55s cubic-bezier(0.3, 0.7, 0.4, 1)
+    calc(var(--stamp-delay, 900ms) + var(--i, 0) * 170ms) backwards;
+}
+[data-reveal-state='in'] .stamp > * {
+  animation: stamp 0.55s cubic-bezier(0.3, 0.7, 0.4, 1)
+    calc(var(--reveal-delay, 0ms) + var(--stamp-delay, 450ms) + var(--i, 0) * 140ms) backwards;
+}
+/* avatars dropping in side by side as the page loads (the hero's review tile) */
+.pop-load > * {
+  animation: reveal-pop 0.5s cubic-bezier(0.25, 0.8, 0.3, 1)
+    calc(var(--pop-delay, 500ms) + var(--i, 0) * 90ms) backwards;
+}
+/* a tick inside a list item that is revealing: its circle pops, then the tick draws */
+@keyframes tick-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+}
+[data-reveal-state='in'] .tick-pop {
+  animation: reveal-pop 0.5s cubic-bezier(0.25, 0.8, 0.3, 1) calc(var(--reveal-delay, 0ms) + 100ms)
+    backwards;
+}
+[data-reveal-state='in'] .tick-pop path {
+  stroke-dasharray: 24;
+  animation: tick-draw 0.35s ease-out calc(var(--reveal-delay, 0ms) + 280ms) backwards;
+}
+[data-reveal='wipe'][data-reveal-state='in'] {
+  animation-duration: 0.95s;
+  animation-timing-function: cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+/* the same, played by CSS alone for a highlight at the top of a page: it runs as soon as
+   the page paints, pre-rendered or not, with nothing for the script to hide first */
+.marker-intro {
+  animation: reveal-wipe 0.95s cubic-bezier(0.25, 0.8, 0.3, 1) var(--marker-delay, 0.45s) backwards;
+}
+/* headline lines rising in on page load, one after another (--d sets each one's turn).
+   They start barely visible rather than at 0, so the browser still counts the headline
+   as painted straight away. */
+@keyframes rise {
+  from {
+    opacity: 0.01;
+    translate: 0 0.45em;
+  }
+}
+.rise {
+  animation: rise 0.7s cubic-bezier(0.19, 1, 0.22, 1) var(--d, 0ms) backwards;
+}
 [data-reveal-state='hidden'] {
   opacity: 0;
 }
@@ -96,6 +310,23 @@
     var(--reveal-delay, 0ms) backwards;
 }
 @media (prefers-reduced-motion: reduce) {
+  .marker-intro,
+  .rise,
+  .tick-pop,
+  .tick-pop path,
+  .card-icon,
+  .card-tag,
+  .in-pop,
+  .in-rise,
+  .in-stagger > *,
+  .in-cascade > *,
+  .in-bar,
+  .stamp-load > *,
+  .stamp > *,
+  .pop-load > *,
+  .in-zoom img {
+    animation: none !important;
+  }
   [data-reveal-state] {
     opacity: 1;
     animation: none;

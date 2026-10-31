@@ -50,21 +50,24 @@
           <PhotoBox
             :alt="c.name"
             :src="c.photo"
-            class="h-[180px] rounded-[20px] md:h-[220px] md:rounded-[24px]"
+            class="in-zoom h-[180px] rounded-[20px] md:h-[220px] md:rounded-[24px]"
             sizes="(min-width: 1024px) 700px, (min-width: 768px) 50vw, 100vw"
           />
           <div
             class="flex flex-1 flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-5"
           >
-            <p class="max-w-[460px] text-[15px] leading-[1.7] text-muted">{{ c.desc }}</p>
+            <p class="in-rise max-w-[460px] text-[15px] leading-[1.7] text-muted">
+              {{ c.desc }}
+            </p>
             <span
               :class="toneClass[c.tone]"
-              class="flex flex-none -rotate-2 flex-col items-start gap-1 rounded-[20px] px-4 py-3"
+              class="in-pop flex flex-none -rotate-2 flex-col items-start gap-1 rounded-[20px] px-4 py-3"
+              style="--in-delay: 450ms"
             >
               <span class="text-[12px] font-semibold opacity-90">{{ c.tag }}</span>
-              <span :class="ageFont(c.age)" class="text-[34px] font-bold leading-none">{{
-                c.age
-              }}</span>
+              <span :class="ageFont(c.age)" class="text-[34px] font-bold leading-none"
+                ><CountUp :delay="300" :value="c.age"
+              /></span>
               <span class="text-[12px] opacity-90">{{ c.ageUnit }}</span>
             </span>
           </div>
@@ -87,7 +90,9 @@
         <div class="mt-auto flex flex-wrap items-end justify-between gap-5">
           <p class="flex items-baseline gap-2">
             <span class="text-sm text-body">เริ่มเรียนได้ตั้งแต่</span>
-            <span class="font-condensed text-[64px] font-bold leading-none">3</span>
+            <span class="font-condensed text-[64px] font-bold leading-none"
+              ><CountUp :delay="200" :duration="800" value="3"
+            /></span>
             <span class="text-sm text-body">ขวบ</span>
           </p>
           <router-link
@@ -105,16 +110,23 @@
         title="บริการอื่นๆ"
         tone="sage"
       >
-        <div class="mt-auto flex flex-wrap gap-2">
+        <div class="in-stagger mt-auto flex flex-wrap gap-2">
           <router-link
-            v-for="p in programs"
+            v-for="(p, i) in programs"
             :key="p.slug"
+            :style="{ '--i': i }"
             :to="p.path"
             class="rounded-full bg-white px-3.5 py-2 text-sm font-medium transition-colors hover:bg-ink hover:text-white"
             >{{ p.label }} →</router-link
           >
-          <span class="rounded-full border border-white px-3.5 py-2 text-sm">Exam Prep</span>
-          <span class="rounded-full border border-white px-3.5 py-2 text-sm"
+          <span
+            :style="{ '--i': programs.length }"
+            class="rounded-full border border-white px-3.5 py-2 text-sm"
+            >Exam Prep</span
+          >
+          <span
+            :style="{ '--i': programs.length + 1 }"
+            class="rounded-full border border-white px-3.5 py-2 text-sm"
             >Corporate Training</span
           >
         </div>
@@ -131,6 +143,7 @@
 <script>
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
+import CountUp from '@/components/CountUp.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import { ageFont, courseGroups, courses, toneClass } from '@/data/courses'
@@ -138,7 +151,7 @@ import { programs } from '@/data/programs'
 
 export default {
   name: 'CoursesView',
-  components: { BentoCard, PhotoBox, SectionHead },
+  components: { BentoCard, CountUp, PhotoBox, SectionHead },
   setup() {
     useHead({
       title: 'คอร์สเรียนพิเศษภาษาอังกฤษ พะเยา - Brighton Language Academy',

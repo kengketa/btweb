@@ -71,7 +71,7 @@
             <PhotoBox
               :alt="n.title"
               :src="n.images[0]"
-              class="h-[220px] rounded-[20px] md:h-[300px] md:rounded-[24px]"
+              class="in-zoom h-[220px] rounded-[20px] md:h-[300px] md:rounded-[24px]"
               sizes="(min-width: 1024px) 700px, (min-width: 768px) 50vw, 100vw"
             />
             <div class="flex items-center gap-3 text-sm">
@@ -110,7 +110,7 @@
             <PhotoBox
               :alt="n.title"
               :src="n.images[0]"
-              class="h-[200px] rounded-[20px]"
+              class="in-zoom h-[200px] rounded-[20px]"
               sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
             />
             <div class="flex gap-2.5 text-[13px]">

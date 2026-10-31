@@ -80,7 +80,12 @@
         sub="แตะแต่ละขั้นตอนเพื่อดูหน้าจอตัวอย่าง — ลองกรอกข้อมูลเพิ่มลูกได้จริงในขั้นตอนที่ 3"
         tone="brand"
       />
-      <div class="grid grid-cols-1 items-start gap-3 md:gap-5 lg:grid-cols-12">
+      <!-- the visitor's own touch anywhere in the demo stops the auto play -->
+      <div
+        ref="demo"
+        class="grid grid-cols-1 items-start gap-3 md:gap-5 lg:grid-cols-12"
+        @pointerdown.capture="onDemoTouch"
+      >
         <!-- desktop: the steps as a list beside the phone; phones get number tabs instead -->
         <BentoCard class="hidden lg:col-span-7 lg:flex">
           <div class="flex flex-col gap-3">
@@ -137,6 +142,7 @@
             class="h-[580px] w-[320px] max-w-full rounded-[48px] bg-ink p-[11px] shadow-[0_30px_70px_rgba(33,26,23,.28)] lg:h-[660px]"
           >
             <div
+              ref="screen"
               class="relative flex h-full w-full flex-col overflow-hidden rounded-[38px] bg-app-cream font-normal"
             >
               <div
@@ -164,6 +170,7 @@
                   <button
                     class="block w-full rounded-xl bg-[#06C755] p-3.5 text-base font-medium text-white"
                     type="button"
+                    data-demo="add-friend"
                     @click="go(1)"
                   >
                     เพิ่มเพื่อน
@@ -199,6 +206,7 @@
                   <!-- Student Progress takes the left two thirds of the menu -->
                   <button
                     aria-label="Student Progress"
+                    data-demo="sp-menu"
                     class="absolute bottom-[3%] left-[1%] top-[3%] w-[64.5%] rounded-xl border-[3px] border-app-red shadow-[0_0_0_4px_rgba(255,255,255,.7)]"
                     type="button"
                     @click="go(2)"
@@ -258,6 +266,7 @@
                         :class="childHint ? 'ring-4 ring-sun/60' : ''"
                         class="grid grid-cols-[46px_minmax(0,1fr)_auto_22px] items-center gap-2.5 rounded-[20px] border-2 border-app-navy bg-white p-3 text-left shadow-[0_4px_0_#1B2559]"
                         type="button"
+                        data-demo="child"
                         @click="go(3)"
                       >
                         <span
@@ -286,6 +295,7 @@
                         :class="added ? '' : 'ring-4 ring-sun/60'"
                         class="flex h-[60px] items-center justify-center gap-2 rounded-[20px] border-2 border-dashed border-[#E58A9A] bg-[#FFF1F3] text-[17px] font-semibold text-app-red"
                         type="button"
+                        data-demo="add-child"
                         @click="openSheet"
                       >
                         <span
@@ -378,6 +388,7 @@
                           "
                           class="h-9 rounded-full text-[13.5px] font-semibold transition-colors"
                           type="button"
+                          :data-demo="i === 1 ? 'tab-credit' : null"
                           @click="go(3 + i)"
                         >
                           {{ t }}
@@ -536,6 +547,7 @@
                         <button
                           class="rounded-full border-2 border-app-navy bg-app-red px-5 py-1.5 text-[14px] font-semibold text-white shadow-[0_3px_0_#1B2559] ring-4 ring-sun/60"
                           type="button"
+                          data-demo="pay"
                           @click="payStage = 1"
                         >
                           ชำระ
@@ -567,6 +579,7 @@
                       <button
                         class="h-12 rounded-full border-2 border-app-navy bg-app-red text-[15px] font-semibold text-white shadow-[0_4px_0_#1B2559] ring-4 ring-sun/60"
                         type="button"
+                        data-demo="pay-confirm"
                         @click="payStage = 2"
                       >
                         ชำระเงิน
@@ -710,6 +723,7 @@
                         :class="canSave ? '' : 'opacity-45'"
                         class="h-11 rounded-full border-2 border-app-navy bg-app-red text-[14px] font-semibold text-white shadow-[0_3px_0_#1B2559]"
                         type="button"
+                        data-demo="save"
                         @click="saveChild"
                       >
                         บันทึก
@@ -718,7 +732,73 @@
                   </div>
                 </div>
               </template>
+
+              <!-- the auto demo's fingertip: glides to the next button and taps it -->
+              <div
+                :class="demoFinger.show ? 'opacity-100' : 'opacity-0'"
+                :style="{ transform: `translate(${demoFinger.x}px, ${demoFinger.y}px)` }"
+                aria-hidden="true"
+                class="demo-finger pointer-events-none absolute left-0 top-0 z-30"
+              >
+                <span
+                  :class="demoFinger.tapping ? 'scale-75' : 'scale-100'"
+                  class="block h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-ink/25 shadow-[0_6px_16px_rgba(0,0,0,.25)] backdrop-blur-[1px] transition-transform duration-150"
+                ></span>
+                <span
+                  v-if="demoFinger.tapping"
+                  class="demo-ripple absolute left-0 top-0 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
+                ></span>
+              </div>
             </div>
+          </div>
+          <!-- auto demo controls -->
+          <div
+            class="flex w-full max-w-[320px] items-center justify-between gap-2 text-[13px] text-muted"
+            data-demo-controls
+          >
+            <span class="flex items-center gap-2">
+              <span
+                :class="demoPlaying ? 'bg-[#06C755] demo-live' : 'bg-line2'"
+                class="h-2 w-2 rounded-full"
+              ></span>
+              {{ demoPlaying ? 'กำลังสาธิตอัตโนมัติ · แตะจอเพื่อลองเอง' : 'ลองแตะในหน้าจอได้เลย' }}
+            </span>
+            <span class="flex flex-none gap-1.5">
+              <button
+                :aria-label="demoPlaying ? 'หยุดการสาธิต' : 'เล่นการสาธิต'"
+                class="grid h-9 w-9 place-items-center rounded-full border border-line2 bg-white text-ink transition-colors hover:border-ink"
+                type="button"
+                @click="demoPlaying ? stopDemo(true) : startDemo(false)"
+              >
+                <svg v-if="demoPlaying" class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 14 14">
+                  <rect height="12" rx="1" width="3.5" x="2" y="1" />
+                  <rect height="12" rx="1" width="3.5" x="8.5" y="1" />
+                </svg>
+                <svg v-else class="ml-0.5 h-3.5 w-3.5" fill="currentColor" viewBox="0 0 14 14">
+                  <path
+                    d="M3 1.5v11a.6.6 0 0 0 .9.5l9-5.5a.6.6 0 0 0 0-1l-9-5.5a.6.6 0 0 0-.9.5z"
+                  />
+                </svg>
+              </button>
+              <button
+                aria-label="เริ่มการสาธิตใหม่"
+                class="grid h-9 w-9 place-items-center rounded-full border border-line2 bg-white text-ink transition-colors hover:border-ink"
+                type="button"
+                @click="startDemo(true)"
+              >
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" />
+                </svg>
+              </button>
+            </span>
           </div>
           <div class="flex w-full max-w-[320px] gap-2.5">
             <button
@@ -764,6 +844,7 @@
           tag="ตัวอย่าง"
         >
           <SkillRadar
+            animated
             :average="radar.average"
             :axes="radar.axes"
             :child="radar.child"
@@ -781,12 +862,11 @@
           tag="ตัวอย่าง"
           tone="sun"
         >
-          <p class="mt-auto flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-            <span class="font-condensed text-[56px] font-bold leading-none">{{
-              child.credit
-            }}</span>
-            <span class="text-sm text-body">เครดิต · ใช้ได้ถึง {{ child.validUntil }}</span>
-          </p>
+          <CreditLedger
+            :balance="child.credit"
+            :transactions="transactions"
+            :valid-until="child.validUntil"
+          />
         </BentoCard>
 
         <BentoCard
@@ -797,14 +877,7 @@
           tag="ตัวอย่าง"
           tone="sage"
         >
-          <div class="mt-auto flex flex-wrap items-center gap-2">
-            <span class="font-condensed text-[40px] font-bold leading-none">{{
-              invoice.amount
-            }}</span>
-            <span class="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium">{{
-              invoice.title
-            }}</span>
-          </div>
+          <PayScan :amount="invoice.amount" :qr="qr" :title="invoice.title" />
         </BentoCard>
 
         <BentoCard
@@ -816,7 +889,7 @@
           title="มีข้อสงสัย? ทักเราได้เลย"
           tone="blush"
         >
-          <div class="flex flex-wrap gap-2.5">
+          <div class="in-stagger flex flex-wrap gap-2.5">
             <a :href="contact.tel" class="btn-primary h-[52px] px-6 text-base"
               >โทร {{ contact.phone }}</a
             >
@@ -838,6 +911,8 @@
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
 import BrandLogo from '@/components/BrandLogo.vue'
+import CreditLedger from '@/components/CreditLedger.vue'
+import PayScan from '@/components/PayScan.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import SkillRadar from '@/components/SkillRadar.vue'
 import { chatUrl, contact } from '@/data/site'
@@ -875,6 +950,9 @@ const qr = (() => {
   return { size, finders, path }
 })()
 
+// the auto demo: a stop signal for a cancelled run
+const DEMO_CANCEL = Symbol('demo cancelled')
+
 // Thai ID cards end in a check digit over the first 12
 const validId = (d) =>
   d.length === 13 &&
@@ -882,7 +960,7 @@ const validId = (d) =>
 
 export default {
   name: 'ResultsView',
-  components: { BentoCard, BrandLogo, SectionHead, SkillRadar },
+  components: { BentoCard, BrandLogo, CreditLedger, PayScan, SectionHead, SkillRadar },
   setup() {
     useHead({
       title: 'ดูผลการเรียนของลูกผ่าน LINE - Brighton Language Academy',
@@ -941,7 +1019,13 @@ export default {
       phone: '',
       added: false,
       sheetOpen: false,
-      payStage: 0
+      payStage: 0,
+      // auto demo: playing, the run it belongs to (a new run cancels the old one), and
+      // whether the visitor stopped it themselves (then it stays stopped)
+      demoPlaying: false,
+      demoRun: 0,
+      demoStopped: false,
+      demoFinger: { x: 160, y: 640, show: false, tapping: false }
     }
   },
   computed: {
@@ -973,8 +1057,137 @@ export default {
       return this.step === 5 ? 'bg-app-cream text-app-navy' : 'bg-app-sky text-app-navy'
     }
   },
+  mounted() {
+    if (
+      !('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return
+    // play while the phone is on screen, pause while it's away
+    this.demoIo = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!this.demoStopped && !this.demoPlaying) this.startDemo(true)
+        } else if (this.demoPlaying) this.stopDemo(false)
+      },
+      { threshold: 0.45 }
+    )
+    this.demoIo.observe(this.$refs.screen)
+  },
+  beforeUnmount() {
+    this.demoIo?.disconnect()
+    this.demoRun += 1
+  },
   methods: {
     chatUrl,
+    // --- auto demo ------------------------------------------------------------------
+    // A fingertip walks through the six steps on the phone, tapping the same buttons a
+    // parent would (their own click handlers run), typing the sample ID and phone into
+    // the add-child form, and starting over at the end. The visitor's own touch stops it.
+    onDemoTouch(e) {
+      if (!e.isTrusted || e.target.closest('[data-demo-controls]')) return
+      if (this.demoPlaying) this.stopDemo(true)
+    },
+    stopDemo(byVisitor) {
+      this.demoRun += 1
+      this.demoPlaying = false
+      this.demoFinger = { ...this.demoFinger, show: false, tapping: false }
+      if (byVisitor) this.demoStopped = true
+    },
+    async startDemo(fromStart) {
+      const run = ++this.demoRun
+      this.demoPlaying = true
+      this.demoStopped = false
+      try {
+        if (fromStart) this.go(0)
+        for (;;) await this.demoScript(run)
+      } catch (e) {
+        if (e !== DEMO_CANCEL) throw e
+      }
+    },
+    wait(ms, run) {
+      return new Promise((resolve) => setTimeout(resolve, ms)).then(() => {
+        if (run !== this.demoRun) throw DEMO_CANCEL
+      })
+    },
+    // glide the fingertip to a button, press, and click it
+    async tap(name, run) {
+      await this.$nextTick()
+      const screen = this.$refs.screen
+      const el = screen?.querySelector(`[data-demo="${name}"]`)
+      if (!el) return
+      // inside the app's scrolling page: bring it into view first (never the window)
+      const app = this.$refs.app
+      if (app && app.contains(el)) {
+        const er = el.getBoundingClientRect()
+        const ar = app.getBoundingClientRect()
+        if (er.bottom > ar.bottom - 10 || er.top < ar.top) {
+          app.scrollTo({ top: app.scrollTop + er.top - ar.top - ar.height / 3, behavior: 'smooth' })
+          await this.wait(450, run)
+        }
+      }
+      const sr = screen.getBoundingClientRect()
+      const r = el.getBoundingClientRect()
+      this.demoFinger = {
+        x: r.left - sr.left + r.width / 2,
+        y: r.top - sr.top + r.height / 2,
+        show: true,
+        tapping: false
+      }
+      await this.wait(800, run)
+      this.demoFinger = { ...this.demoFinger, tapping: true }
+      await this.wait(160, run)
+      el.click()
+      await this.wait(260, run)
+      this.demoFinger = { ...this.demoFinger, tapping: false }
+    },
+    async typeInto(field, text, run) {
+      for (const ch of text) {
+        this[field] += ch
+        await this.wait(55, run)
+      }
+    },
+    async demoScript(run) {
+      this.go(0)
+      this.demoFinger = { x: 160, y: 520, show: false, tapping: false }
+      await this.wait(900, run)
+      // 1 → 2: add the LINE friend, then open Student Progress from the chat menu
+      await this.tap('add-friend', run)
+      await this.wait(1100, run)
+      await this.tap('sp-menu', run)
+      await this.wait(1100, run)
+      // 3: add a child, typing the sample ID and phone
+      await this.tap('add-child', run)
+      await this.wait(500, run)
+      this.demoFinger = { ...this.demoFinger, show: false }
+      await this.typeInto('digits', sampleId, run)
+      await this.wait(250, run)
+      await this.typeInto('phone', samplePhone, run)
+      await this.wait(400, run)
+      await this.tap('save', run)
+      await this.wait(900, run)
+      await this.tap('child', run)
+      await this.wait(900, run)
+      // 4: the results; scroll down to the teacher's notes and back up
+      this.demoFinger = { ...this.demoFinger, show: false }
+      this.$refs.app?.scrollTo({ top: 240, behavior: 'smooth' })
+      await this.wait(1800, run)
+      this.$refs.app?.scrollTo({ top: 0, behavior: 'smooth' })
+      await this.wait(700, run)
+      // 5: the credit tab
+      await this.tap('tab-credit', run)
+      await this.wait(2000, run)
+      // 6: pay an invoice with PromptPay
+      this.demoFinger = { ...this.demoFinger, show: false }
+      this.go(5)
+      await this.wait(900, run)
+      await this.tap('pay', run)
+      await this.wait(1100, run)
+      await this.tap('pay-confirm', run)
+      await this.wait(400, run)
+      this.demoFinger = { ...this.demoFinger, show: false }
+      await this.wait(2600, run)
+    },
     scoreColor(v) {
       return v >= 80 ? '#0E8A43' : v >= 70 ? '#D98200' : '#C8102E'
     },
@@ -1032,3 +1245,29 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* the auto demo's fingertip glides between buttons; the ring spreads out on a tap */
+.demo-finger {
+  transition:
+    transform 0.75s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.3s ease;
+}
+.demo-ripple {
+  animation: demo-ripple 0.5s ease-out forwards;
+}
+@keyframes demo-ripple {
+  to {
+    opacity: 0;
+    scale: 2.2;
+  }
+}
+.demo-live {
+  animation: demo-live 1.4s ease-in-out infinite;
+}
+@keyframes demo-live {
+  50% {
+    opacity: 0.35;
+  }
+}
+</style>

@@ -16,6 +16,7 @@
     >
       Facebook
     </a>
+    <!-- straight to the booking form on /contact (the bar is hidden on that page) -->
     <router-link
       :to="bookingLink"
       class="flex h-12 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white"

@@ -9,7 +9,7 @@
           class="font-display text-[32px] font-bold leading-[1.4] md:text-5xl xl:text-[56px] xl:leading-[1.35]"
         >
           นัดวัดระดับภาษา<br class="hidden md:block" />
-          <span class="marker">ฟรี</span>สำหรับลูกของคุณ
+          <span class="marker marker-intro">ฟรี</span>สำหรับลูกของคุณ
         </h1>
         <p class="max-w-[480px] text-[15px] leading-[1.75] text-muted md:text-[17px]">
           กรอกข้อมูลสั้นๆ แล้ว{{ booking.endpoint ? 'กดส่ง' : 'ส่งให้เราทาง Messenger' }}
@@ -18,7 +18,7 @@
         <div class="mt-2 grid gap-3 sm:grid-cols-[auto_1fr] lg:grid-cols-1 xl:grid-cols-[auto_1fr]">
           <a
             :href="contact.tel"
-            class="flex flex-col gap-2.5 rounded-[24px] border border-[#F1DFAE] bg-sunsoft px-4 py-4 transition hover:-translate-y-0.5 md:px-[22px] md:py-5"
+            class="flex flex-col gap-2.5 rounded-[24px] border border-[#F1DFAE] bg-sunsoft px-4 py-4 lift md:px-[22px] md:py-5"
           >
             <span class="flex items-center gap-2.5 text-[13px] text-muted">
               <span
@@ -34,7 +34,7 @@
           </a>
           <a
             :href="contact.facebook"
-            class="flex flex-col gap-2.5 rounded-[24px] border border-line bg-white px-4 py-4 transition hover:-translate-y-0.5 md:px-[22px] md:py-5"
+            class="flex flex-col gap-2.5 rounded-[24px] border border-line bg-white px-4 py-4 lift md:px-[22px] md:py-5"
             rel="noopener"
             target="_blank"
           >
@@ -68,8 +68,14 @@
         </div>
       </div>
 
+      <!-- "นัดวัดระดับฟรี" links land here, gliding down from the top of the page; on
+           wide screens the form is already in view beside the contact details, so the
+           page stays at the top -->
       <div
+        id="booking-form"
         class="rounded-3xl border border-line bg-white p-5 shadow-[0_30px_60px_-40px_rgba(0,0,0,.3)] md:rounded-[32px] md:p-11 lg:sticky lg:top-24"
+        data-scroll-glide
+        data-scroll-media="(max-width: 1023px)"
       >
         <form
           v-show="!submitted"

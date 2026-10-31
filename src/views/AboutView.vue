@@ -8,7 +8,7 @@
         <h1
           class="font-display text-[36px] font-bold leading-[1.4] md:text-[56px] xl:text-[64px] xl:leading-[1.32]"
         >
-          มากกว่าโรงเรียน…<br />คือ<span class="marker">บ้าน</span>แห่งการเรียนรู้
+          มากกว่าโรงเรียน…<br />คือ<span class="marker marker-intro">บ้าน</span>แห่งการเรียนรู้
         </h1>
       </div>
       <p class="text-base leading-[1.8] text-muted md:text-lg" style="text-wrap: pretty">
@@ -26,7 +26,7 @@
       <PhotoBox
         :src="cover"
         alt="นักเรียนและครูที่ Brighton Language Academy"
-        class="col-span-2 h-[260px] rounded-[28px] md:h-[400px] lg:col-span-8 lg:row-span-2 lg:h-auto lg:rounded-[32px]"
+        class="in-zoom col-span-2 h-[260px] rounded-[28px] md:h-[400px] lg:col-span-8 lg:row-span-2 lg:h-auto lg:rounded-[32px]"
         position="center 35%"
         priority
         sizes="(min-width: 1280px) 780px, 100vw"
@@ -35,14 +35,14 @@
         v-for="(st, i) in stats"
         :key="st[1]"
         :class="statTones[i].card"
-        class="flex flex-col justify-between gap-3 rounded-[24px] p-4 md:min-h-[150px] md:p-5 lg:col-span-2 lg:rounded-[28px] lg:p-6"
+        class="lift flex flex-col justify-between gap-3 rounded-[24px] p-4 md:min-h-[150px] md:p-5 lg:col-span-2 lg:rounded-[28px] lg:p-6"
       >
         <span :class="statTones[i].label" class="text-[13px] leading-[1.45]">{{ st[1] }}</span>
         <span
           :class="statTones[i].value"
           class="font-condensed text-[40px] font-bold leading-none md:text-[48px]"
-          >{{ st[0] }}</span
-        >
+          ><CountUp :delay="200" :value="st[0]"
+        /></span>
       </div>
     </section>
 
@@ -58,7 +58,7 @@
       />
       <div v-reveal="{ stagger: 90 }" class="grid gap-3 md:gap-5 lg:grid-cols-12">
         <article
-          class="flex flex-col gap-5 rounded-[28px] border border-line bg-white p-5 md:rounded-[32px] md:p-9 lg:col-span-8"
+          class="lift flex flex-col gap-5 rounded-[28px] border border-line bg-white p-5 md:rounded-[32px] md:p-9 lg:col-span-8"
         >
           <p
             v-for="(text, i) in story.paragraphs"
@@ -70,10 +70,10 @@
           </p>
         </article>
         <figure
-          class="relative flex flex-col justify-between gap-4 overflow-hidden rounded-[28px] bg-brand p-6 text-white md:gap-8 md:rounded-[32px] md:p-9 lg:col-span-4"
+          class="lift relative flex flex-col justify-between gap-4 overflow-hidden rounded-[28px] bg-brand p-6 text-white md:gap-8 md:rounded-[32px] md:p-9 lg:col-span-4"
         >
           <span
-            class="font-display text-[56px] leading-[.6] text-sun md:text-[72px]"
+            class="in-pop font-display text-[56px] leading-[.6] text-sun md:text-[72px]"
             aria-hidden="true"
             >“</span
           >
@@ -116,7 +116,7 @@
           <span
             :class="methodCards[i].num"
             aria-hidden="true"
-            class="mt-auto self-end font-condensed text-[72px] font-bold leading-none md:text-[96px]"
+            class="in-rise mt-auto self-end font-condensed text-[72px] font-bold leading-none md:text-[96px]"
             >0{{ i + 1 }}</span
           >
         </BentoCard>
@@ -134,7 +134,7 @@
           eyebrow="Our Teachers"
           icon="users"
           title="ครูของเรา คัดเลือกและอบรมอย่างไร"
-          tone="ink"
+          tone="brand"
         />
         <router-link class="link-arrow flex-none text-base" to="/teachers"
           >ดูทีมครูชาวต่างชาติของเรา →</router-link
@@ -146,7 +146,7 @@
           :key="title"
           :sub="text"
           :title="title"
-          :tone="i === 0 ? 'ink' : 'white'"
+          :tone="i === 0 ? 'paper' : 'white'"
           icon="checkCircle"
         />
       </div>
@@ -156,7 +156,7 @@
     <section class="wrap pb-12 md:pb-[104px]">
       <div v-reveal="{ stagger: 90 }" class="grid gap-3 md:gap-5 lg:grid-cols-12">
         <div
-          class="flex flex-col gap-5 rounded-[28px] bg-sun p-6 md:rounded-[32px] md:p-12 lg:col-span-8"
+          class="lift flex flex-col gap-5 rounded-[28px] bg-sun p-6 md:rounded-[32px] md:p-12 lg:col-span-8"
         >
           <span class="font-condensed text-xs font-semibold uppercase tracking-[.14em]"
             >Success Story</span
@@ -173,18 +173,21 @@
           </div>
         </div>
         <div
-          class="flex flex-col justify-between gap-4 rounded-[28px] bg-ink p-6 text-cream md:gap-6 md:rounded-[32px] md:p-9 lg:col-span-4"
+          class="lift flex flex-col justify-between gap-4 rounded-[28px] bg-paper p-6 text-ink md:gap-6 md:rounded-[32px] md:p-9 lg:col-span-4"
         >
-          <span class="text-sm text-cream/70">เริ่มเรียนกับเราตอน</span>
+          <span class="text-sm text-body">เริ่มเรียนกับเราตอน</span>
           <span class="flex items-baseline gap-2">
-            <span class="font-condensed text-[64px] font-bold leading-none text-sun md:text-[88px]"
-              >3</span
-            >
+            <span
+              class="font-condensed text-[64px] font-bold leading-none text-brand md:text-[88px]"
+              ><CountUp :delay="200" :duration="800" value="3"
+            /></span>
             <span class="text-lg">ขวบ</span>
           </span>
-          <span class="flex items-baseline gap-2 border-t border-cream/15 pt-5">
-            <span class="text-sm text-cream/70">IELTS</span>
-            <span class="font-condensed text-[56px] font-bold leading-none">8.0</span>
+          <span class="flex items-baseline gap-2 border-t border-line2 pt-5">
+            <span class="text-sm text-body">IELTS</span>
+            <span class="font-condensed text-[56px] font-bold leading-none"
+              ><CountUp :delay="500" value="8.0"
+            /></span>
           </span>
         </div>
       </div>
@@ -200,7 +203,12 @@
         sub="เราเชื่อว่าห้องเรียนที่ดี เริ่มจากการดูแลคนที่สอนให้ดีที่สุด เพราะครูที่มีเวลาและมีแรงบันดาลใจ จะส่งต่อสิ่งเหล่านั้นให้นักเรียน"
         tone="sage"
       >
-        <template #title>ครูมีความสุข <span class="marker">ลูกก็มีความสุข</span></template>
+        <template #title
+          >ครูมีความสุข
+          <span v-reveal="{ variant: 'wipe', delay: 350 }" class="marker"
+            >ลูกก็มีความสุข</span
+          ></template
+        >
       </SectionHead>
       <div v-reveal="{ stagger: 80 }" class="grid gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
         <BentoCard
@@ -239,7 +247,7 @@
         >
           <span
             aria-hidden="true"
-            class="mt-auto self-end font-condensed text-[56px] font-bold leading-none text-brand/20"
+            class="in-rise mt-auto self-end font-condensed text-[56px] font-bold leading-none text-brand/20"
             >0{{ i + 1 }}</span
           >
         </BentoCard>
@@ -253,7 +261,7 @@
         class="mb-5 md:mb-10"
         icon="checkCircle"
         title="พันธกิจของเรา"
-        tone="ink"
+        tone="brand"
       />
       <div v-reveal="{ stagger: 80 }" class="grid gap-3 md:grid-cols-3 md:gap-5">
         <BentoCard
@@ -276,7 +284,7 @@
         :key="i"
         :src="src"
         alt="บรรยากาศที่ Brighton"
-        class="h-[220px] rounded-[28px] md:h-[300px] md:rounded-[32px]"
+        class="in-zoom h-[220px] rounded-[28px] md:h-[300px] md:rounded-[32px]"
         sizes="(min-width: 640px) 40vw, 100vw"
       />
     </section>
@@ -286,6 +294,7 @@
 <script>
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
+import CountUp from '@/components/CountUp.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import { useRandomPhotos } from '@/composables/useRandomPhotos'
@@ -302,7 +311,7 @@ import {
 
 export default {
   name: 'AboutView',
-  components: { BentoCard, PhotoBox, SectionHead },
+  components: { BentoCard, CountUp, PhotoBox, SectionHead },
   setup() {
     useHead({
       title: 'เกี่ยวกับเรา - Brighton Language Academy',
@@ -328,14 +337,14 @@ export default {
       // the figure tiles beside the cover photo
       statTones: [
         { card: 'bg-sun', label: 'text-body', value: 'text-ink' },
-        { card: 'bg-ink', label: 'text-cream/70', value: 'text-sun' },
+        { card: 'bg-paper', label: 'text-body', value: 'text-brand' },
         { card: 'bg-blush', label: 'text-body', value: 'text-brand' },
         { card: 'bg-white border border-line', label: 'text-muted', value: 'text-ink' }
       ],
       // the methods grid: 7/5 then 5/7 columns, each in its own tone
       methodCards: [
         { span: 'lg:col-span-7', tone: 'white', num: 'text-sun' },
-        { span: 'lg:col-span-5', tone: 'ink', num: 'text-sun/40' },
+        { span: 'lg:col-span-5', tone: 'paper', num: 'text-brand/25' },
         { span: 'lg:col-span-5', tone: 'sun', num: 'text-ink/15' },
         { span: 'lg:col-span-7', tone: 'blush', num: 'text-brand/25' }
       ],

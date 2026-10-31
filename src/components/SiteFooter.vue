@@ -4,7 +4,7 @@
       <!-- the footer is one more bento grid: brand, courses, links, contact -->
       <div class="grid gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-12">
         <div
-          class="flex flex-col justify-between gap-6 rounded-[28px] border border-line bg-white p-6 text-ink md:p-7 shadow-[0_24px_48px_-36px_rgba(34,28,25,.28)] sm:col-span-2 lg:col-span-4 lg:row-span-2"
+          class="lift flex flex-col justify-between gap-6 rounded-[28px] border border-line bg-white p-6 text-ink md:p-7 shadow-[0_24px_48px_-36px_rgba(34,28,25,.28)] sm:col-span-2 lg:col-span-4 lg:row-span-2"
         >
           <div class="flex flex-col gap-4">
             <BrandLogo class="self-start" />
@@ -20,7 +20,7 @@
           >
         </div>
         <div
-          class="flex flex-col gap-2.5 rounded-[28px] border border-line bg-white p-5 text-sm md:p-6 lg:col-span-4"
+          class="lift flex flex-col gap-2.5 rounded-[28px] border border-line bg-white p-5 text-sm md:p-6 lg:col-span-4"
         >
           <b class="mb-1 text-[13px] tracking-[.04em] text-brand">หลักสูตร</b>
           <router-link
@@ -33,7 +33,7 @@
           </router-link>
         </div>
         <div
-          class="flex flex-col gap-2.5 rounded-[28px] bg-sunsoft p-5 text-sm md:p-6 lg:col-span-4 lg:row-span-2"
+          class="lift flex flex-col gap-2.5 rounded-[28px] bg-sunsoft p-5 text-sm md:p-6 lg:col-span-4 lg:row-span-2"
         >
           <b class="mb-1 text-[13px] tracking-[.04em] text-ink">ติดต่อ</b>
           <a
@@ -48,7 +48,7 @@
           <span class="text-body">{{ contact.hours }}</span>
         </div>
         <div
-          class="flex flex-wrap gap-2 rounded-[28px] border border-line bg-white p-5 text-sm sm:col-span-2 lg:col-span-4"
+          class="lift flex flex-wrap gap-2 rounded-[28px] border border-line bg-white p-5 text-sm sm:col-span-2 lg:col-span-4"
         >
           <router-link class="footer-chip" to="/about">เกี่ยวกับเรา</router-link>
           <router-link v-for="p in programs" :key="p.slug" :to="p.path" class="footer-chip">

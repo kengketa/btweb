@@ -17,6 +17,7 @@
 
     <div class="flex flex-1 flex-col gap-2.5">
       <div
+        ref="bars"
         class="flex h-40 items-stretch gap-1.5 sm:h-44 sm:gap-2"
         role="group"
         aria-label="ระดับ CEFR"
@@ -34,8 +35,8 @@
         >
           <span
             :class="state(i).bar"
-            :style="{ height: `${22 + i * 15.5}%` }"
-            class="relative w-full rounded-xl transition-colors"
+            :style="{ height: grown ? `${22 + i * 15.5}%` : '0%', '--d': `${i * 80}ms` }"
+            class="bar relative w-full rounded-xl"
           >
             <span
               v-if="i === current"
@@ -76,12 +77,36 @@ export default {
     current: { type: Number, default: 1 }
   },
   data() {
-    return { levels: LEVELS, picked: null }
+    // grown: the bars at full height. They start folded only when the ladder is below
+    // the fold as the page loads, then grow up one after another as it scrolls in.
+    return { levels: LEVELS, picked: null, grown: true, io: null }
   },
   computed: {
     shown() {
       return this.picked ?? this.current
     }
+  },
+  mounted() {
+    if (
+      !('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return
+    const r = this.$refs.bars.getBoundingClientRect()
+    if (r.top < window.innerHeight && r.bottom > 0) return
+    this.grown = false
+    this.io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        this.io.disconnect()
+        this.grown = true
+      },
+      { threshold: 0.5 }
+    )
+    this.io.observe(this.$refs.bars)
+  },
+  beforeUnmount() {
+    this.io?.disconnect()
   },
   methods: {
     state(i) {
@@ -96,3 +121,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bar {
+  transition:
+    background-color 0.3s,
+    height 0.9s cubic-bezier(0.34, 1.3, 0.64, 1) var(--d);
+}
+</style>

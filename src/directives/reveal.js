@@ -8,7 +8,9 @@
 //                                               scrolls in (e.g. a sideways scroller,
 //                                               whose off-screen cards never "enter")
 //
-// Variants: 'up' (default), 'fade', 'scale'. The motion itself is CSS (the
+// Variants: 'up' (default), 'fade', 'scale', 'wipe' (the yellow .marker highlight wiping on
+// from the left and landing with a small tilt), 'pop' (a sticker slapped on: grows in tilted,
+// overshoots and settles), 'grow' (a line drawing itself downward; set --grow-duration). The motion itself is CSS (the
 // [data-reveal] rules in assets/tailwind.scss); this file only decides when.
 //
 // Content is never hidden by the server: pre-rendered HTML carries no reveal state, so
@@ -18,7 +20,7 @@
 // the browser renders itself (dev server, page feed, client-side navigation) start
 // hidden and reveal as they enter. With "reduce motion" on, nothing is touched.
 
-const VARIANTS = ['up', 'fade', 'scale']
+const VARIANTS = ['up', 'fade', 'scale', 'wipe', 'pop', 'grow']
 // a long list shouldn't keep its last item waiting: delays stop growing after this
 const MAX_STAGGER_STEPS = 6
 
@@ -73,12 +75,19 @@ function hide(el) {
 function show(el, delay) {
   el.style.setProperty('--reveal-delay', `${delay}ms`)
   el.dataset.revealState = 'in'
-  // hand the element back to its own styles once it has arrived
+  // Hand the element back to its own styles once it has arrived, and once whatever plays
+  // inside it on arrival (a card's icon popping, ticks drawing: the .in-* classes) has
+  // finished too. Looping animations inside it don't count.
   el.addEventListener('animationend', function done(e) {
     if (e.target !== el) return
     el.removeEventListener('animationend', done)
-    delete el.dataset.revealState
-    el.style.removeProperty('--reveal-delay')
+    const inner = (el.getAnimations?.({ subtree: true }) ?? []).filter(
+      (a) => a.effect?.getTiming?.().iterations !== Infinity
+    )
+    Promise.all(inner.map((a) => a.finished.catch(() => {}))).then(() => {
+      delete el.dataset.revealState
+      el.style.removeProperty('--reveal-delay')
+    })
   })
 }
 
