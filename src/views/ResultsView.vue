@@ -43,7 +43,7 @@
         </div>
         <div class="flex justify-center">
           <div
-            class="relative w-full max-w-[360px] rounded-[28px] border border-line bg-white px-7 pb-6 pt-7 text-center shadow-[0_24px_56px_rgba(33,26,23,.12)] md:rounded-[32px]"
+            class="relative w-full max-w-[360px] rounded-[28px] border border-line bg-white px-6 pb-5 pt-7 text-center md:px-7 md:pb-6 shadow-[0_24px_56px_rgba(33,26,23,.12)] md:rounded-[32px]"
           >
             <div
               class="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink px-4 py-1.5 text-sm font-normal text-white"
@@ -70,17 +70,17 @@
       </div>
     </section>
 
-    <section id="how" class="wrap pb-16 md:pb-[104px]">
+    <section id="how" class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :title="`${steps.length} ขั้นตอนง่าย ๆ`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="How it works"
         icon="route"
         sub="แตะแต่ละขั้นตอนเพื่อดูหน้าจอตัวอย่าง — ลองกรอกข้อมูลเพิ่มลูกได้จริงในขั้นตอนที่ 3"
         tone="brand"
       />
-      <div class="grid grid-cols-1 items-start gap-4 md:gap-5 lg:grid-cols-12">
+      <div class="grid grid-cols-1 items-start gap-3 md:gap-5 lg:grid-cols-12">
         <!-- desktop: the steps as a list beside the phone; phones get number tabs instead -->
         <BentoCard class="hidden lg:col-span-7 lg:flex">
           <div class="flex flex-col gap-3">
@@ -742,10 +742,10 @@
       </div>
     </section>
 
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="What you'll see"
         icon="chart"
         sub="บางครั้งจุดเด่นเล็ก ๆ ของลูกเป็นสิ่งที่มองไม่เห็นจากที่บ้าน แต่แสดงออกอย่างเต็มที่เมื่ออยู่ในห้องเรียน"
@@ -754,7 +754,7 @@
       />
       <div
         v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard
           :sub="features[0].text"
@@ -842,6 +842,7 @@ import SectionHead from '@/components/SectionHead.vue'
 import SkillRadar from '@/components/SkillRadar.vue'
 import { chatUrl, contact } from '@/data/site'
 import {
+  appFeatures,
   history,
   invoice,
   radar,
@@ -933,20 +934,7 @@ export default {
           icon: 'M4 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z'
         }
       ],
-      features: [
-        {
-          title: 'ผลการประเมิน และความเห็นจากครู',
-          text: 'กราฟทักษะ เช่น การฟัง การพูด การเขียน คำศัพท์ และ Phonics เทียบค่าเฉลี่ยของระดับชั้น พร้อมคะแนนแต่ละหน่วยการเรียนและความเห็นจากคุณครูผู้สอน'
-        },
-        {
-          title: 'เครดิตคงเหลือ',
-          text: 'ดูเครดิตที่เหลือและวันหมดอายุ พร้อมประวัติการลงเรียนและการชำระทุกครั้ง ไม่ต้องโทรถามโรงเรียน'
-        },
-        {
-          title: 'ชำระค่าเรียนผ่านพร้อมเพย์',
-          text: 'แตะชำระที่ใบแจ้งหนี้ แล้วสแกน QR ด้วยแอปธนาคารใดก็ได้ จ่ายเสร็จในมือถือภายในไม่กี่นาที'
-        }
-      ],
+      features: appFeatures,
       // phone demo state
       step: 0,
       digits: '',

@@ -21,7 +21,7 @@
 
 @layer components {
   .wrap {
-    @apply mx-auto w-full max-w-[1280px] px-5 md:px-10 lg:px-14;
+    @apply mx-auto w-full max-w-[1280px] px-4 md:px-10 lg:px-14;
   }
   .eyebrow {
     @apply font-condensed text-xs font-semibold uppercase tracking-[.14em] text-brand md:text-[13px];

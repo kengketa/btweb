@@ -12,12 +12,13 @@
         title="ข่าวสารและกิจกรรม"
         tone="brand"
       />
-      <div class="-mx-5 flex flex-none gap-2 overflow-x-auto px-5 md:mx-0 md:flex-wrap md:px-0">
+      <!-- the categories wrap instead of scrolling sideways; smaller on phones so they fit -->
+      <div class="flex flex-none flex-wrap gap-2">
         <button
           v-for="cat in categories"
           :key="cat"
           :class="{ 'chip-on': filter === cat }"
-          class="chip h-10 px-[18px] text-sm"
+          class="chip h-9 px-3.5 text-sm md:h-10 md:px-[18px]"
           @click="setFilter(cat)"
         >
           {{ cat }}
@@ -28,7 +29,7 @@
     <!-- loading: the same 7/5 + 4/4/4 shape the posts will take -->
     <section
       v-if="!loaded"
-      class="wrap grid grid-cols-1 gap-4 pb-24 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+      class="wrap grid grid-cols-1 gap-3 pb-24 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
     >
       <div
         v-for="n in 5"
@@ -51,7 +52,7 @@
       <!-- the two newest posts as a wide + narrow pair, the rest in rows of three -->
       <section
         v-reveal="{ stagger: 80 }"
-        class="wrap grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 md:gap-5 md:pb-5 lg:grid-cols-12"
+        class="wrap grid grid-cols-1 gap-3 pb-4 md:grid-cols-2 md:gap-5 md:pb-5 lg:grid-cols-12"
       >
         <BentoCard
           v-for="(n, i) in lead"
@@ -102,7 +103,7 @@
       <section
         v-if="rest.length"
         v-reveal="{ stagger: 70 }"
-        class="wrap grid grid-cols-1 gap-4 pb-10 sm:grid-cols-2 md:gap-5 lg:grid-cols-3"
+        class="wrap grid grid-cols-1 gap-3 pb-10 sm:grid-cols-2 md:gap-5 lg:grid-cols-3"
       >
         <BentoCard v-for="n in rest" :key="n.id" :href="n.url">
           <div class="flex flex-1 flex-col gap-4">

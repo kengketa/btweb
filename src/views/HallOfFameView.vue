@@ -25,11 +25,11 @@
     </section>
 
     <!-- IELTS: the report and the band scale, then one card per student -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${ieltsStudents.length} คน`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="IELTS Academic"
         icon="trophy"
         sub="ผลสอบ IELTS Academic ของนักเรียนไบรท์ตันอยู่ในระดับ CEFR C1 — ระดับที่มหาวิทยาลัยชั้นนำทั่วโลกใช้เป็นเกณฑ์รับเข้าศึกษา"
@@ -38,7 +38,7 @@
       />
       <div
         v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard class="lg:col-span-5" tone="blush">
           <figure
@@ -206,7 +206,7 @@
           tag="Brighton Journey"
           tone="ink"
         >
-          <div class="mt-auto flex flex-wrap items-center gap-4 md:gap-5">
+          <div class="mt-auto flex flex-wrap items-center gap-3 md:gap-5">
             <div
               :style="{ backgroundImage: `url('${journey.photo}')` }"
               aria-hidden="true"
@@ -239,11 +239,11 @@
     </section>
 
     <!-- Oxford Placement Test -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${oxfordStudents.length} คน`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="Oxford Placement Test for Young Learners"
         icon="book"
         sub="นักเรียนระดับประถมศึกษาของไบรท์ตันทุกคนในรายชื่อนี้ สอบได้ระดับ B1 ขึ้นไป — เทียบเท่าเป้าหมายของนักเรียนจบ ม.6 ตามกรอบ CEFR ของกระทรวงศึกษาธิการ"
@@ -252,7 +252,7 @@
       />
       <div
         v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard
           :class="oxfordReport ? 'lg:col-span-7' : 'md:col-span-2 lg:col-span-12'"
@@ -347,7 +347,7 @@
 
     <section
       v-reveal="{ stagger: 90 }"
-      class="wrap grid grid-cols-1 gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+      class="wrap grid grid-cols-1 gap-3 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
     >
       <BentoCard class="lg:col-span-7" tone="ink">
         <div class="flex flex-1 flex-col gap-4">

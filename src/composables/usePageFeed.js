@@ -1,10 +1,10 @@
 import { computed, markRaw, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { menu } from '@/data/pages'
+import { feedPages } from '@/data/pages'
 import { replaceKeepingScroll } from '@/router'
 
-// On phones the menu pages read like a social feed: nearing the end of one page loads
-// the next menu page below it, and the address bar follows whichever page is being read.
+// On phones the feed pages read like a social feed: nearing the end of one page loads
+// the next feed page below it, and the address bar follows whichever page is being read.
 // `base` is the page the visitor actually navigated to; `items` are the pages fed in below.
 export function usePageFeed() {
   const router = useRouter()
@@ -17,8 +17,8 @@ export function usePageFeed() {
   const nextPage = computed(() => {
     if (!enabled.value) return null
     const last = items.value.length ? items.value[items.value.length - 1].path : base.value.path
-    const i = menu.findIndex((m) => m.to === last)
-    return i === -1 ? null : menu[i + 1] || null
+    const i = feedPages.indexOf(last)
+    return i === -1 ? null : feedPages[i + 1] || null
   })
   // the footer waits until the last page has been fed in
   const hidesFooter = computed(() => nextPage.value !== null)
@@ -47,15 +47,12 @@ export function usePageFeed() {
     loading = true
     const started = generation
     try {
-      const record = router.resolve(page.to).matched[0]
+      const record = router.resolve(page).matched[0]
       let component = record.components.default
       // a page the visitor hasn't opened yet is still its lazy loader
       if (typeof component === 'function') component = (await component()).default
       if (started !== generation) return
-      items.value = [
-        ...items.value,
-        { path: page.to, label: page.label, component: markRaw(component), el: null }
-      ]
+      items.value = [...items.value, { path: page, component: markRaw(component), el: null }]
     } catch {
       // offline or a deploy replaced the chunks: the next scroll tries again
     } finally {

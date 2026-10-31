@@ -3,7 +3,7 @@
     <!-- Hero: headline on the left, a bento of photos and proof points on the right -->
     <section class="relative">
       <div
-        class="wrap grid items-center gap-10 pb-10 pt-8 md:pt-12 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:pb-14 lg:pt-14"
+        class="wrap grid items-center gap-10 pb-12 pt-8 md:pb-10 md:pt-12 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:pb-14 lg:pt-14"
       >
         <div class="flex flex-col gap-5 md:gap-7">
           <span
@@ -26,10 +26,10 @@
             Phonics กับครูที่รู้จักและใส่ใจลูกของคุณทุกคน
           </p>
           <div class="flex flex-wrap items-center gap-3.5">
-            <router-link class="btn-primary h-14 px-[30px] text-[17px]" to="/contact">
+            <router-link :to="{ hash: '#booking' }" class="btn-primary h-14 px-[30px] text-[17px]">
               นัดวัดระดับภาษาฟรี <span>→</span>
             </router-link>
-            <router-link class="btn-outline h-14 px-7 text-[17px]" to="/courses">
+            <router-link :to="{ hash: '#courses' }" class="btn-outline h-14 px-7 text-[17px]">
               ดูหลักสูตร
             </router-link>
           </div>
@@ -129,11 +129,12 @@
         </div>
       </div>
 
-      <!-- the path from first visit to seeing results, as a row of numbered steps -->
-      <div class="wrap pb-14 md:pb-20">
+      <!-- the path from first visit to seeing results, as a row of numbered steps; hidden on
+           phones, where the sticky call bar already offers the booking step -->
+      <div class="wrap hidden pb-20 md:block">
         <ol
           v-reveal="{ stagger: 70 }"
-          class="-mx-5 flex snap-x gap-2.5 overflow-x-auto px-5 pb-1 md:mx-0 md:grid md:grid-cols-[repeat(4,1fr)_auto] md:overflow-visible md:px-0"
+          class="-mx-4 flex snap-x gap-2.5 overflow-x-auto px-4 pb-1 md:mx-0 md:grid md:grid-cols-[repeat(4,1fr)_auto] md:overflow-visible md:px-0"
         >
           <li v-for="(s, i) in journey" :key="s.label" class="flex-none snap-start md:flex-auto">
             <router-link
@@ -151,8 +152,8 @@
           </li>
           <li class="flex-none snap-start">
             <router-link
+              :to="{ hash: '#booking' }"
               class="flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-ink px-5 py-3 text-[15px] font-semibold text-cream transition-colors hover:bg-brand"
-              to="/contact"
               >นัดเลย →</router-link
             >
           </li>
@@ -161,7 +162,7 @@
     </section>
 
     <!-- Welcome: what makes Brighton different, one card per idea (issue #31) -->
-    <section id="why" class="scroll-mt-24 pb-16 md:pb-[104px]">
+    <section id="why" class="scroll-mt-24 pb-12 md:pb-[104px]">
       <div class="wrap">
         <div
           v-reveal="{ stagger: 120 }"
@@ -188,7 +189,7 @@
 
         <div
           v-reveal="{ stagger: 90 }"
-          class="mt-10 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+          class="mt-10 grid grid-cols-1 gap-3 md:mt-14 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
         >
           <BentoCard
             class="md:col-span-2 lg:col-span-7"
@@ -304,11 +305,11 @@
     </section>
 
     <!-- Courses -->
-    <section id="courses" class="wrap scroll-mt-24 pb-16 md:pb-[104px]">
+    <section id="courses" class="wrap scroll-mt-24 pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${courses.length} หลักสูตร`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="Our Courses"
         icon="book"
         sub="เลือกตามอายุและพื้นฐานของลูก ทุกหลักสูตรเริ่มจากการวัดระดับฟรี"
@@ -318,7 +319,7 @@
       <!-- one card per course; the first is wide, with its age block beside the points -->
       <div
         v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard
           v-for="(c, i) in courses"
@@ -338,7 +339,7 @@
             <div
               v-if="i === 0"
               :class="toneClass[c.tone]"
-              class="flex min-h-[150px] flex-col justify-between gap-4 rounded-[22px] p-5"
+              class="flex flex-col justify-between gap-4 rounded-[22px] p-5 sm:min-h-[150px]"
             >
               <span class="text-[13px] font-semibold opacity-90">{{ c.tag }}</span>
               <span :class="ageFont(c.age)" class="text-[52px] font-bold leading-none"
@@ -402,7 +403,10 @@
               <span class="text-sm text-muted">ขวบ</span>
             </p>
             <div class="flex flex-col gap-3">
-              <router-link class="btn-primary h-14 text-base shadow-none" to="/contact">
+              <router-link
+                :to="{ hash: '#booking' }"
+                class="btn-primary h-14 text-base shadow-none"
+              >
                 นัดวัดระดับฟรี →
               </router-link>
               <router-link class="link-arrow text-center text-sm" to="/courses">
@@ -415,10 +419,10 @@
     </section>
 
     <!-- Programs: teachers, camp, EF, MEP/EP, each with its figure from programs.js -->
-    <section id="programs" class="wrap scroll-mt-24 pb-16 md:pb-[104px]">
+    <section id="programs" class="wrap scroll-mt-24 pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         count="4 โครงการ"
         eyebrow="More at Brighton"
         icon="sparkle"
@@ -428,7 +432,7 @@
       />
       <div
         v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard
           class="lg:col-span-5"
@@ -507,11 +511,91 @@
       </div>
     </section>
 
+    <!-- Results: real exam results and the parents' LINE app, each opening its full page.
+         The nav's Hall of Fame and ดูผลการเรียน scroll to these two cards. -->
+    <section id="results" class="wrap scroll-mt-24 pb-12 md:pb-[104px]">
+      <SectionHead
+        v-reveal
+        class="mb-5 md:mb-10"
+        eyebrow="Results"
+        icon="trophy"
+        sub="ผลสอบจริงของนักเรียนไบรท์ตัน และแอปผู้ปกครองใน LINE ที่ติดตามผลการเรียนของลูกได้ในมือถือ"
+        title="ผลการเรียนที่เห็นได้จริง"
+        tone="brand"
+      />
+      <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-3 md:gap-5 lg:grid-cols-12">
+        <BentoCard
+          id="hall-of-fame"
+          class="lg:col-span-7"
+          icon="trophy"
+          sub="ผลสอบ IELTS Academic และ Oxford Placement Test ของนักเรียนไบรท์ตัน"
+          title="Hall of Fame"
+          to="/hall-of-fame"
+          tone="ink"
+        >
+          <div class="mt-auto grid grid-cols-2 gap-3">
+            <div
+              class="flex flex-col gap-1 rounded-[20px] border border-cream/15 bg-cream/[.08] p-4"
+            >
+              <span class="text-[13px] text-cream/70">IELTS Academic</span>
+              <span
+                class="font-condensed text-[44px] font-bold leading-none text-sun md:text-[52px]"
+                >{{ topIelts.overall }}</span
+              >
+              <span class="text-[13px] text-cream/70">Overall · CEFR {{ topIelts.cefr }}</span>
+            </div>
+            <div
+              class="flex flex-col gap-1 rounded-[20px] border border-cream/15 bg-cream/[.08] p-4"
+            >
+              <span class="text-[13px] text-cream/70">Oxford Young Learners</span>
+              <span
+                class="font-condensed text-[44px] font-bold leading-none text-cream md:text-[52px]"
+                >{{ oxfordCount }}</span
+              >
+              <span class="text-[13px] text-cream/70">คน ได้ระดับ B1 ขึ้นไป</span>
+            </div>
+          </div>
+          <template #foot><span class="font-semibold text-sun">ดู Hall of Fame →</span></template>
+        </BentoCard>
+
+        <BentoCard
+          id="parent-app"
+          class="lg:col-span-5"
+          icon="chart"
+          sub="ติดตามผลการเรียน เครดิต และชำระค่าเรียนของลูกได้ในมือถือ ผ่านแอปผู้ปกครองใน LINE"
+          title="ดูผลการเรียนผ่าน LINE"
+          tone="sage"
+        >
+          <ul class="flex flex-col gap-2.5">
+            <li
+              v-for="f in appFeatures"
+              :key="f.title"
+              class="flex items-center gap-2.5 text-[15px] font-medium"
+            >
+              <BentoIcon class="h-5 w-5 flex-none text-sagedeep" name="checkCircle" />{{ f.title }}
+            </li>
+          </ul>
+          <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-3 pt-5">
+            <a
+              :href="contact.line"
+              class="inline-flex h-12 items-center whitespace-nowrap rounded-full bg-[#06C755] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[#05A948]"
+              rel="noopener"
+              target="_blank"
+              >เพิ่มเพื่อน {{ contact.lineName }}</a
+            >
+            <router-link class="font-semibold text-sagedeep hover:underline" to="/results"
+              >ดูวิธีใช้งาน →</router-link
+            >
+          </div>
+        </BentoCard>
+      </div>
+    </section>
+
     <!-- Our story: founder, students, a success story; the full version is on /about -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <div
         v-reveal="{ variant: 'scale' }"
-        class="grid gap-8 rounded-3xl bg-ink p-7 text-cream md:rounded-[32px] md:p-14 lg:grid-cols-[1.2fr_1fr] lg:gap-14"
+        class="grid gap-6 rounded-3xl bg-ink p-6 text-cream md:gap-8 md:rounded-[32px] md:p-14 lg:grid-cols-[1.2fr_1fr] lg:gap-14"
       >
         <div class="flex flex-col gap-4">
           <span class="font-condensed text-xs font-semibold uppercase tracking-[.14em] text-sun"
@@ -548,7 +632,7 @@
     </section>
 
     <!-- Gallery -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <div v-reveal class="mb-6 flex items-end justify-between gap-6 md:mb-10">
         <SectionHead
           icon="heart"
@@ -599,11 +683,11 @@
     </section>
 
     <!-- Reviews: a masonry bento of parents' Facebook comments, opened by a brand card -->
-    <section id="reviews" class="wrap scroll-mt-24 pb-16 md:pb-[104px]">
+    <section id="reviews" class="wrap scroll-mt-24 pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${reviews.length} รีวิว`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="เสียงจากผู้ปกครอง"
         icon="chat"
         sub="รีวิวจากผู้ปกครองบนเพจ Facebook ของโรงเรียน"
@@ -618,7 +702,7 @@
         class="-mb-3 gap-3 sm:mb-0 sm:columns-2 md:gap-4 lg:columns-3"
       >
         <div
-          class="relative mb-3 flex break-inside-avoid flex-col gap-6 overflow-hidden rounded-[28px] bg-brand p-6 text-white md:mb-4 md:p-7"
+          class="relative mb-3 flex break-inside-avoid flex-col gap-5 overflow-hidden rounded-[28px] bg-brand p-5 text-white md:mb-4 md:gap-6 md:p-7"
         >
           <div
             aria-hidden="true"
@@ -643,9 +727,12 @@
             >อ่านรีวิวทั้งหมดบน Facebook →</a
           >
         </div>
+        <!-- phones show the first few and load more on request; from md every review shows.
+             Hidden ones stay in the page (pre-rendered for search), only out of sight. -->
         <figure
-          v-for="r in reviews"
+          v-for="(r, i) in reviews"
           :key="r.name"
+          :class="i >= reviewsShown && 'hidden md:block'"
           class="mb-3 break-inside-avoid rounded-[28px] border border-line bg-white p-5 text-ink md:mb-4 md:p-6"
         >
           <blockquote
@@ -682,11 +769,20 @@
           </figcaption>
         </figure>
       </div>
+      <button
+        v-if="reviewsShown < reviews.length"
+        class="btn-outline mt-5 h-12 w-full text-[15px] md:hidden"
+        type="button"
+        @click="reviewsShown += reviewStep"
+      >
+        ดูรีวิวเพิ่มเติม · อีก {{ reviews.length - reviewsShown }} รีวิว
+      </button>
     </section>
 
-    <!-- Booking CTA -->
-    <section class="wrap pb-16 md:pb-24">
-      <div v-reveal="{ stagger: 100 }" class="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-12">
+    <!-- Booking CTA: where every นัดวัดระดับฟรี in the nav and action bar scrolls to; its own
+         button opens the booking form on /contact -->
+    <section id="booking" class="wrap scroll-mt-24 pb-16 md:pb-24">
+      <div v-reveal="{ stagger: 100 }" class="grid grid-cols-1 gap-3 md:gap-5 lg:grid-cols-12">
         <BentoCard
           :level="2"
           class="lg:col-span-7"
@@ -774,7 +870,8 @@ import reviewList from '@/data/reviews.json'
 import { ageFont, courses, lessonSteps, toneClass } from '@/data/courses'
 import { homePhotos } from '@/data/photos'
 import { programBySlug } from '@/data/programs'
-import { radar, sampleChild } from '@/data/parentReport'
+import { appFeatures, radar, sampleChild } from '@/data/parentReport'
+import { ieltsStudents, oxfordStudents } from '@/data/hallOfFame'
 
 export default {
   name: 'HomeView',
@@ -817,6 +914,9 @@ export default {
           ...r,
           initial: Array.from(r.name)[0]
         })),
+      // reviews shown on phones before 'load more', and how many each tap adds
+      reviewsShown: 5,
+      reviewStep: 5,
       years: yearsLabel,
       story: founderStory,
       storyStats: [
@@ -836,7 +936,7 @@ export default {
         { label: 'วัดระดับฟรี', to: { hash: '#why' } },
         { label: 'เลือกหลักสูตรตามวัย', to: { hash: '#courses' } },
         { label: 'เรียนกับครูเจ้าของภาษา', to: { hash: '#programs' } },
-        { label: 'ดูพัฒนาการใน LINE', to: '/results' }
+        { label: 'ดูพัฒนาการใน LINE', to: { hash: '#parent-app' } }
       ],
       courses,
       toneClass,
@@ -891,6 +991,9 @@ export default {
       // the progress card: the sample child's radar from the /results demo
       radar,
       sampleChild,
+      appFeatures,
+      topIelts: ieltsStudents[0],
+      oxfordCount: oxfordStudents.length,
       bookingSteps: [
         'ทักแชทหรือโทรนัดเวลา',
         'ครูพูดคุยและวัดระดับลูก ฟรี',

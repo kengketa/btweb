@@ -80,14 +80,36 @@ export function replaceKeepingScroll(router, path) {
   })
 }
 
+// room for the sticky nav above a section the page scrolls to
+export const NAV_OFFSET = 96
+
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// Scroll to a section of the current page ('' is the top), smoothly unless the visitor
+// asked for less motion. Used for taps on a link to the section already in the address,
+// which the router doesn't treat as a navigation.
+export function scrollToSection(hash) {
+  const el = hash && document.querySelector(hash)
+  if (hash && !el) return
+  const top = el ? el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET : 0
+  window.scrollTo({ top, behavior: reducedMotion() ? 'auto' : 'smooth' })
+}
+
 function scrollBehavior(to, from, savedPosition) {
   if (to.path === keepScrollFor) {
     keepScrollFor = null
     return false
   }
   if (savedPosition) return savedPosition
-  // leave room for the sticky nav when jumping to a section
-  if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }
+  // a section: glide there within the page, jump straight there when arriving from
+  // another page, and leave room for the sticky nav either way
+  if (to.hash) {
+    const glide = from.path === to.path && !reducedMotion()
+    return { el: to.hash, top: NAV_OFFSET, behavior: glide ? 'smooth' : 'auto' }
+  }
+  // back to the top of the page already open, e.g. หน้าแรก from a section of it
+  if (from.path === to.path && from !== START_LOCATION)
+    return { top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' }
   // first page load: already at the top, and scrolling there would force a
   // layout while the page is still rendering
   if (from === START_LOCATION) return false

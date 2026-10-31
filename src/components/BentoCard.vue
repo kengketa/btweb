@@ -3,7 +3,7 @@
     :is="to ? 'router-link' : href ? 'a' : 'div'"
     :class="[tones[tone].card, (to || href) && 'group hover:-translate-y-1']"
     v-bind="linkAttrs"
-    class="flex min-w-0 flex-col rounded-[28px] border p-6 transition duration-300 md:rounded-[32px] md:p-8"
+    class="flex min-w-0 flex-col rounded-[28px] border p-5 transition duration-300 md:rounded-[32px] md:p-8"
   >
     <div v-if="title" class="flex flex-col gap-1.5">
       <!-- the icon keeps its place beside the title even when a long title wraps -->
@@ -30,10 +30,10 @@
       </div>
       <p v-if="sub" :class="tones[tone].sub" class="text-[15px] leading-[1.65]">{{ sub }}</p>
     </div>
-    <div :class="title && 'mt-6'" class="flex flex-1 flex-col">
+    <div :class="title && 'mt-4 md:mt-6'" class="flex flex-1 flex-col">
       <slot />
     </div>
-    <div v-if="$slots.foot" :class="tones[tone].sub" class="mt-5 text-[13px] leading-[1.6]">
+    <div v-if="$slots.foot" :class="tones[tone].sub" class="mt-4 text-[13px] leading-[1.6] md:mt-5">
       <slot name="foot" />
     </div>
   </component>

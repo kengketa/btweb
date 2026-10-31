@@ -1,35 +1,39 @@
 <template>
+  <!-- Every line is laid out from the start and the unplayed ones are only hidden, so the
+       card has its full height before the chat plays: nothing below it moves while the
+       visitor (or a nav jump) scrolls past. -->
   <div ref="box" class="flex flex-1 flex-col justify-end gap-2.5 text-[15px]">
-    <TransitionGroup name="bubble">
+    <div
+      v-for="([who, line], i) in lines"
+      :key="i"
+      :class="who === 'teacher' ? 'self-start' : 'self-end'"
+      class="relative max-w-[85%]"
+    >
       <div
-        v-for="([who, line], i) in lines.slice(0, shown)"
-        :key="i"
-        :class="
-          who === 'teacher'
-            ? 'self-start rounded-bl-md bg-white'
-            : 'self-end rounded-br-md bg-brand text-white'
-        "
-        class="max-w-[85%] rounded-2xl px-4 py-2.5 leading-snug"
+        :class="[
+          who === 'teacher' ? 'rounded-bl-md bg-white' : 'rounded-br-md bg-brand text-white',
+          i < shown ? 'translate-y-0 opacity-100' : 'invisible translate-y-2.5 opacity-0'
+        ]"
+        class="rounded-2xl px-4 py-2.5 leading-snug transition-[opacity,transform] duration-[350ms] ease-[cubic-bezier(0.19,1,0.22,1)]"
       >
         {{ line }}
       </div>
-      <!-- "typing…" dots while the next line is on its way -->
+      <!-- "typing…" dots in the slot of the line that is on its way -->
       <div
-        v-if="typing"
-        key="typing"
-        :class="nextIsTeacher ? 'self-start bg-white' : 'self-end bg-brand/90'"
+        v-if="typing && i === shown"
+        :class="who === 'teacher' ? 'left-0 bg-white' : 'right-0 bg-brand/90'"
         aria-hidden="true"
-        class="flex gap-1 rounded-2xl px-4 py-3.5"
+        class="absolute top-0 flex gap-1 rounded-2xl px-4 py-3.5"
       >
         <span
           v-for="n in 3"
           :key="n"
-          :class="nextIsTeacher ? 'bg-muted' : 'bg-white'"
+          :class="who === 'teacher' ? 'bg-muted' : 'bg-white'"
           :style="{ animationDelay: `${n * 0.15}s` }"
           class="typing-dot h-1.5 w-1.5 rounded-full"
         ></span>
       </div>
-    </TransitionGroup>
+    </div>
   </div>
 </template>
 
@@ -44,11 +48,6 @@ export default {
   },
   data() {
     return { shown: this.lines.length, typing: false, timers: [], io: null }
-  },
-  computed: {
-    nextIsTeacher() {
-      return this.lines[this.shown]?.[0] === 'teacher'
-    }
   },
   mounted() {
     if (
@@ -90,15 +89,6 @@ export default {
 </script>
 
 <style scoped>
-.bubble-enter-active {
-  transition:
-    opacity 0.35s ease,
-    translate 0.35s cubic-bezier(0.19, 1, 0.22, 1);
-}
-.bubble-enter-from {
-  opacity: 0;
-  translate: 0 10px;
-}
 .typing-dot {
   animation: typing 1s infinite ease-in-out;
 }

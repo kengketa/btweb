@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-start gap-4 md:gap-5">
+  <div class="flex items-start gap-3 md:gap-5">
     <!-- a chunky, slightly tilted icon tile: the bento stand-in for BeBetter's 3D icons -->
     <span
       :class="tiles[tone]"

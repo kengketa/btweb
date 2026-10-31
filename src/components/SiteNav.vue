@@ -13,10 +13,11 @@
 
         <nav class="hidden items-center gap-1 lg:flex">
           <router-link
-            v-for="link in links"
-            :key="link.to"
+            v-for="link in desktopLinks"
+            :key="link.label"
+            :aria-current="isActive(link) ? 'location' : null"
             :class="isActive(link) ? 'bg-sunsoft text-ink' : 'text-ink/75 hover:bg-cream'"
-            :to="link.to"
+            :to="target(link)"
             class="rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors xl:px-4"
           >
             {{ link.label }}
@@ -25,8 +26,8 @@
 
         <div class="flex items-center gap-1.5">
           <router-link
+            :to="bookingLink"
             class="btn-primary hidden h-11 px-[22px] text-[15px] shadow-none md:inline-flex md:h-12"
-            to="/contact"
           >
             นัดวัดระดับฟรี
           </router-link>
@@ -58,17 +59,18 @@
       >
         <router-link
           v-for="link in links"
-          :key="link.to"
+          :key="link.label"
+          :aria-current="isActive(link) ? 'location' : null"
           :class="isActive(link) ? 'bg-sunsoft' : 'bg-cream'"
-          :to="link.to"
+          :to="target(link)"
           class="rounded-[20px] px-4 py-4 text-base font-medium"
           @click="open = false"
         >
           {{ link.label }}
         </router-link>
         <router-link
+          :to="bookingLink"
           class="btn-primary col-span-2 h-12 text-base shadow-none"
-          to="/contact"
           @click="open = false"
         >
           นัดวัดระดับภาษาฟรี →
@@ -80,7 +82,7 @@
 
 <script>
 import BrandLogo from './BrandLogo.vue'
-import { menu } from '@/data/pages'
+import { bookingLink, menu } from '@/data/pages'
 
 export default {
   name: 'SiteNav',
@@ -89,12 +91,23 @@ export default {
     return {
       open: false,
       scrolled: false,
-      links: menu
+      links: menu,
+      bookingLink,
+      // on the home page: the section(s) being read, '' above the first one. null until
+      // mounted, so the first render matches the pre-rendered page.
+      reading: null,
+      frame: 0
+    }
+  },
+  computed: {
+    desktopLinks() {
+      return this.links.filter((link) => !link.phone)
     }
   },
   watch: {
     $route() {
       this.open = false
+      this.$nextTick(this.spy)
     }
   },
   mounted() {
@@ -103,14 +116,44 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.onScroll)
+    cancelAnimationFrame(this.frame)
   },
   methods: {
+    target(link) {
+      return link.hash ? { path: '/', hash: link.hash } : '/'
+    },
     onScroll() {
       this.scrolled = window.scrollY > 8
+      if (!this.frame) this.frame = requestAnimationFrame(this.spy)
+    },
+    // Scroll spy: the section being read is the last one whose top has passed just below
+    // the nav. Hall of Fame and the LINE app sit side by side on desktop, so every target
+    // starting at that same line counts.
+    spy() {
+      this.frame = 0
+      if (this.$route.path !== '/') {
+        this.reading = null
+        return
+      }
+      const line = 140
+      const tops = this.links
+        .filter((link) => link.hash)
+        .map((link) => {
+          const el = document.querySelector(link.hash)
+          return el && [link.hash, el.getBoundingClientRect().top]
+        })
+        .filter((entry) => entry && entry[1] <= line)
+      if (!tops.length) {
+        this.reading = ['']
+        return
+      }
+      const last = Math.max(...tops.map(([, top]) => top))
+      this.reading = tops.filter(([, top]) => last - top < 4).map(([hash]) => hash)
     },
     isActive(link) {
       const path = this.$route.path
-      return link.to === '/' ? path === '/' : path.startsWith(link.to)
+      if (path !== '/') return link.pages.some((p) => path === p || path.startsWith(`${p}/`))
+      return this.reading ? this.reading.includes(link.hash) : link.hash === ''
     }
   }
 }

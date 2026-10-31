@@ -35,7 +35,7 @@
         v-for="(st, i) in stats"
         :key="st[1]"
         :class="statTones[i].card"
-        class="flex min-h-[150px] flex-col justify-between gap-3 rounded-[24px] p-5 lg:col-span-2 lg:rounded-[28px] lg:p-6"
+        class="flex flex-col justify-between gap-3 rounded-[24px] p-4 md:min-h-[150px] md:p-5 lg:col-span-2 lg:rounded-[28px] lg:p-6"
       >
         <span :class="statTones[i].label" class="text-[13px] leading-[1.45]">{{ st[1] }}</span>
         <span
@@ -47,18 +47,18 @@
     </section>
 
     <!-- Founder's story -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :title="story.heading"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="Our Story"
         icon="heart"
         tone="peach"
       />
-      <div v-reveal="{ stagger: 90 }" class="grid gap-4 md:gap-5 lg:grid-cols-12">
+      <div v-reveal="{ stagger: 90 }" class="grid gap-3 md:gap-5 lg:grid-cols-12">
         <article
-          class="flex flex-col gap-5 rounded-[28px] border border-line bg-white p-6 md:rounded-[32px] md:p-9 lg:col-span-8"
+          class="flex flex-col gap-5 rounded-[28px] border border-line bg-white p-5 md:rounded-[32px] md:p-9 lg:col-span-8"
         >
           <p
             v-for="(text, i) in story.paragraphs"
@@ -70,9 +70,13 @@
           </p>
         </article>
         <figure
-          class="relative flex flex-col justify-between gap-8 overflow-hidden rounded-[28px] bg-brand p-7 text-white md:rounded-[32px] md:p-9 lg:col-span-4"
+          class="relative flex flex-col justify-between gap-4 overflow-hidden rounded-[28px] bg-brand p-6 text-white md:gap-8 md:rounded-[32px] md:p-9 lg:col-span-4"
         >
-          <span class="font-display text-[72px] leading-[.6] text-sun" aria-hidden="true">“</span>
+          <span
+            class="font-display text-[56px] leading-[.6] text-sun md:text-[72px]"
+            aria-hidden="true"
+            >“</span
+          >
           <blockquote
             class="font-display text-lg font-medium leading-[1.7] md:text-[22px]"
             style="text-wrap: pretty"
@@ -85,11 +89,11 @@
     </section>
 
     <!-- Teaching methods -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${methods.length} แนวทาง`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="How We Teach"
         icon="route"
         sub="สี่อย่างที่ทำให้ห้องเรียน Brighton ต่างจากการเรียนพิเศษทั่วไป"
@@ -98,7 +102,7 @@
       />
       <div
         v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard
           v-for="(m, i) in methods"
@@ -120,7 +124,7 @@
     </section>
 
     <!-- Teachers -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <div
         v-reveal
         class="mb-6 flex flex-col justify-between gap-4 md:mb-10 lg:flex-row lg:items-end"
@@ -136,7 +140,7 @@
           >ดูทีมครูชาวต่างชาติของเรา →</router-link
         >
       </div>
-      <div v-reveal="{ stagger: 70 }" class="grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
+      <div v-reveal="{ stagger: 70 }" class="grid gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
         <BentoCard
           v-for="([title, text], i) in teacherStandards"
           :key="title"
@@ -149,10 +153,10 @@
     </section>
 
     <!-- Success story -->
-    <section class="wrap pb-16 md:pb-[104px]">
-      <div v-reveal="{ stagger: 90 }" class="grid gap-4 md:gap-5 lg:grid-cols-12">
+    <section class="wrap pb-12 md:pb-[104px]">
+      <div v-reveal="{ stagger: 90 }" class="grid gap-3 md:gap-5 lg:grid-cols-12">
         <div
-          class="flex flex-col gap-5 rounded-[28px] bg-sun p-7 md:rounded-[32px] md:p-12 lg:col-span-8"
+          class="flex flex-col gap-5 rounded-[28px] bg-sun p-6 md:rounded-[32px] md:p-12 lg:col-span-8"
         >
           <span class="font-condensed text-xs font-semibold uppercase tracking-[.14em]"
             >Success Story</span
@@ -169,11 +173,13 @@
           </div>
         </div>
         <div
-          class="flex flex-col justify-between gap-6 rounded-[28px] bg-ink p-7 text-cream md:rounded-[32px] md:p-9 lg:col-span-4"
+          class="flex flex-col justify-between gap-4 rounded-[28px] bg-ink p-6 text-cream md:gap-6 md:rounded-[32px] md:p-9 lg:col-span-4"
         >
           <span class="text-sm text-cream/70">เริ่มเรียนกับเราตอน</span>
           <span class="flex items-baseline gap-2">
-            <span class="font-condensed text-[88px] font-bold leading-none text-sun">3</span>
+            <span class="font-condensed text-[64px] font-bold leading-none text-sun md:text-[88px]"
+              >3</span
+            >
             <span class="text-lg">ขวบ</span>
           </span>
           <span class="flex items-baseline gap-2 border-t border-cream/15 pt-5">
@@ -185,10 +191,10 @@
     </section>
 
     <!-- Team culture -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="Our Team"
         icon="sun"
         sub="เราเชื่อว่าห้องเรียนที่ดี เริ่มจากการดูแลคนที่สอนให้ดีที่สุด เพราะครูที่มีเวลาและมีแรงบันดาลใจ จะส่งต่อสิ่งเหล่านั้นให้นักเรียน"
@@ -196,7 +202,7 @@
       >
         <template #title>ครูมีความสุข <span class="marker">ลูกก็มีความสุข</span></template>
       </SectionHead>
-      <div v-reveal="{ stagger: 80 }" class="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
+      <div v-reveal="{ stagger: 80 }" class="grid gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
         <BentoCard
           v-for="([title, text], i) in teamCulture"
           :key="title"
@@ -208,7 +214,7 @@
     </section>
 
     <!-- Next decade + mission -->
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <div
         v-reveal
         class="mb-6 flex flex-col justify-between gap-4 md:mb-10 lg:flex-row lg:items-end"
@@ -223,7 +229,7 @@
           >ห้องเรียน EP · IEP · MEP ที่เราดูแล →</router-link
         >
       </div>
-      <div v-reveal="{ stagger: 90 }" class="grid gap-4 md:grid-cols-3 md:gap-5">
+      <div v-reveal="{ stagger: 90 }" class="grid gap-3 md:grid-cols-3 md:gap-5">
         <BentoCard
           v-for="([title, text], i) in vision"
           :key="title"
@@ -240,16 +246,16 @@
       </div>
     </section>
 
-    <section class="wrap pb-16 md:pb-[104px]">
+    <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${missions.length} ข้อ`"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         icon="checkCircle"
         title="พันธกิจของเรา"
         tone="ink"
       />
-      <div v-reveal="{ stagger: 80 }" class="grid gap-4 md:grid-cols-3 md:gap-5">
+      <div v-reveal="{ stagger: 80 }" class="grid gap-3 md:grid-cols-3 md:gap-5">
         <BentoCard
           v-for="(m, i) in missions"
           :key="m.title"

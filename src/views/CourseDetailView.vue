@@ -7,7 +7,7 @@
         <b class="text-ink">{{ course.name }}</b>
       </div>
       <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
-        <div class="flex flex-col gap-4 md:gap-5">
+        <div class="flex flex-col gap-3 md:gap-5">
           <span class="self-start rounded-full bg-sun px-3.5 py-1.5 text-sm font-semibold">
             {{ course.tag }} ·
             {{ course.ageUnit === 'ปี' ? `อายุ ${course.age} ปี` : course.ageUnit }}
@@ -39,9 +39,9 @@
 
     <!-- the course as bento cards beside a sticky facts card (issue #33) -->
     <section
-      class="wrap grid grid-cols-1 items-start gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+      class="wrap grid grid-cols-1 items-start gap-3 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
     >
-      <div v-reveal="{ stagger: 80 }" class="flex min-w-0 flex-col gap-4 md:gap-5 lg:col-span-8">
+      <div v-reveal="{ stagger: 80 }" class="flex min-w-0 flex-col gap-3 md:gap-5 lg:col-span-8">
         <BentoCard :level="2" icon="checkCircle" title="สิ่งที่ลูกจะได้เรียน">
           <ul class="grid gap-x-7 gap-y-4 sm:grid-cols-2">
             <li v-for="[title, text] in course.points" :key="title" class="flex items-start gap-3">
@@ -153,9 +153,9 @@
       </BentoCard>
     </section>
 
-    <section class="wrap pb-16 md:pb-[104px]">
-      <SectionHead v-reveal class="mb-6 md:mb-10" icon="book" title="หลักสูตรอื่นๆ" tone="sun" />
-      <div v-reveal="{ stagger: 80 }" class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+    <section class="wrap pb-12 md:pb-[104px]">
+      <SectionHead v-reveal class="mb-5 md:mb-10" icon="book" title="หลักสูตรอื่นๆ" tone="sun" />
+      <div v-reveal="{ stagger: 80 }" class="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-5">
         <BentoCard
           v-for="c in others"
           :key="c.slug"

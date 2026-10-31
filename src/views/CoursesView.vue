@@ -17,14 +17,15 @@
       </div>
     </section>
 
+    <!-- the filters wrap instead of scrolling sideways; smaller on phones so they fit -->
     <div
-      class="mx-auto flex max-w-[1280px] gap-2 overflow-x-auto px-5 pb-5 md:flex-wrap md:gap-2.5 md:px-10 md:pb-7 lg:px-14"
+      class="mx-auto flex max-w-[1280px] flex-wrap gap-2 px-4 pb-5 md:gap-2.5 md:px-10 md:pb-7 lg:px-14"
     >
       <button
         v-for="[key, label] in groups"
         :key="key"
         :class="{ 'chip-on': filter === key }"
-        class="chip"
+        class="chip h-9 px-3.5 text-sm md:h-11 md:px-5 md:text-[15px]"
         @click="filter = key"
       >
         {{ label }}
@@ -34,7 +35,7 @@
     <!-- one bento card per course; widths alternate 7/5, 5/7 so rows don't line up -->
     <section
       v-reveal="{ stagger: 80 }"
-      class="wrap grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 md:gap-5 md:pb-5 lg:grid-cols-12"
+      class="wrap grid grid-cols-1 gap-3 pb-4 md:grid-cols-2 md:gap-5 md:pb-5 lg:grid-cols-12"
     >
       <BentoCard
         v-for="(c, i) in filtered"
@@ -74,7 +75,7 @@
 
     <section
       v-reveal="{ stagger: 90 }"
-      class="wrap grid grid-cols-1 gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+      class="wrap grid grid-cols-1 gap-3 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
     >
       <BentoCard
         class="lg:col-span-7"

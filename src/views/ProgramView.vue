@@ -2,7 +2,7 @@
   <main>
     <section class="wrap pb-12 pt-12 md:pb-16 md:pt-[88px]">
       <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
-        <div class="flex flex-col gap-4 md:gap-5">
+        <div class="flex flex-col gap-3 md:gap-5">
           <span class="eyebrow">{{ program.eyebrow }}</span>
           <h1
             class="font-display text-[34px] font-bold leading-[1.4] md:text-5xl md:leading-[1.35] xl:text-[56px]"
@@ -40,7 +40,7 @@
       <div
         v-if="program.stats"
         v-reveal="{ stagger: 70 }"
-        class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 md:mt-14 md:gap-5"
+        class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 md:mt-14 md:gap-5"
       >
         <BentoCard v-for="([value, label], i) in program.stats" :key="label" :tone="stat[i].tone">
           <span
@@ -55,18 +55,18 @@
       </div>
     </section>
 
-    <section v-if="program.camp" class="wrap pb-16 md:pb-[104px]">
+    <section v-if="program.camp" class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
         :count="`${program.camp.weeks.length} สัปดาห์`"
         :sub="program.camp.schedule"
         :title="program.camp.term"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
         eyebrow="Next camp"
         icon="calendar"
         tone="sun"
       />
-      <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-12">
+      <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-3 md:gap-5 lg:grid-cols-12">
         <BentoCard class="lg:col-span-7" icon="route" title="ตารางค่าย">
           <ol class="relative flex flex-col gap-5">
             <span
@@ -110,18 +110,18 @@
     <section
       v-for="(section, s) in program.sections"
       :key="section.heading"
-      class="wrap pb-16 md:pb-[104px]"
+      class="wrap pb-12 md:pb-[104px]"
     >
       <SectionHead
         v-reveal
         :icon="section.style === 'cards' ? 'sparkle' : 'checkCircle'"
         :title="section.heading"
         :tone="headTones[s % headTones.length]"
-        class="mb-6 md:mb-10"
+        class="mb-5 md:mb-10"
       />
       <div
         v-reveal="{ stagger: 80 }"
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
       >
         <BentoCard
           v-for="([title, text], i) in section.items"
@@ -144,7 +144,7 @@
 
     <section
       v-reveal="{ stagger: 90 }"
-      class="wrap grid grid-cols-1 gap-4 pb-4 md:gap-5 md:pb-5 lg:grid-cols-12"
+      class="wrap grid grid-cols-1 gap-3 pb-4 md:gap-5 md:pb-5 lg:grid-cols-12"
     >
       <BentoCard :level="2" class="lg:col-span-7" icon="help" title="คำถามที่พบบ่อย">
         <FaqList :key="program.slug" :faqs="program.faqs" heading="" />
@@ -169,7 +169,7 @@
 
     <section
       v-reveal="{ stagger: 90 }"
-      class="wrap grid grid-cols-1 gap-4 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
+      class="wrap grid grid-cols-1 gap-3 pb-16 md:gap-5 md:pb-[104px] lg:grid-cols-12"
     >
       <BentoCard :lang="summaryLang" class="lg:col-span-7" tone="paper">
         <div class="flex flex-col gap-3">
