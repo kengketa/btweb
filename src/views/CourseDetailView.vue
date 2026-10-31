@@ -82,7 +82,7 @@
               class="relative flex flex-col gap-5"
             >
               <li
-                v-for="([title, text], i) in course.levels.items"
+                v-for="([title, text, steps], i) in course.levels.items"
                 :key="title"
                 class="relative flex gap-4"
               >
@@ -93,6 +93,21 @@
                 <span class="flex min-w-0 flex-col gap-1 pt-1">
                   <b class="text-[17px] text-ink">{{ title }}</b>
                   <span class="text-[15px] leading-[1.7] text-body">{{ text }}</span>
+                  <!-- the levels this step covers, in order, like the chart on the home page -->
+                  <span v-if="steps" class="mt-1.5 flex flex-wrap items-center gap-1">
+                    <template v-for="(step, j) in steps" :key="step">
+                      <span
+                        class="rounded-full bg-white px-2.5 py-0.5 font-condensed text-[13px] font-semibold text-ink ring-1 ring-line2"
+                        >{{ step }}</span
+                      >
+                      <span
+                        v-if="j < steps.length - 1"
+                        aria-hidden="true"
+                        class="text-[11px] text-muted"
+                        >›</span
+                      >
+                    </template>
+                  </span>
                 </span>
               </li>
             </ol>

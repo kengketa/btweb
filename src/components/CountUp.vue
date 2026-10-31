@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { onScreenAtBoot } from '@/composables/useOnScreen'
 // numbers inside the text, with thousands commas and decimals: "1,000+", "8.0", "~50"
 const NUMBER = /\d[\d,]*(?:\.\d+)?/g
 const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
@@ -39,8 +40,7 @@ export default {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     )
       return
-    const r = this.$refs.el.getBoundingClientRect()
-    if (r.top < window.innerHeight && r.bottom > 0) return // already in view: leave it
+    if (onScreenAtBoot(this.$refs.el)) return // already in view: leave it
     this.progress = 0
     this.io = new IntersectionObserver(
       ([entry]) => {

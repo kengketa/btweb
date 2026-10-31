@@ -23,7 +23,7 @@
             style="text-wrap: pretty"
           >
             ติดตามผลการเรียน เครดิต และชำระค่าเรียนของลูกได้ในมือถือ ผ่านแอปผู้ปกครองใน LINE
-            ทั้งกราฟผลการประเมินเทียบค่าเฉลี่ยระดับชั้นและความเห็นจากคุณครูผู้สอน — ได้ทุกที่
+            ทั้งกราฟผลการประเมินเทียบค่าเฉลี่ยระดับชั้นและความเห็นจาก teacher ผู้สอน — ได้ทุกที่
             ทุกเวลา
           </p>
           <div class="flex flex-wrap items-center gap-3">
@@ -456,7 +456,7 @@
                           </div>
                           <div class="rounded-xl bg-app-note px-2.5 py-2">
                             <div class="text-[10.5px] font-semibold text-[#9A6A00]">
-                              ความเห็นจากครู
+                              ความเห็นจาก teacher
                             </div>
                             <div class="text-xs leading-[1.55]">{{ h.comment }}</div>
                           </div>
@@ -831,7 +831,13 @@
         sub="บางครั้งจุดเด่นเล็ก ๆ ของลูกเป็นสิ่งที่มองไม่เห็นจากที่บ้าน แต่แสดงออกอย่างเต็มที่เมื่ออยู่ในห้องเรียน"
         title="เห็นการเติบโตของลูกในทุก ๆ ก้าว"
         tone="sun"
-      />
+      >
+        <template #title
+          >เห็นการเติบโตของลูกใน<span v-reveal="{ variant: 'wipe', delay: 350 }" class="marker"
+            >ทุก ๆ ก้าว</span
+          ></template
+        >
+      </SectionHead>
       <div
         v-reveal="{ stagger: 90 }"
         class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
@@ -849,7 +855,7 @@
             :axes="radar.axes"
             :child="radar.child"
             :name="child.nickname"
-            class="mt-auto"
+            class="my-auto"
           />
           <template #foot>ตัวอย่างกราฟจากแอป Student Progress</template>
         </BentoCard>

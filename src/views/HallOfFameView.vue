@@ -28,14 +28,19 @@
     <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
-        :count="`${ieltsStudents.length} คน`"
         class="mb-5 md:mb-10"
         eyebrow="IELTS Academic"
         icon="trophy"
         sub="ผลสอบ IELTS Academic ของนักเรียนไบรท์ตันอยู่ในระดับ CEFR C1 — ระดับที่มหาวิทยาลัยชั้นนำทั่วโลกใช้เป็นเกณฑ์รับเข้าศึกษา"
         title="พร้อมเรียนต่อระดับนานาชาติ"
         tone="brand"
-      />
+      >
+        <template #title
+          >พร้อมเรียนต่อระดับ<span v-reveal="{ variant: 'wipe', delay: 350 }" class="marker"
+            >นานาชาติ</span
+          ></template
+        >
+      </SectionHead>
       <div
         v-reveal="{ stagger: 90 }"
         class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
@@ -253,7 +258,6 @@
     <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead
         v-reveal
-        :count="`${oxfordStudents.length} คน`"
         class="mb-5 md:mb-10"
         eyebrow="Oxford Placement Test for Young Learners"
         icon="book"
@@ -336,7 +340,10 @@
               v-for="(o, oi) in oxfordStudents"
               :key="o.first + o.last"
               :style="{ '--i': Math.min(oi, 10) }"
-              :class="o.top ? 'border-[#F1DFAE] bg-sunsoft' : 'border-line bg-cream'"
+              :class="[
+                o.top ? 'border-[#F1DFAE] bg-sunsoft' : 'border-line bg-cream',
+                oi >= oxfordShown && 'hidden sm:flex'
+              ]"
               class="flex items-center gap-3.5 rounded-[20px] border px-4 py-3.5"
             >
               <div
@@ -356,6 +363,15 @@
               </div>
             </div>
           </div>
+          <!-- phones show the first few; the rest open five at a time, as with the reviews -->
+          <button
+            v-if="oxfordShown < oxfordStudents.length"
+            class="btn-outline mt-4 h-12 w-full text-[15px] sm:hidden"
+            type="button"
+            @click="oxfordShown += oxfordStep"
+          >
+            ดูรายชื่อเพิ่มเติม
+          </button>
         </BentoCard>
       </div>
     </section>
@@ -370,7 +386,11 @@
             class="font-display text-[28px] font-bold leading-[1.3] text-ink md:text-[40px]"
             style="text-wrap: balance"
           >
-            คนต่อไปใน Hall of Fame<br />อาจเป็นลูกของคุณ
+            คนต่อไปใน Hall of Fame<br />อาจเป็น<span
+              v-reveal="{ variant: 'wipe', delay: 450 }"
+              class="marker"
+              >ลูกของคุณ</span
+            >
           </h2>
           <p class="max-w-[520px] text-base leading-[1.7] text-body md:text-[17px]">
             ปรึกษาเส้นทางการเรียนภาษาอังกฤษตั้งแต่พื้นฐานจนถึงเป้าหมาย IELTS กับทีมไบรท์ตัน
@@ -439,6 +459,9 @@ export default {
   },
   data() {
     return {
+      // Oxford students shown on phones before 'show more', and how many each tap adds
+      oxfordShown: 5,
+      oxfordStep: 5,
       contact,
       ieltsReport,
       ieltsStudents,

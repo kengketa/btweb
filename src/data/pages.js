@@ -29,7 +29,8 @@ export const menu = [
   { label: 'Hall of Fame', hash: '#hall-of-fame', pages: ['/hall-of-fame'] },
   { label: 'ดูผลการเรียน', hash: '#parent-app', pages: ['/results'] },
   { label: 'รีวิว', hash: '#reviews', pages: ['/news'] },
-  { label: 'ติดต่อเรา', hash: '#booking', pages: ['/contact'], phone: true }
+  // the contact page itself (the home page no longer has a contact section)
+  { label: 'ติดต่อเรา', to: '/contact', pages: ['/contact'], phone: true }
 ]
 
 // where every "นัดวัดระดับฟรี" in the nav, the phone menu and the phone action bar goes:

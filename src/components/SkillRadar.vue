@@ -158,6 +158,7 @@
 </template>
 
 <script>
+import { onScreenAtBoot } from '@/composables/useOnScreen'
 // The skills radar from the Student Progress parent app: one child's scores against the
 // class average, in the app's own colours. Used by the /results phone demo and the home
 // page's progress card, both with the sample data in src/data/parentReport.js.
@@ -262,9 +263,10 @@ export default {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     )
       return
-    const r = this.$refs.root.getBoundingClientRect()
-    const onScreen = r.top < window.innerHeight && r.bottom > 0
-    // already on screen as the page loads: skip the intro rather than blink it away
+    // already on screen as the site first loads: skip the intro rather than blink it away.
+    // After a click to another page the old scroll position is still in place at this
+    // point, so there it always waits and plays the intro when it scrolls into view.
+    const onScreen = onScreenAtBoot(this.$refs.root)
     this.phase = onScreen ? 'live' : 'waiting'
     if (!onScreen) this.grow = this.axes.map(() => 0)
     this.io = new IntersectionObserver(

@@ -267,6 +267,12 @@
   animation: reveal-pop 0.5s cubic-bezier(0.25, 0.8, 0.3, 1)
     calc(var(--pop-delay, 500ms) + var(--i, 0) * 90ms) backwards;
 }
+/* a tick icon that pops (.in-pop) and then draws its tick: add .tick-draw */
+[data-reveal-state='in'] .tick-draw path {
+  stroke-dasharray: 24;
+  animation: tick-draw 0.35s ease-out
+    calc(var(--reveal-delay, 0ms) + var(--in-delay, 250ms) + 200ms) backwards;
+}
 /* a tick inside a list item that is revealing: its circle pops, then the tick draws */
 @keyframes tick-draw {
   from {
@@ -321,6 +327,7 @@
   .in-stagger > *,
   .in-cascade > *,
   .in-bar,
+  .tick-draw path,
   .stamp-load > *,
   .stamp > *,
   .pop-load > *,
@@ -330,5 +337,15 @@
   [data-reveal-state] {
     opacity: 1;
     animation: none;
+  }
+}
+
+/* every page ends close above the footer: the footer is one more bento grid, so the gap
+   reads like the space between cards rather than the end of the page. Pages give their
+   last section a big bottom padding; this trims it in one place. */
+main > :last-child {
+  padding-bottom: 1.5rem;
+  @media (min-width: 768px) {
+    padding-bottom: 2rem;
   }
 }

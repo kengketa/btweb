@@ -19,14 +19,18 @@
             <span class="rise sm:block sm:whitespace-nowrap" style="--d: 90ms"
               >อย่าง<span class="marker marker-intro">มีความสุข</span></span
             >
-            <span class="rise sm:block sm:whitespace-nowrap" style="--d: 180ms">และใช้ได้จริง</span>
+            <span class="rise sm:block sm:whitespace-nowrap" style="--d: 180ms"
+              >และ<span class="marker marker-intro" style="--marker-delay: 1s"
+                >ใช้ได้จริง</span
+              ></span
+            >
           </h1>
           <p class="max-w-[520px] text-base leading-[1.7] text-muted md:text-lg md:leading-[1.75]">
             Brighton Language Academy โรงเรียนสอนภาษามาตรฐานสากลในพะเยา หลักสูตร Oxford และ Jolly
-            Phonics กับครูที่รู้จักและใส่ใจลูกของคุณทุกคน
+            Phonics กับ teacher ที่รู้จักและใส่ใจลูกของคุณทุกคน
           </p>
           <div class="flex flex-wrap items-center gap-3.5">
-            <router-link :to="{ hash: '#booking' }" class="btn-primary h-14 px-[30px] text-[17px]">
+            <router-link :to="bookingLink" class="btn-primary h-14 px-[30px] text-[17px]">
               นัดวัดระดับภาษาฟรี <span>→</span>
             </router-link>
             <router-link :to="{ hash: '#courses' }" class="btn-outline h-14 px-7 text-[17px]">
@@ -52,7 +56,7 @@
           />
           <PhotoBox
             :src="heroPhotos[1]"
-            alt="ครูและนักเรียนที่ Brighton"
+            alt="Teacher และนักเรียนที่ Brighton"
             class="in-zoom lift rounded-[24px] md:rounded-[28px]"
             priority
             sizes="(min-width: 1024px) 150px, 50vw"
@@ -155,7 +159,7 @@
           </li>
           <li class="flex-none snap-start">
             <router-link
-              :to="{ hash: '#booking' }"
+              :to="bookingLink"
               class="flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-ink px-5 py-3 text-[15px] font-semibold text-cream transition-colors hover:bg-brand"
               >นัดเลย →</router-link
             >
@@ -179,14 +183,18 @@
             >
               “เพราะเราเชื่อว่า…
               <span v-reveal="{ variant: 'wipe', delay: 350 }" class="marker">ความสุข</span
-              >คือจุดเริ่มต้นของการเรียนรู้ที่ดีที่สุด”
+              >คือจุดเริ่มต้นของการเรียนรู้ที่<span
+                v-reveal="{ variant: 'wipe', delay: 850 }"
+                class="marker"
+                >ดีที่สุด</span
+              >”
             </h2>
           </div>
           <p class="text-base leading-[1.85] text-muted md:text-[17px]">
             ที่ Brighton เราไม่ได้เป็นเพียงแค่โรงเรียนสอนภาษา
             แต่เราเป็นพื้นที่แห่งการเรียนรู้ที่ให้ความสำคัญกับ “ความรู้สึก” ของผู้เรียน
             ห้องเรียนที่ลูกกล้าพูดโดยไม่กลัวผิด ได้ลงมือทำผ่านกิจกรรม พร้อมหลักสูตรระดับสากล (Oxford
-            &amp; Jolly Phonics) และครูที่ผ่านการคัดเลือกและอบรม
+            &amp; Jolly Phonics) และ teacher ที่ผ่านการคัดเลือกและอบรม
             เพื่อให้ลูกเติบโตอย่างมั่นคงทั้งทักษะภาษาและทัศนคติ
           </p>
         </div>
@@ -198,11 +206,11 @@
           <BentoCard
             class="md:col-span-2 lg:col-span-7"
             icon="target"
-            sub="วัดระดับก่อนเริ่มเรียนตามกรอบ CEFR ติดตามผลตลอดปี และสอบเลื่อนระดับทุกปี"
+            sub="วัดระดับก่อนเริ่มเรียน แล้วเรียนในระดับชั้นที่เหมาะกับลูก ติดตามผลตลอดปี และสอบเลื่อนระดับทุกปี"
             tag="ฟรี"
             title="วัดระดับก่อนเรียน"
           >
-            <CefrLadder :current="1" />
+            <LevelLadder />
             <template #foot
               >ตัวอย่างเส้นทางของนักเรียนหนึ่งคน · แตะบนแท่งเพื่อดูแต่ละระดับ</template
             >
@@ -220,17 +228,17 @@
           <BentoCard
             class="lg:col-span-4"
             icon="users"
-            sub="ครูผู้สอนคลาสที่ Brighton ใช้ภาษาอังกฤษเป็นภาษาแรก"
-            title="ครูเจ้าของภาษา"
+            sub="Teacher ผู้สอนคลาสที่ Brighton ใช้ภาษาอังกฤษเป็นภาษาแรก"
+            title="Teacher เจ้าของภาษา"
             tone="paper"
           >
             <CheckSteps
               :items="teacherStandards.map(([standard]) => standard)"
-              complete-label="ครูของ Brighton ทุกคนผ่านครบทุกข้อ"
+              complete-label="Teacher ของ Brighton ทุกคนผ่านครบทุกข้อ"
             />
             <template #foot>
               <router-link class="font-semibold text-brand hover:underline" to="/teachers"
-                >ดูทีมครูชาวต่างชาติของเรา →</router-link
+                >ดูทีม teacher ชาวต่างชาติของเรา →</router-link
               >
             </template>
           </BentoCard>
@@ -238,7 +246,7 @@
           <BentoCard
             class="lg:col-span-4"
             icon="chat"
-            sub="ห้องเรียนแบบ Can Do Attitude ตอบผิดได้ ครูและเพื่อนช่วยกันให้กำลังใจ"
+            sub="ห้องเรียนแบบ Can Do Attitude ตอบผิดได้ teacher และเพื่อนช่วยกันให้กำลังใจ"
             title="กล้าพูด ไม่กลัวผิด"
             tone="blush"
           >
@@ -249,7 +257,7 @@
           <BentoCard
             class="md:col-span-2 lg:col-span-4"
             icon="chart"
-            sub="ครูประเมินลูกตลอดปี ผู้ปกครองดูผลการเรียนได้ใน LINE"
+            sub="Teacher ประเมินลูกตลอดปี ผู้ปกครองดูผลการเรียนได้ใน LINE"
             title="เห็นพัฒนาการของลูก"
           >
             <SkillRadar
@@ -258,7 +266,7 @@
               :axes="radar.axes"
               :child="radar.child"
               :name="sampleChild.nickname"
-              class="mt-auto"
+              class="my-auto"
             />
             <template #foot>
               <router-link class="link-arrow" to="/results">ดูวิธีดูผลการเรียน →</router-link>
@@ -273,120 +281,60 @@
       <SectionHead
         v-reveal
         :count="`${courses.length} หลักสูตร`"
-        class="mb-5 md:mb-10"
+        class="mb-5 md:mb-8"
         eyebrow="Our Courses"
         icon="book"
-        sub="เลือกตามอายุและพื้นฐานของลูก ทุกหลักสูตรเริ่มจากการวัดระดับฟรี"
+        sub="เลือกชั้นเรียนของลูก แล้วดูว่าคอร์สไหนเหมาะ ทุกหลักสูตรเริ่มจากการวัดระดับฟรี"
         title="หลักสูตรตามช่วงวัย"
         tone="brand"
       />
-      <!-- one card per course; the first is wide, with its age block beside the points -->
-      <div
-        v-reveal="{ stagger: 90 }"
-        class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-12"
-      >
-        <BentoCard
-          v-for="(c, i) in courses"
-          :key="c.slug"
-          :class="courseCards[i].span"
-          :sub="c.short"
-          :tag="c.curriculum"
-          :title="c.name"
-          :to="`/courses/${c.slug}`"
-          :tone="courseCards[i].tone"
-        >
-          <div
-            :class="i === 0 && 'sm:grid sm:grid-cols-[200px_1fr] sm:items-stretch sm:gap-7'"
-            class="flex flex-1 flex-col gap-5"
-          >
-            <!-- the wide card keeps the course's colour block; the others show the age on the card -->
-            <div
-              v-if="i === 0"
-              v-reveal="{ variant: 'pop', delay: 150 }"
-              :class="toneClass[c.tone]"
-              class="flex flex-col justify-between gap-4 rounded-[22px] p-5 sm:min-h-[150px]"
-            >
-              <span class="text-[13px] font-semibold opacity-90">{{ c.tag }}</span>
-              <span :class="ageFont(c.age)" class="text-[52px] font-bold leading-none"
-                ><CountUp :delay="250" :value="c.age" /><span class="ml-1.5 text-lg">ปี</span></span
-              >
-            </div>
-            <div v-else class="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-              <span>
-                <span
-                  :class="[ageFont(c.age), courseCards[i].age]"
-                  class="text-[52px] font-bold leading-none"
-                  ><CountUp :delay="150" :value="c.age" /><span
-                    v-if="c.ageUnit === 'ปี'"
-                    class="ml-1.5 text-lg"
-                    >ปี</span
-                  ></span
-                >
-                <span
-                  v-if="c.ageUnit !== 'ปี'"
-                  :class="courseCards[i].muted"
-                  class="mt-1.5 block text-[13px]"
-                  >{{ c.ageUnit }}</span
-                >
-              </span>
-              <span
-                v-reveal="{ variant: 'pop', delay: 450 }"
-                :class="courseCards[i].pill"
-                class="rounded-full px-3 py-1 text-[13px] font-semibold"
-                >{{ c.tag }}</span
-              >
-            </div>
-            <ul v-reveal="{ stagger: 110, delay: 250 }" class="flex flex-col justify-end gap-2.5">
-              <li
-                v-for="[point] in c.points.slice(0, 3)"
-                :key="point"
-                class="flex items-center gap-2.5 text-[15px]"
-              >
-                <span
-                  :class="courseCards[i].check"
-                  class="tick-pop flex h-6 w-6 flex-none items-center justify-center rounded-full"
-                >
-                  <BentoIcon class="h-3.5 w-3.5" name="check" />
-                </span>
-                {{ point }}
-              </li>
-            </ul>
-          </div>
-          <template #foot
-            ><span :class="courseCards[i].link" class="font-semibold"
-              >ดูรายละเอียด →</span
-            ></template
-          >
-        </BentoCard>
 
-        <BentoCard
-          class="lg:col-span-4"
-          icon="target"
-          tone="sage"
-          sub="ให้ครูช่วยประเมิน วัดระดับภาษาฟรี ไม่มีค่าใช้จ่าย"
-          title="ไม่แน่ใจว่าเริ่มที่ไหน?"
+      <!-- the parent picks their child's stage; matching courses are marked, the rest step back -->
+      <div
+        v-reveal
+        class="mb-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3 md:mb-6"
+        role="group"
+        aria-label="ลูกอยู่ชั้นไหน"
+      >
+        <span class="text-[15px] font-semibold">ลูกอยู่ชั้นไหน?</span>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="[key, label] in [['', 'ทั้งหมด'], ...stages]"
+            :key="key"
+            :aria-pressed="stage === key"
+            :class="{ 'chip-on': stage === key }"
+            class="chip h-10 px-4 text-[15px]"
+            type="button"
+            @click="stage = key"
+          >
+            {{ label }}
+          </button>
+        </div>
+      </div>
+
+      <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5">
+        <CourseCard v-for="c in courses" :key="c.slug" :course="c" :picked="stage" />
+      </div>
+
+      <!-- not sure: the free placement test decides -->
+      <div
+        v-reveal
+        class="mt-3 flex flex-col gap-4 rounded-[28px] border border-[#D3E0CF] bg-sage p-5 sm:flex-row sm:items-center sm:justify-between md:mt-5 md:rounded-[32px] md:px-8 md:py-6"
+      >
+        <span class="flex items-start gap-3">
+          <BentoIcon class="mt-0.5 h-6 w-6 flex-none text-sagedeep" name="target" />
+          <span class="flex flex-col gap-0.5">
+            <b class="font-display text-lg font-semibold md:text-xl">ไม่แน่ใจว่าเริ่มที่ไหน?</b>
+            <span class="text-[15px] text-body"
+              >วัดระดับฟรี ผลสอบจะบอกคลาสที่เหมาะกับลูก · เริ่มเรียนได้ตั้งแต่ 3 ขวบ</span
+            >
+          </span>
+        </span>
+        <router-link
+          :to="bookingLink"
+          class="btn-primary h-12 flex-none px-7 text-[15px] shadow-none md:h-14 md:text-base"
+          >นัดวัดระดับฟรี →</router-link
         >
-          <div class="flex flex-1 flex-col justify-between gap-6">
-            <p class="flex items-baseline gap-2">
-              <span class="text-sm text-muted">เริ่มเรียนได้ตั้งแต่</span>
-              <span class="font-condensed text-[64px] font-bold leading-none text-brand"
-                ><CountUp :delay="200" :duration="800" value="3"
-              /></span>
-              <span class="text-sm text-muted">ขวบ</span>
-            </p>
-            <div class="flex flex-col gap-3">
-              <router-link
-                :to="{ hash: '#booking' }"
-                class="btn-primary h-14 text-base shadow-none"
-              >
-                นัดวัดระดับฟรี →
-              </router-link>
-              <router-link class="link-arrow text-center text-sm" to="/courses">
-                ดูหลักสูตรทั้งหมด →
-              </router-link>
-            </div>
-          </div>
-        </BentoCard>
       </div>
     </section>
 
@@ -398,7 +346,7 @@
         count="4 โครงการ"
         eyebrow="More at Brighton"
         icon="sparkle"
-        sub="ครูต่างชาติในโรงเรียนทั่วพะเยา ค่ายภาษาช่วงปิดเทอม ทักษะ EF และห้องเรียน EP / MEP"
+        sub="Teacher ต่างชาติในโรงเรียนทั่วพะเยา ค่ายภาษาช่วงปิดเทอม ทักษะ EF และห้องเรียน EP / MEP"
         title="มากกว่าคลาสภาษาอังกฤษ"
         tone="sage"
       />
@@ -520,9 +468,9 @@
               <span class="text-[13px] text-body">Oxford Young Learners</span>
               <span
                 class="font-condensed text-[44px] font-bold leading-none text-ink md:text-[52px]"
-                ><CountUp :delay="350" :value="oxfordCount"
-              /></span>
-              <span class="text-[13px] text-body">คน ได้ระดับ B1 ขึ้นไป</span>
+                >B1+</span
+              >
+              <span class="text-[13px] text-body">นักเรียนหลายคนได้ระดับ B1 ขึ้นไป</span>
             </div>
           </div>
           <template #foot><span class="font-semibold text-brand">ดู Hall of Fame →</span></template>
@@ -627,7 +575,7 @@
         <!-- phones: two rows sized by the photos' aspect ratios, so the top photo scales with
              the screen and no empty row is left for the photo that only shows from md -->
         <PhotoBox
-          alt="นักเรียนและครูที่ Brighton"
+          alt="นักเรียนและ teacher ที่ Brighton"
           :src="photos[0]"
           class="in-zoom col-span-2 aspect-[16/10] rounded-[18px] md:row-span-2 md:aspect-auto md:rounded-3xl"
           sizes="(min-width: 768px) 25vw, 100vw"
@@ -750,78 +698,6 @@
         ดูรีวิวเพิ่มเติม · อีก {{ reviews.length - reviewsShown }} รีวิว
       </button>
     </section>
-
-    <!-- Booking CTA: where every นัดวัดระดับฟรี in the nav and action bar scrolls to; its own
-         button opens the booking form on /contact -->
-    <section id="booking" class="wrap scroll-mt-24 pb-16 md:pb-24">
-      <div v-reveal="{ stagger: 100 }" class="grid grid-cols-1 gap-3 md:gap-5 lg:grid-cols-12">
-        <BentoCard
-          :level="2"
-          class="lg:col-span-7"
-          icon="calendar"
-          sub="นัดวัดระดับภาษาฟรี ครูจะพูดคุยกับลูกและแนะนำคลาสที่เหมาะกับวัยและพื้นฐานของลูกมากที่สุด"
-          title="มาลองเรียนกับเราก่อน"
-        >
-          <ol class="in-cascade flex flex-col gap-3 sm:flex-row sm:gap-3">
-            <li
-              v-for="(step, i) in bookingSteps"
-              :key="step"
-              :style="{ '--i': i }"
-              class="flex flex-1 items-center gap-3 rounded-2xl bg-cream p-4 sm:flex-col sm:items-start"
-            >
-              <span
-                class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-sun font-condensed text-sm font-bold"
-                >{{ i + 1 }}</span
-              >
-              <span class="text-[15px] font-medium leading-snug">{{ step }}</span>
-            </li>
-          </ol>
-          <router-link
-            class="btn-primary mt-6 h-[58px] self-start px-8 text-[17px] shadow-none"
-            to="/contact"
-          >
-            นัดวัดระดับภาษาฟรี →
-          </router-link>
-        </BentoCard>
-
-        <BentoCard
-          :sub="contact.hours"
-          class="lg:col-span-5"
-          icon="pin"
-          title="ติดต่อเรา"
-          tone="paper"
-        >
-          <div class="flex flex-col gap-2.5">
-            <a
-              :href="contact.tel"
-              class="flex items-center justify-between gap-3 rounded-full border border-line2 py-2.5 pl-4 pr-2.5 transition-colors hover:border-brand/40"
-            >
-              <span class="flex items-center gap-2.5 text-[15px]">
-                <IconMobile class="h-[18px] w-[18px] text-brand" />{{ contact.phone }}
-              </span>
-              <span class="rounded-full bg-sun px-3 py-1 text-[13px] font-semibold text-ink"
-                >โทร</span
-              >
-            </a>
-            <a
-              :href="contact.facebook"
-              class="flex items-center justify-between gap-3 rounded-full border border-line2 py-2.5 pl-4 pr-2.5 transition-colors hover:border-brand/40"
-              rel="noopener"
-              target="_blank"
-            >
-              <span class="flex min-w-0 items-center gap-2.5 text-[15px]">
-                <IconFacebook class="h-[18px] w-[18px] flex-none text-brand" />
-                <span class="truncate">{{ contact.facebookName }}</span>
-              </span>
-              <span class="flex-none rounded-full bg-white/70 px-3 py-1 text-[13px] font-semibold"
-                >แชท</span
-              >
-            </a>
-          </div>
-          <template #foot>{{ contact.address.join(' ') }}</template>
-        </BentoCard>
-      </div>
-    </section>
   </main>
 </template>
 
@@ -829,41 +705,42 @@
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
 import BentoIcon from '@/components/BentoIcon.vue'
-import CefrLadder from '@/components/CefrLadder.vue'
+import LevelLadder from '@/components/LevelLadder.vue'
 import ChatDemo from '@/components/ChatDemo.vue'
 import CountUp from '@/components/CountUp.vue'
+import CourseCard from '@/components/CourseCard.vue'
 import LessonSteps from '@/components/LessonSteps.vue'
 import CheckSteps from '@/components/CheckSteps.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import SkillRadar from '@/components/SkillRadar.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
 import IconFacebook from '@/components/icons/IconFacebook.vue'
-import IconMobile from '@/components/icons/IconMobile.vue'
 import { useRandomPhotos } from '@/composables/useRandomPhotos'
 import { contact, team, yearsLabel } from '@/data/site'
 import { founderStory, studentsLabel, teacherStandards } from '@/data/about'
 import reviewList from '@/data/reviews.json'
-import { ageFont, courses, lessonSteps, toneClass } from '@/data/courses'
+import { courses, lessonSteps, stages } from '@/data/courses'
+import { bookingLink } from '@/data/pages'
 import { homePhotos } from '@/data/photos'
 import { programBySlug } from '@/data/programs'
 import { appFeatures, radar, sampleChild } from '@/data/parentReport'
-import { ieltsStudents, oxfordStudents } from '@/data/hallOfFame'
+import { ieltsStudents } from '@/data/hallOfFame'
 
 export default {
   name: 'HomeView',
   components: {
     BentoCard,
     BentoIcon,
-    CefrLadder,
+    LevelLadder,
     ChatDemo,
     CountUp,
+    CourseCard,
     CheckSteps,
     LessonSteps,
     SectionHead,
     SkillRadar,
     PhotoBox,
-    IconFacebook,
-    IconMobile
+    IconFacebook
   },
   setup() {
     useHead({
@@ -911,70 +788,32 @@ export default {
       journey: [
         { label: 'วัดระดับฟรี', to: { hash: '#why' } },
         { label: 'เลือกหลักสูตรตามวัย', to: { hash: '#courses' } },
-        { label: 'เรียนกับครูเจ้าของภาษา', to: { hash: '#programs' } },
+        { label: 'เรียนกับ teacher เจ้าของภาษา', to: { hash: '#programs' } },
         { label: 'ดูพัฒนาการใน LINE', to: { hash: '#parent-app' } }
       ],
       courses,
-      toneClass,
-      ageFont,
-      // the course cards, in the order of `courses`: grid width, card tone and the
-      // colours that sit on it (row 1: 7 + 5 columns, row 2: 4 + 4 + the booking card)
-      courseCards: [
-        {
-          span: 'md:col-span-2 lg:col-span-7',
-          tone: 'white',
-          check: 'bg-sunsoft text-ink',
-          link: 'text-brand'
-        },
-        {
-          span: 'lg:col-span-5',
-          tone: 'sun',
-          age: 'text-ink',
-          muted: 'text-body',
-          pill: 'bg-white text-ink',
-          check: 'bg-white text-ink',
-          link: 'text-ink'
-        },
-        {
-          span: 'lg:col-span-4',
-          tone: 'blush',
-          age: 'text-brand-deep',
-          muted: 'text-body',
-          pill: 'bg-white text-brand',
-          check: 'bg-white text-brand',
-          link: 'text-brand'
-        },
-        {
-          span: 'lg:col-span-4',
-          tone: 'paper',
-          age: 'text-brand',
-          muted: 'text-body',
-          pill: 'bg-white text-brand',
-          check: 'bg-white text-brand',
-          link: 'text-brand'
-        }
-      ],
+      stages,
+      bookingLink,
+      // the school stage picked above the course cards ('' = all)
+      stage: '',
       prog: programBySlug,
       campWeeks: programBySlug.camp.camp.weeks.map((w) => w.name.replace(/^Week \d+ · /, '')),
       efSkills: programBySlug.ef.sections[0].items.map(([skill]) => skill),
       // the "กล้าพูด ไม่กลัวผิด" card: a sample exchange, labelled as one on the card
       chat: [
-        ['teacher', 'What colour is the apple?'],
-        ['child', 'It’s… blue?'],
-        ['teacher', 'Good try! Look again.'],
-        ['child', 'Red! I can do it!']
+        ['teacher', 'What animal has four legs?'],
+        ['child', 'A cat!', 'Mint'],
+        ['teacher', 'Hmm… it has long ears.'],
+        ['child', 'A dog?', 'Mint'],
+        ['teacher', 'Nice try! Some dogs have long ears, but not this one. Can anyone help?'],
+        ['child', 'A rabbit!', 'Ploy'],
+        ['teacher', 'Yes, correct! Now it’s your turn to ask me a question.']
       ],
       // the progress card: the sample child's radar from the /results demo
       radar,
       sampleChild,
       appFeatures,
-      topIelts: ieltsStudents[0],
-      oxfordCount: oxfordStudents.length,
-      bookingSteps: [
-        'ทักแชทหรือโทรนัดเวลา',
-        'ครูพูดคุยและวัดระดับลูก ฟรี',
-        'แนะนำคลาสที่เหมาะกับลูก'
-      ]
+      topIelts: ieltsStudents[0]
     }
   }
 }

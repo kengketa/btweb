@@ -181,6 +181,7 @@ export default {
   },
   methods: {
     target(link) {
+      if (link.to) return link.to
       return link.hash ? { path: '/', hash: link.hash } : '/'
     },
     onScroll() {

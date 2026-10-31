@@ -18,7 +18,7 @@
           <component
             :is="`h${level}`"
             class="font-display text-xl font-semibold leading-snug md:text-[24px]"
-            >{{ title }}</component
+            ><slot name="title">{{ title }}</slot></component
           >
           <span
             v-if="tag"

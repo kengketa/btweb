@@ -25,7 +25,7 @@
     >
       <PhotoBox
         :src="cover"
-        alt="นักเรียนและครูที่ Brighton Language Academy"
+        alt="นักเรียนและ teacher ที่ Brighton Language Academy"
         class="in-zoom col-span-2 h-[260px] rounded-[28px] md:h-[400px] lg:col-span-8 lg:row-span-2 lg:h-auto lg:rounded-[32px]"
         position="center 35%"
         priority
@@ -133,11 +133,11 @@
           :count="`${teacherStandards.length} เกณฑ์`"
           eyebrow="Our Teachers"
           icon="users"
-          title="ครูของเรา คัดเลือกและอบรมอย่างไร"
+          title="Teacher ของเรา คัดเลือกและอบรมอย่างไร"
           tone="brand"
         />
         <router-link class="link-arrow flex-none text-base" to="/teachers"
-          >ดูทีมครูชาวต่างชาติของเรา →</router-link
+          >ดูทีม teacher ชาวต่างชาติของเรา →</router-link
         >
       </div>
       <div v-reveal="{ stagger: 70 }" class="grid gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
@@ -200,11 +200,11 @@
         class="mb-5 md:mb-10"
         eyebrow="Our Team"
         icon="sun"
-        sub="เราเชื่อว่าห้องเรียนที่ดี เริ่มจากการดูแลคนที่สอนให้ดีที่สุด เพราะครูที่มีเวลาและมีแรงบันดาลใจ จะส่งต่อสิ่งเหล่านั้นให้นักเรียน"
+        sub="เราเชื่อว่าห้องเรียนที่ดี เริ่มจากการดูแลคนที่สอนให้ดีที่สุด เพราะ teacher ที่มีเวลาและมีแรงบันดาลใจ จะส่งต่อสิ่งเหล่านั้นให้นักเรียน"
         tone="sage"
       >
         <template #title
-          >ครูมีความสุข
+          >Teacher มีความสุข
           <span v-reveal="{ variant: 'wipe', delay: 350 }" class="marker"
             >ลูกก็มีความสุข</span
           ></template
@@ -217,7 +217,14 @@
           :sub="text"
           :title="title"
           :tone="['sage', 'white', 'peach'][i % 3]"
-        />
+        >
+          <!-- "Empathy" in its title wipes on in yellow -->
+          <template v-if="title.includes(teamMark)" #title
+            >{{ title.split(teamMark)[0]
+            }}<span v-reveal="{ variant: 'wipe', delay: 450 }" class="marker">{{ teamMark }}</span
+            >{{ title.split(teamMark)[1] }}</template
+          >
+        </BentoCard>
       </div>
     </section>
 
@@ -271,7 +278,14 @@
           :tag="m.label"
           :title="`“${m.title}”`"
           :tone="['blush', 'sage', 'paper'][i]"
-        />
+        >
+          <!-- the mission's key phrase wipes on in yellow -->
+          <template #title
+            >“{{ m.title.split(m.mark)[0]
+            }}<span v-reveal="{ variant: 'wipe', delay: 450 }" class="marker">{{ m.mark }}</span
+            >{{ m.title.split(m.mark)[1] }}”</template
+          >
+        </BentoCard>
       </div>
     </section>
 
@@ -333,6 +347,8 @@ export default {
       success: successStory,
       teacherStandards,
       teamCulture,
+      // the word highlighted in the team cards' titles
+      teamMark: 'Empathy',
       vision,
       // the figure tiles beside the cover photo
       statTones: [
@@ -352,22 +368,26 @@ export default {
         [yearsLabel, 'ปีที่ดูแลเด็กๆ ในพะเยา'],
         [studentsLabel, 'นักเรียนที่เรียนกับเรา'],
         [String(team.schools), 'โรงเรียนในพะเยาที่เราดูแลห้องเรียน MEP'],
-        [`~${team.foreignTeachers}`, 'ครูชาวต่างชาติในทีม']
+        [`~${team.foreignTeachers}`, 'Teacher ชาวต่างชาติในทีม']
       ],
       missions: [
         {
           label: 'ต่อผู้เรียน',
           title: 'สร้างการเรียนรู้ที่มีความสุข และใช้ได้จริงในชีวิตจริง',
+          // the phrase in the title that gets the yellow highlight
+          mark: 'ใช้ได้จริง',
           desc: 'เรามุ่งมั่นพัฒนาทักษะภาษาอังกฤษของผู้เรียน โดยเน้นการเรียนแบบมีความสุข เพื่อให้ผู้เรียนรักในภาษาและสามารถนำไปใช้ได้จริงในชีวิตประจำวัน'
         },
         {
           label: 'ต่อพนักงาน',
           title: 'เติบโตไปด้วยกันอย่างมีคุณภาพและความสุข',
+          mark: 'เติบโตไปด้วยกัน',
           desc: 'เรามุ่งพัฒนาศักยภาพและการเติบโตของพนักงานทุกคนอย่างต่อเนื่องและยั่งยืน เพราะเราเชื่อว่าทีมงานที่มีความสุข จะส่งต่อการสอนที่มีคุณภาพ'
         },
         {
           label: 'ต่อคู่ค้า',
           title: 'ร่วมมืออย่างมืออาชีพ บนความเชื่อใจและความเป็นธรรม',
+          mark: 'มืออาชีพ',
           desc: 'เรามุ่งพัฒนาความสัมพันธ์ระหว่างองค์กร บนพื้นฐานของความเป็นธรรม เพื่อการเติบโตในการดำเนินธุรกิจร่วมกันในระยะยาว'
         }
       ],
@@ -375,12 +395,12 @@ export default {
         {
           en: 'Can Do Attitude',
           title: 'กล้าพูด ไม่กลัวผิด',
-          desc: 'ห้องเรียนที่ไม่มีความกดดัน ตอบผิดได้ ครูและเพื่อนช่วยกันให้กำลังใจ ลูกจึงไม่เขินอาย และกล้าใช้ภาษาอังกฤษอย่างเป็นธรรมชาติ'
+          desc: 'ห้องเรียนที่ไม่มีความกดดัน ตอบผิดได้ teacher และเพื่อนช่วยกันให้กำลังใจ ลูกจึงไม่เขินอาย และกล้าใช้ภาษาอังกฤษอย่างเป็นธรรมชาติ'
         },
         {
           en: 'Active Learning',
           title: 'เรียนด้วยการลงมือทำ',
-          desc: 'ไม่ใช่การนั่งท่องจำหน้ากระดาน ครูชวนเด็กๆ เล่น ลงมือทำ และสร้างงานศิลปะและงานประดิษฐ์ ให้ภาษาอังกฤษติดตัวผ่านประสบการณ์จริง'
+          desc: 'ไม่ใช่การนั่งท่องจำหน้ากระดาน teacher ชวนเด็กๆ เล่น ลงมือทำ และสร้างงานศิลปะและงานประดิษฐ์ ให้ภาษาอังกฤษติดตัวผ่านประสบการณ์จริง'
         },
         {
           en: 'Oxford · Jolly Phonics',
@@ -390,7 +410,7 @@ export default {
         {
           en: 'Placement & Progress',
           title: 'วัดระดับและติดตามผล',
-          desc: 'วัดระดับก่อนเริ่มเรียน เพื่อเรียนในชั้นที่ท้าทายพอดี ครูประเมินพัฒนาการอย่างต่อเนื่อง และมีสอบเลื่อนระดับทุกปี'
+          desc: 'วัดระดับก่อนเริ่มเรียน เพื่อเรียนในชั้นที่ท้าทายพอดี teacher ประเมินพัฒนาการอย่างต่อเนื่อง และมีสอบเลื่อนระดับทุกปี'
         }
       ]
     }
