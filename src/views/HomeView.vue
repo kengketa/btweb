@@ -315,27 +315,6 @@
       <div v-reveal="{ stagger: 90 }" class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5">
         <CourseCard v-for="c in courses" :key="c.slug" :course="c" :picked="stage" />
       </div>
-
-      <!-- not sure: the free placement test decides -->
-      <div
-        v-reveal
-        class="mt-3 flex flex-col gap-4 rounded-[28px] border border-[#D3E0CF] bg-sage p-5 sm:flex-row sm:items-center sm:justify-between md:mt-5 md:rounded-[32px] md:px-8 md:py-6"
-      >
-        <span class="flex items-start gap-3">
-          <BentoIcon class="mt-0.5 h-6 w-6 flex-none text-sagedeep" name="target" />
-          <span class="flex flex-col gap-0.5">
-            <b class="font-display text-lg font-semibold md:text-xl">ไม่แน่ใจว่าเริ่มที่ไหน?</b>
-            <span class="text-[15px] text-body"
-              >วัดระดับฟรี ผลสอบจะบอกคลาสที่เหมาะกับลูก · เริ่มเรียนได้ตั้งแต่ 3 ขวบ</span
-            >
-          </span>
-        </span>
-        <router-link
-          :to="bookingLink"
-          class="btn-primary h-12 flex-none px-7 text-[15px] shadow-none md:h-14 md:text-base"
-          >นัดวัดระดับฟรี →</router-link
-        >
-      </div>
     </section>
 
     <!-- Programs: teachers, camp, EF, MEP/EP, each with its figure from programs.js -->
@@ -538,7 +517,7 @@
           <div
             v-for="[value, label] in storyStats"
             :key="label"
-            class="flex flex-col gap-2 rounded-[20px] bg-white/70 p-5"
+            class="lift flex flex-col gap-2 rounded-[20px] bg-white/70 p-5"
           >
             <span
               class="font-condensed text-[36px] font-bold leading-none text-brand md:text-[44px]"
@@ -577,16 +556,18 @@
         <PhotoBox
           alt="นักเรียนและ teacher ที่ Brighton"
           :src="photos[0]"
-          class="in-zoom col-span-2 aspect-[16/10] rounded-[18px] md:row-span-2 md:aspect-auto md:rounded-3xl"
+          class="lift group in-zoom col-span-2 aspect-[16/10] rounded-[18px] md:row-span-2 md:aspect-auto md:rounded-3xl"
           sizes="(min-width: 768px) 25vw, 100vw"
         />
         <PhotoBox
           :src="photos[1]"
           alt="กิจกรรมที่ Brighton"
-          class="in-zoom aspect-square rounded-[18px] md:aspect-auto md:rounded-3xl"
+          class="lift group in-zoom aspect-square rounded-[18px] md:aspect-auto md:rounded-3xl"
           sizes="(min-width: 768px) 25vw, 50vw"
         />
-        <div class="flex flex-col justify-between rounded-[18px] bg-sun p-5 md:rounded-3xl md:p-6">
+        <div
+          class="lift flex flex-col justify-between rounded-[18px] bg-sun p-5 md:rounded-3xl md:p-6"
+        >
           <span class="font-condensed text-xl font-semibold italic leading-[1.3] md:text-[26px]"
             >“I can do it!”</span
           >
@@ -595,7 +576,7 @@
         <PhotoBox
           :src="photos[2]"
           alt="กิจกรรมที่ Brighton"
-          class="in-zoom col-span-2 hidden rounded-3xl md:block"
+          class="lift group in-zoom col-span-2 hidden rounded-3xl md:block"
           sizes="50vw"
         />
       </div>

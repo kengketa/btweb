@@ -201,27 +201,33 @@
 
     <section class="wrap pb-12 md:pb-[104px]">
       <SectionHead v-reveal class="mb-5 md:mb-10" icon="book" title="หลักสูตรอื่นๆ" tone="sun" />
-      <div v-reveal="{ stagger: 80 }" class="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-5">
-        <BentoCard
+      <!-- each card reads top to bottom: the course photo, who it's for (in words, the same
+           line the Home cards use), the name, what it is, and the link -->
+      <div v-reveal="{ stagger: 80 }" class="grid grid-cols-1 gap-3 sm:grid-cols-3 md:gap-5">
+        <router-link
           v-for="c in others"
           :key="c.slug"
-          :sub="c.sub"
-          :title="c.name"
           :to="`/courses/${c.slug}`"
+          class="lift group flex min-w-0 flex-col overflow-hidden rounded-[28px] border border-line bg-white"
         >
-          <div class="mt-auto flex items-end justify-between gap-4">
-            <span class="link-arrow">ดูรายละเอียด →</span>
+          <PhotoBox
+            :alt="c.name"
+            :src="c.photo"
+            class="in-zoom aspect-[16/10] w-full"
+            sizes="(min-width: 640px) 33vw, 100vw"
+          />
+          <div class="flex flex-1 flex-col p-5 md:p-6">
             <span
-              :class="toneClass[c.tone]"
-              class="in-pop flex flex-none -rotate-2 flex-col items-start gap-0.5 rounded-[18px] px-3.5 py-2.5"
+              class="self-start rounded-full bg-sun px-3 py-1 text-[13px] font-semibold text-ink"
+              >{{ c.ageLabel }}</span
             >
-              <span :class="ageFont(c.age)" class="text-[28px] font-bold leading-none"
-                ><CountUp :delay="300" :value="c.age"
-              /></span>
-              <span class="text-[12px] opacity-90">{{ c.ageUnit }}</span>
-            </span>
+            <h3 class="mt-3 font-display text-xl font-bold leading-snug md:text-[22px]">
+              {{ c.name }}
+            </h3>
+            <p class="mt-1 text-[15px] leading-[1.65] text-muted">{{ c.short }}</p>
+            <span class="link-arrow mt-auto pt-4 text-[15px]">ดูรายละเอียด →</span>
           </div>
-        </BentoCard>
+        </router-link>
       </div>
     </section>
   </main>
@@ -232,18 +238,17 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
 import BentoCard from '@/components/BentoCard.vue'
-import CountUp from '@/components/CountUp.vue'
 import BentoIcon from '@/components/BentoIcon.vue'
 import FaqList from '@/components/FaqList.vue'
 import PhotoBox from '@/components/PhotoBox.vue'
 import SectionHead from '@/components/SectionHead.vue'
 import { contact } from '@/data/site'
-import { ageFont, courses, faqs, lessonSteps, toneClass } from '@/data/courses'
+import { courses, faqs, lessonSteps } from '@/data/courses'
 import { courseSchema, jsonLd } from '@/data/schema'
 
 export default {
   name: 'CourseDetailView',
-  components: { BentoCard, BentoIcon, CountUp, FaqList, PhotoBox, SectionHead },
+  components: { BentoCard, BentoIcon, FaqList, PhotoBox, SectionHead },
   beforeRouteEnter(to, from, next) {
     next(courses.some((c) => c.slug === to.params.slug) ? undefined : '/courses')
   },
@@ -262,11 +267,9 @@ export default {
   },
   data() {
     return {
-      ageFont,
       contact,
       faqs,
-      steps: lessonSteps,
-      toneClass
+      steps: lessonSteps
     }
   },
   computed: {
