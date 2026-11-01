@@ -4,6 +4,7 @@
 export const courses = [
   {
     slug: 'english-level',
+    days: 'เสาร์ – อาทิตย์', // วันเรียน on the course page
     logo: {
       src: '/images/3_courses/oxford-university-press.png',
       alt: 'Oxford University Press',
@@ -66,6 +67,7 @@ export const courses = [
   },
   {
     slug: 'brighton-phonics',
+    days: 'เสาร์ – อาทิตย์', // วันเรียน on the course page
     logo: {
       src: '/images/3_courses/jolly-phonics.png',
       alt: 'Jolly Phonics',
@@ -123,6 +125,7 @@ export const courses = [
   },
   {
     slug: '4-skills-english',
+    days: 'จันทร์ – ศุกร์', // วันเรียน on the course page
     logo: {
       src: '/images/3_courses/oxford-university-press.png',
       alt: 'Oxford University Press',
@@ -167,6 +170,7 @@ export const courses = [
   },
   {
     slug: 'private-course',
+    days: 'นัดวันและเวลาได้เอง', // วันเรียน on the course page
     logos: [
       { src: '/images/3_courses/ielts.png', alt: 'IELTS', width: 400, height: 118, wide: true },
       { src: '/images/3_courses/toeic.png', alt: 'TOEIC', width: 400, height: 80, wide: true }
