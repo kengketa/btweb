@@ -1,4 +1,8 @@
+# Brighton Language Academy: everything here is public information for parents.
+# Search engines and AI assistants are welcome to index it, quote it, open it for
+# a user and learn from it (contentsignals.org).
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 Sitemap: https://www.brightonedu.com/sitemap.xml
