@@ -46,7 +46,9 @@
   .lift {
     transition:
       transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 0.3s ease;
+      box-shadow 0.3s ease,
+      opacity 0.35s ease,
+      filter 0.35s ease;
   }
   @media (hover: hover) {
     .lift:hover {
@@ -57,6 +59,16 @@
   @media (prefers-reduced-motion: reduce) {
     .lift {
       transition: box-shadow 0.3s ease;
+    }
+  }
+  /* while one card is hovered, its sibling cards step back to 80% so the hovered one
+     stands out (after bebetter.education). Any .lift card with .lift siblings gets it, no
+     class needed on the grid. Mouse only, so a tap on a phone never leaves a grid stuck
+     faded; the fade rides on .lift's transition. :where() keeps it at zero specificity,
+     so a card's own opacity (CourseCard's dimmed state) still wins. */
+  @media (hover: hover) and (pointer: fine) {
+    :where(:has(> .lift:hover) > .lift:not(:hover)) {
+      opacity: 0.8;
     }
   }
   .footer-chip {
