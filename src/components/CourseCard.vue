@@ -5,7 +5,7 @@
   <router-link
     :class="dimmed ? 'opacity-40 saturate-50' : ''"
     :to="`/courses/${course.slug}`"
-    class="lift group flex min-w-0 flex-col rounded-[28px] border border-line bg-white p-5 transition-opacity duration-300 md:rounded-[32px] md:p-7"
+    class="lift group flex min-w-0 flex-col rounded-[28px] border border-line bg-white p-5 md:rounded-[32px] md:p-7"
   >
     <div class="flex flex-wrap items-center justify-between gap-2">
       <ul
