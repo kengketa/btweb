@@ -80,11 +80,12 @@
         sub="แตะแต่ละขั้นตอนเพื่อดูหน้าจอตัวอย่าง — ลองกรอกข้อมูลเพิ่มลูกได้จริงในขั้นตอนที่ 3"
         tone="brand"
       />
-      <!-- the visitor's own touch anywhere in the demo stops the auto play -->
+      <!-- the visitor pressing a button, link or field in the demo stops the auto play; a
+           finger that only scrolls the page past it does not -->
       <div
         ref="demo"
         class="grid grid-cols-1 items-start gap-3 md:gap-5 lg:grid-cols-12"
-        @pointerdown.capture="onDemoTouch"
+        @click.capture="onDemoTouch"
       >
         <!-- desktop: the steps as a list beside the phone; phones get number tabs instead -->
         <BentoCard class="hidden lg:col-span-7 lg:flex">
@@ -1090,8 +1091,11 @@ export default {
     // A fingertip walks through the six steps on the phone, tapping the same buttons a
     // parent would (their own click handlers run), typing the sample ID and phone into
     // the add-child form, and starting over at the end. The visitor's own touch stops it.
+    // a click (unlike pointerdown) never fires for a touch that turns into a scroll, and
+    // only a press on something the visitor can use counts, not a tap on blank screen
     onDemoTouch(e) {
       if (!e.isTrusted || e.target.closest('[data-demo-controls]')) return
+      if (!e.target.closest('button, a, input, select, textarea, label, [role="button"]')) return
       if (this.demoPlaying) this.stopDemo(true)
     },
     stopDemo(byVisitor) {
