@@ -47,11 +47,11 @@ export const radar = {
     'Listening',
     'Speaking',
     'Writing',
-    'Vocabularies',
+    'Vocabulary',
     'Attendance',
     'Social development',
     'Participation',
-    'Confident',
+    'Confidence',
     'Concentration',
     'Hand-WR',
     'Phonic'
@@ -68,10 +68,10 @@ export const history = [
     scores: {
       Listening: 98,
       Speaking: 95,
-      Vocabularies: 98,
+      Vocabulary: 98,
       Attendance: 100,
       Participation: 95,
-      Confident: 96,
+      Confidence: 96,
       Concentration: 90,
       Phonic: 92
     },
@@ -85,10 +85,10 @@ export const history = [
     scores: {
       Listening: 95,
       Speaking: 90,
-      Vocabularies: 97,
+      Vocabulary: 97,
       Attendance: 100,
       Participation: 92,
-      Confident: 90,
+      Confidence: 90,
       Concentration: 78,
       Phonic: 85
     },
